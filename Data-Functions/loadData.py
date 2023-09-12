@@ -29,11 +29,13 @@ def loadTeamData():
     
     
     fh.close()
+    cur.close()
     return 0
 
 
 
 def loadPlayerData(test):
+    #open required databases and files
     try: 
         conn = sqlite3.connect("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/Data-Functions/Players-Teams.db")
         cur = conn.cursor()
@@ -137,20 +139,21 @@ def loadPlayerData(test):
     #     for item in playersCleaned[index]:
     #         print(playersCleaned[index][item], end=" ")
     #     print()
-    for player in (playersCleaned):
-        if (player["team"] == "NA"):
-            cur.execute("Insert into ")
-        # for item in playersCleaned[index]:
-        #     if (item == "team"):
-        #         if (playersCleaned[index][item] == "NA"):
-        #             cur
+    
+    # load data into the database
+    try: 
+        for player in (playersCleaned):
+            temp = cur.execute("Select id from Teams where teamAbv = (?)", (player["team"],))
+            teamID = str(temp.fetchone()[0])
+            cur.execute("Insert into Players (playerName, currentTeam, jerseyNumber, position, height, weight) values (?,?,?,?,?,?)", (player["name"], teamID, player["jerseyNumber"], player["position"], player["height"], player["weight"],))
+            conn.commit()
+    except:
+        print("Error Loading the playerData")
+        return -1
         
-                        
+    cur.close()        
     return 0
     
-
-
-# loadPlayerData(0)
 
 
 
