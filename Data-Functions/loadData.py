@@ -158,7 +158,7 @@ def loadPlayerData(test):
 
 def loadPlayerStats():
     #open required databases and files
-    fields = ["PLAYER_ID","TEAM_ID","AGE","GAMES_PLAYED","WINS","LOSSES","MINS","PTS","FGM","FGA","FG_PERCENT","THREEPM","THREEPA","","FTM","FTA", "FT_PERCENT","OREB","DREB","REB","AST","TOV","STL","BLK","PF","FANTASY_POINTS","DD2","DD3","PLUS_MINUS"]
+    fields = ["PLAYER_ID","TEAM_ID","AGE","GAMES_PLAYED","WINS","LOSSES","MINS","PTS","FGM","FGA","FG_PERCENT","THREEPM","THREEPA","THREEP_PERCENT","FTM","FTA", "FT_PERCENT","OREB","DREB","REB","AST","TOV","STL","BLK","PF","FANTASY_POINTS","DD2","DD3","PLUS_MINUS"]
     try: 
         conn = sqlite3.connect("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/Data-Functions/Players-Teams.db")
         cur = conn.cursor()
@@ -238,32 +238,20 @@ def loadPlayerStats():
         print(name, end=" ")
         
         # items is the same length as the terms list should all line up
-        # cur.execute("INSERT OR IGNORE INTO StatsPerGame2022_2023 ('PLAYER_ID','TEAM_ID', 'AGE','GAMES_PLAYED','WINS','LOSSES','MINS','PTS','FGM','FGA','FG_PERCENT','THREEPM','THREEPA','FTM','FTA', 'FT_PERCENT','OREB','DREB','REB','AST','TOV','STL','BLK','PF','FANTASY_POINTS','DD2','DD3','PLUS_MINUS') values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (items[0],items[1],items[2],items[3],items[4],items[5],items[6],items[7],items[8],items[9],items[10],items[11],items[12],items[13],items[14],items[15],items[16],items[17],items[18],items[19],items[20],items[21],items[22],items[23],items[24],items[25],items[26],items[27],items[28],items[29],))
+        
+        # uncomment this to run it
+        # cur.execute("INSERT OR IGNORE INTO StatsPerGame2022_2023 ('PLAYER_ID','TEAM_ID', 'AGE','GAMES_PLAYED','WINS','LOSSES','MINS','PTS','FGM','FGA','FG_PERCENT','THREEPM','THREEPA', 'THREEP_PERCENT','FTM','FTA', 'FT_PERCENT','OREB','DREB','REB','AST','TOV','STL','BLK','PF','FANTASY_POINTS','DD2','DD3','PLUS_MINUS') values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (items[0],items[1],items[2],items[3],items[4],items[5],items[6],items[7],items[8],items[9],items[10],items[11],items[12],items[13],items[14],items[15],items[16],items[17],items[18],items[19],items[20],items[21],items[22],items[23],items[24],items[25],items[26],items[27],items[28],))
         # conn.commit()
-        print(items[0])
+        
+        # print(items[0])
         # print(len(fields), len(items))
         
-        # for index in range(len(items)):
-        #     print(items[index], end=" ")
-        # print()
+        for index in range(len(items)):
+            print(items[index], end=" ")
+        print()
+        
+        cur.close()
                 
-
-            
-        
-                
-            
-            
-        
-        
-        
-        
-        
-        
-        
-        # try:
-        #     team = playerData.find("a", attrs={"class": "Anchor_anchor__cSc3P RosterRow_team__AunTP"}).text
-        # except: 
-        #     team = "NA"
 
 def loadExtra():
     names = ['Juan Toscano-Anderson','KZ Okpala','Matthew Dellavedova','Noah Vonleh','Daishen Nix','John Wall','Justin Jackson','Vit Krejci','Frank Kaminsky','Hamidou Diallo','PJ Dozier','Serge Ibaka','Tyrese Martin','Bryn Forbes','R.J. Hampton','Ryan Arcidiacono','Leandro Bolmaro','Vernon Carey Jr.','Boban Marjanovic','Jarrett Culver','Kemba Walker','Stanley Johnson','Tony Bradley','Malcolm Hill','Rodney McGruder','Gorgui Dieng','Joshua Primo','Marko Simonovic','Trevor Keels','Facundo Campazzo','Sterling Brown','Trevelin Queen','Tyler Dorsey','Alize Johnson','Chima Moneke','Chris Silva','Deonte Burton','Devon Dotson','Donovan Williams','Jordan Hall','Kobi Simmons','Michael Foster Jr.','Skylar Mays','Chance Comanche','Frank Jackson','Jarrell Brantley','Jordan Schakel','Justin Minaya','RaiQuan Gray','Xavier Sneed']
@@ -286,7 +274,7 @@ def loadExtra():
     cur.close()
     return 0
 
-loadPlayerStats()
+
 
 
 
