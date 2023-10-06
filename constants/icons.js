@@ -4,7 +4,7 @@ import bookmarks from "../assets/icons/bookmarks_FILL0_wght400_GRAD0_opsz24.png"
 import cancel from "../assets/icons/cancel_FILL0_wght400_GRAD0_opsz24.png"
 import close from "../assets/icons/close_FILL0_wght400_GRAD0_opsz24.png"
 import collectionsBM from "../assets/icons/collections_bookmark_FILL0_wght400_GRAD0_opsz24.png"
-import home from "../assets/icons/cottage_FILL0_wght400_GRAD0_opsz24.png"
+import MainPageIcon from "../assets/icons/cottage_FILL0_wght400_GRAD0_opsz24.png"
 import remove from "../assets/icons/delete_FILL0_wght400_GRAD0_opsz24.png"
 import expand from "../assets/icons/expand_more_FILL0_wght400_GRAD0_opsz24.png"
 import teamsIcon from "../assets/icons/groups_FILL0_wght400_GRAD0_opsz24.png"
@@ -24,7 +24,7 @@ export default {
     cancel,
     close,
     collectionsBM,
-    home,
+    MainPageIcon,
     remove,
     expand,
     teamsIcon,
