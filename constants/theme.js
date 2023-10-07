@@ -1,6 +1,7 @@
 const COLORS = {
     light: "#F5F6F4",
     dark: "#1F1F1F",
+    darkSecond: "#121212",
     blue: "#247BA0",
     red: "#E84855",
     orange: "#E38065"
