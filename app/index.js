@@ -1,34 +1,23 @@
-import { useState } from 'react';
-import { View, ScrollView, SafeAreaView, Text } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { SafeAreaView } from 'react-native';
+import { useRouter } from 'expo-router';
+import { COLORS, } from '../constants';
+import NavBar from './NavBar'
+import HeaderMenu from './HeaderMenu';
 
-import { COLORS, icons } from '../constants';
-import NavBar from '../components/navbar';
+/*This is the high level "Page"
+The four pages of MainPage, TeamsPage, PlayersPage, and LearnPage reside here.
+They are displayed from the NavBar.
+Going into sub pages the NavBar disappears until back at the high level. Similar to Canvas Dashboard. This can be changed if need be.
+*/
+
 const Home = () =>{
     const router = useRouter();
     return (
     
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.light}}>
-        <Stack.Screen
-        options={{
-            headerStyle: { backgroundColor: COLORS.light},
-            headerShadowVisible: false,
-            headerleft: () => (
-                <SlideMenu iconURL={icons.menu} dimension= "20%" />
-            ),
-            headerTitle: "Hello"
-        }}
-        />
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark}}>
+        <HeaderMenu/>
         <NavBar/>
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{flex: 1}}> 
-            <Text>
-                Hello
-            </Text>
-            </View>
-        </ScrollView>
     </SafeAreaView>
     )
 }
-
 export default Home;

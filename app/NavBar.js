@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { icons } from '../constants'
 import { BottomNavigation, Text } from 'react-native-paper';
+import MainPage from './MainPage'
 
-const MainPageRoute = () => <Text>Home</Text>;
+//see index.js top comment
+//These are the screens of the NavBar
+const MainPageRoute = () => <MainPage/>;
 
 const TeamsRoute = () => <Text>Teams</Text>;
 
