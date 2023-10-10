@@ -1,17 +1,15 @@
 const fetch = require('node-fetch');
 
 
-const getPlayerData = async () => {
-    const data = {
-        playerName: "Lebron James"
-        
-    }
+
+//will pass in 
+const getPlayerData = async (playerJson) => {
     const params = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(playerJson)
         
     }
 
@@ -28,4 +26,4 @@ const getPlayerData = async () => {
 
 }
 
-getPlayerData();
+getPlayerData({playerName: "lebron James"});
