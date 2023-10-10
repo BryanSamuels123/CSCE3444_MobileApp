@@ -20,25 +20,29 @@ const creatConn = () =>{
 
 app.post("/getPlayerData", (req, res) =>{ // in the body include type: stats, or type: quick maybe? 
     const playerJson = req.body; //the name of the player
-    if (!playerJson.playerName) return res.status(400).send(JSON.stringify({error: "No <playerName> field in request"}))
-    const db = creatConn();
 
-    db.all("SELECT * FROM Players where playerName=(?) COLLATE NOCASE", [playerJson.playerName], (err, rawData) =>{
-        if (err) {
+    if (!playerJson.playerName) return res.status(400).send(JSON.stringify({error: "No <playerName> field in request"})) // error handling
+
+    const db = creatConn(); // create connection to database
+
+    db.all("SELECT * FROM Players where playerName=(?) COLLATE NOCASE", [playerJson.playerName], (err, rawData) =>{ // query all of the player data
+        if (err || (!rawData[0])) {
             console.error(err);
             return res.status(404).send(JSON.stringify({error: "Player Not Found"}));
         }
-        console.log(rawData);
-
-
-        db.get("SELECT teamName, teamAbv from Teams where Teams.id =(?)",[rawData[0].currentTeam], (err, teamName) => {
-            rawData[0].teamName = (err) ? "NA" : teamName.teamName;
-            rawData[0].teamAbv = (err) ? "NA" : teamName.teamAbv;
+        else{
             console.log(rawData);
-            res.status(200).send(JSON.stringify(rawData));
-        })
+
+
+            db.get("SELECT teamName, teamAbv from Teams where Teams.id =(?)",[rawData[0].currentTeam], (err, teamName) => { // query the team data for the player
+                rawData[0].teamName = (err) ? "NA" : teamName.teamName;
+                rawData[0].teamAbv = (err) ? "NA" : teamName.teamAbv;
+                console.log(rawData);
+                res.status(200).send(JSON.stringify(rawData)); 
+            })
+        }
         
     });
        
-    db.close();
+    db.close(); // clean up open connection
 });

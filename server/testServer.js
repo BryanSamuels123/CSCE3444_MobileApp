@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 
 
-//will pass in 
+//will pass in player name
 const getPlayerData = async (playerJson) => {
     const params = {
         method: 'POST',
@@ -26,4 +26,4 @@ const getPlayerData = async (playerJson) => {
 
 }
 
-getPlayerData({playerName: "lebron James"});
+getPlayerData({playerName: "Trae Young"});
