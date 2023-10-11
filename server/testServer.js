@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
+// may need to do "npm install node-fetch@2" if not working
 
-
+// shows format of the api calls that the server is expecting
 
 //will pass in player name
 const getPlayerData = async (playerJson) => {
@@ -16,7 +17,7 @@ const getPlayerData = async (playerJson) => {
 
     try{
         const dataStream = await fetch("http://localhost:8000/playerData", params);
-        const retData = await dataStream.text();
+        const retData = await dataStream.json();
 
         console.log(retData);
     }
@@ -46,5 +47,26 @@ const getTeamData = async (teamJson) =>{
     }
 };
 
+const getStats = async (resuestJson) =>{
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(resuestJson)
+        
+    }   
+
+    try{
+        const dataStream = await fetch("http://localhost:8000/getStats", params)
+        const data = await dataStream.json();
+        console.log(data);
+    }
+    catch (err){
+        console.error(err);
+    }
+}
+
 // getPlayerData({playerName: "Trae Young"});
-getTeamData({teamName: "all"});
+// getTeamData({teamName: "Los Angeles Lakers"});
+getStats({playerName: "all"});
