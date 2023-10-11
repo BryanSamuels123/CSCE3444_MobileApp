@@ -69,4 +69,4 @@ const getStats = async (resuestJson) =>{
 
 // getPlayerData({playerName: "Trae Young"});
 // getTeamData({teamName: "Los Angeles Lakers"});
-getStats({playerName: "all"});
+// getStats({playerName: "Stephen Curry"});

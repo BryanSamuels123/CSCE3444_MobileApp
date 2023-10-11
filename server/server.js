@@ -4,12 +4,12 @@ const sqlite3 = require("sqlite3").verbose();
 const dbFile = "../Data-Functions/Players-Teams.db"
 const bodyParser = require('body-parser'); // require the required modules
 
-
 const port = 8000;
+
 const app = express();
 app.use(bodyParser.json());
 app.use(express.json());
-app.listen(port, ()=> console.log(`app is listening on ${port}`));
+app.listen(port, ()=> console.log(`server is listening on ${port}`));
 
 const createConn = () =>{
     const db = new sqlite3.Database(dbFile, (err) =>{
@@ -39,7 +39,6 @@ app.post("/playerData", (req, res) =>{ // in the body include type: stats, or ty
             db.get("SELECT teamName, teamAbv from Teams where Teams.id =(?)",[rawData[0].currentTeam], (err, teamName) => { // query the team data for the player
                 rawData[0].teamName = (err) ? "NA" : teamName.teamName;
                 rawData[0].teamAbv = (err) ? "NA" : teamName.teamAbv;
-                console.log(rawData);
                 return res.status(200).send(JSON.stringify(rawData)); 
             })
         }
@@ -82,53 +81,52 @@ app.post("/teamData", (req, res) =>{ // include a "teamName"
 })
 
 
-app.post("/getStats", (req, res) =>{
+app.post("/getStats", (req, res) =>{ // must include teamName and/or playerName fields in body
     const db = createConn();
 
-    if (req.body.playerName == "all"){
+    if (req.body.playerName == "all"){ // if all in playername select all stats
         db.all("Select * from StatsPerGame2022_2023", (err, data) =>{
             if (err){
                 return res.status(500).send(JSON.stringify({error: err}));
             }
             else if (!data[0]){
-                return res.status(500).send(JSON.stringify({error: "INTERNAL SERVER ERROR;\nNO DATA AVAILABLE"}));
+                return res.status(500).send(JSON.stringify({error: "INTERNAL SERVER ERROR;\nNO DATA AVAILABLE"})); // handle errors
             }
             else{
-                return res.status(200).send(JSON.stringify(data));
+                return res.status(200).send(JSON.stringify(data)); // send final data
             }
         })
     }
-    else if ((req.body.teamName) && (req.body.playerName)){
+    else if ((req.body.teamName) && (req.body.playerName)){ // if both fields exist do a more specific search
     
-        let bad = false;
-        db.get("Select id from teams where teamName=(?) COLLATE NOCASE", [req.body.teamName], (err, team) =>{
+        db.get("Select id from teams where teamName=(?) COLLATE NOCASE", [req.body.teamName], (err, team) =>{ // find the proper team id
             if (err){ 
                 res.status(404).send(JSON.stringify({error: err}))
             }
             else if (!team){ 
-                res.status(404).send(JSON.stringify({error: "Team Not Found"}))
+                res.status(404).send(JSON.stringify({error: "Team Not Found"})) // handle errors
             }
             else {
-                db.get("SELECT id FROM Players where playerName=(?) COLLATE NOCASE", [req.body.playerName], (err, player) =>{ // query all of the player data
+                db.get("SELECT id FROM Players where playerName=(?) COLLATE NOCASE", [req.body.playerName], (err, player) =>{ // find the proper player id
                     if (err) {
                         console.error(err);
                         res.status(404).send(JSON.stringify({"error": err}))
                     }
-                    else if (!player) {
+                    else if (!player) { // handle errors
                         console.error(err);
                         res.status(404).send(JSON.stringify({"error": "Player Not Found"}))
                     }
                     else{
                         
-                        db.all("SELECT * from StatsPerGame2022_2023 where TEAM_ID=(?) and PLAYER_ID=(?);", [team.id, player.id], (err, nData) =>{
+                        db.all("SELECT * from StatsPerGame2022_2023 where TEAM_ID=(?) and PLAYER_ID=(?);", [team.id, player.id], (err, nData) =>{ // pull the stats
                             if (err) {
                                 return res.status(404).send(JSON.stringify({error: err}));
                             }
                             else if (!nData[0]) {
-                                return res.status(404).send(JSON.stringify({error: `Data Not Available For ${req.body.playerName}`}));
+                                return res.status(404).send(JSON.stringify({error: `'${req.body.playerName}' Not Found On Team: '${req.body.teamName}'`})); // handle errors
                             }
                             else {
-                                return res.status(200).send(JSON.stringify(nData))
+                                return res.status(200).send(JSON.stringify(nData)) // send data
                             }
                         });
                     }
@@ -137,22 +135,21 @@ app.post("/getStats", (req, res) =>{
         });
     }
     else if(req.body.teamName){
-        db.get("Select id from teams where teamName=(?) COLLATE NOCASE", [req.body.teamName], (err, data) =>{
+        db.get("Select id from teams where teamName=(?) COLLATE NOCASE", [req.body.teamName], (err, data) =>{ // if only team name in parameters find proper id
             if (err) {
                 return res.status(404).send(JSON.stringify({error: err}))
             }
             else if (!data) {
-                return res.status(404).send(JSON.stringify({error: "Team Not Found"}))
+                return res.status(404).send(JSON.stringify({error: "Team Not Found"})) // handle errors
             }
             else{
-                console.log(data[0]);
-                db.all("SELECT * from StatsPerGame2022_2023 where TEAM_ID=(?)", [data.id], (err, nData) =>{
+                db.all("SELECT * from StatsPerGame2022_2023 where TEAM_ID=(?)", [data.id], (err, nData) =>{ // pull stats
                     if (err){ 
                         return res.status(404).send(JSON.stringify({error: err}))
                     }
                     else if (!nData[0]){ 
                         
-                        return res.status(404).send(JSON.stringify({error: `Data Not Available For ${req.body.teamName}`}))
+                        return res.status(404).send(JSON.stringify({error: `Data Not Available For ${req.body.teamName}`})) // handle errors
                     }
                     else {
                         return res.status(200).send(JSON.stringify(nData));
@@ -168,7 +165,7 @@ app.post("/getStats", (req, res) =>{
                 return res.status(404).send(JSON.stringify({error: err}));
             }
             else if(!rawData[0]){
-                return res.status(404).send(JSON.stringify({error: "Player Not Found"}));
+                return res.status(404).send(JSON.stringify({error: "Player Not Found"})); // handle errors
             }   
             else{    
                 db.get("SELECT * from StatsPerGame2022_2023 where PLAYER_ID=(?)",[rawData[0].id], (err, nData) => { // query the team data for the player
@@ -177,7 +174,7 @@ app.post("/getStats", (req, res) =>{
                     }
                     else {
                         
-                        return res.status(200).send(JSON.stringify(nData));
+                        return res.status(200).send(JSON.stringify(nData)); // send data
                     } 
                 })
             }
@@ -186,8 +183,8 @@ app.post("/getStats", (req, res) =>{
 
     }
     else{
-        return res.status(400).send(JSON.stringify({error: "Request body must include <teamName> or <playerName> field"}));
+        return res.status(400).send(JSON.stringify({error: "Request body must include <teamName> or <playerName> field"})); // if neither field exists give bad syntax error
     }
-    db.close();
+    db.close(); // clean up database connection.
 });
-//handle get stats
+
