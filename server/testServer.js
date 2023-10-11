@@ -15,7 +15,7 @@ const getPlayerData = async (playerJson) => {
 
 
     try{
-        const dataStream = await fetch("http://localhost:8000/getPlayerData", params);
+        const dataStream = await fetch("http://localhost:8000/playerData", params);
         const retData = await dataStream.text();
 
         console.log(retData);
@@ -26,4 +26,25 @@ const getPlayerData = async (playerJson) => {
 
 }
 
-getPlayerData({playerName: "Trae Young"});
+const getTeamData = async (teamJson) =>{
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(teamJson)
+        
+    }   
+
+    try{
+        const dataStream = await fetch("http://localhost:8000/teamData", params)
+        const data = await dataStream.json();
+        console.log(data);
+    }
+    catch (err){
+        console.error(err);
+    }
+};
+
+// getPlayerData({playerName: "Trae Young"});
+getTeamData({teamName: "all"});
