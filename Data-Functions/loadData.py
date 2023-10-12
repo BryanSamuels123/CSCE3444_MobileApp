@@ -274,8 +274,56 @@ def loadExtra():
     cur.close()
     return 0
 
-
-
+#function to save player headshot images
+#file paths have been removed to avoid overwriting
+def loadHeadShots():
+    try: 
+        conn = sqlite3.connect("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/Players-Teams.db")
+        cur = conn.cursor()
+    except:
+        print("Cannot connect to database 'loadPlayerData()' failed") 
+        return -1 # -1 will be the error case
+    
+    fh = open("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/test.html")
+    doc = BeautifulSoup(fh, "html.parser")
+    playerImagesRaw = doc.findAll("img", attrs={"class": "PlayerImage_image__wH_YX PlayerImage_round__bIjPr"})
+    print(playerImagesRaw[0])
+    for img in playerImagesRaw:
+        rawName = img.get("alt").split(" ")
+        name = ""
+        for index in range(len(rawName)): 
+            # print(range(len(rawName)))
+            if (index == len(rawName) -1):
+                break
+            name += rawName[index]
+            name += " "
+        finName = name.strip()
+        
+        idTup  = cur.execute("Select id from Players where playerName=(?)", (finName,)).fetchone()
+        # print(cur.fetchone())
+        if(idTup == None):
+            print("error:", finName)
+            with open("", "a") as meh:
+                finName += "\n"
+                meh.write(finName)
+            continue
+        else:
+            print(idTup[0])
+            print(finName, end=": ")
+            id = idTup[0]
+            print(id)
+            src = img.get("src")
+            respImage = requests.get(src)
+            
+            if respImage.status_code == 200:
+                path = ""
+                path += f"/headShot-{id}.png"
+                with open(path, "wb") as nFile:
+                    nFile.write(respImage.content)
+                # cur.execute("UPDATE Players SET playerHeadshot=(?) WHERE id=(?)", (f"/headShot-{id}.png", id,))
+                # conn.commit()
+    conn.close()
+  
 
 
 
