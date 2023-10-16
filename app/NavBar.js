@@ -2,10 +2,11 @@ import * as React from "react";
 import { icons, COLORS } from "../constants";
 import { BottomNavigation, Text } from "react-native-paper";
 import MainPage from "./MainPage";
+import TeamUI from "./TeamUI";
 
 const MainPageRoute = () => <MainPage />;
 
-const TeamsRoute = () => <Text>Teams</Text>;
+const TeamsRoute = () => <TeamUI/>;
 
 const PlayersRoute = () => <Text>Players</Text>;
 
