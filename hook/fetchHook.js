@@ -1,8 +1,8 @@
-// expo doesn't allow connections to localhost, so using direct sql queries until server is hosted with an ssl cert.
+// function to pull data from database;
 import { useState, useEffect } from "react";
 
 
-const fetchHook = (endpoint, query) =>{
+const fetchHook = (endpoint, query) =>{ // takes in a string(endpoint) and an object(query) as paramaters
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false); // creates setter with default variable
