@@ -3,6 +3,7 @@ import { icons, COLORS } from "../constants";
 import { BottomNavigation, Text } from "react-native-paper";
 import MainPage from "./MainPage";
 import TeamUI from "./TeamUI";
+import LearnPage from "./LearnPage";
 
 const MainPageRoute = () => <MainPage />;
 
@@ -10,7 +11,7 @@ const TeamsRoute = () => <TeamUI/>;
 
 const PlayersRoute = () => <Text>Players</Text>;
 
-const LearnRoute = () => <Text>Learn</Text>;
+const LearnRoute = () => <LearnPage/>;
 
 const NavBar = () => {
   const [index, setIndex] = React.useState(0);

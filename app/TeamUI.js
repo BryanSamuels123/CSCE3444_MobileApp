@@ -6,7 +6,7 @@ import {
     StatusBar,
     TouchableOpacity,
 } from 'react-native';
-import { COLORS, FONTS } from '../constants';
+import { COLORS, FONTS, icons } from '../constants';
 import { Card } from "react-native-paper";
 import * as React from 'react';
 import { Link } from "expo-router";
