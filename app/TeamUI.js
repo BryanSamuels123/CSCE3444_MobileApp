@@ -97,7 +97,16 @@ const TeamCard = ({ item }) => {
                         source={{ uri: item.logo}}
                     />
                     <Card.Cover style={style.BlackBar}/>
-                        <Text style={style.Conferences}>{item.conference}</Text>
+                        <Text style={style.leftData}>
+                            Wins: {item.wins}
+                            {"\n"}
+                            Losses: {item.losses}
+                        </Text>
+                        <Text style={style.RightData}>
+                            Conference: {item.conference}
+                            {"\n"}
+                            Streak: {item.streak}
+                        </Text>
                         <Text style={style.TeamName}>{item.title}</Text>
 
                 </Card>
@@ -139,39 +148,51 @@ const style = StyleSheet.create({
         flexGrow: 3,
     },
     CardContainer:{
-        backgroundColor: COLORS.blue,
+        backgroundColor: COLORS.orange,
         margin: 5,
         height: 180,
         width: 370,
     },
     ImageBackground:{
-        height: 180,
-        width: 370,
+        height: 100,
+        width: 180,
+        left: 90,
         backgroundColor: "transparent",
     },
     BlackBar:{
         position: "absolute",
-        marginTop: 130, 
-        height: 50,
+        marginTop: 100, 
+        height: 80,
         width: 370,
         backgroundColor: COLORS.dark,
     },
-    Conferences: {
+    leftData: {
         position: "absolute",
-        textAlign: "center",
-        fontWeight: "bold",
-        top: 10,
-        left: 150,
+        textAlign: "left",
+        top: 135,
+        left: 10,
         color: COLORS.light,
         BorderStyle: "solid",
         //textDecorationColor: COLORS.dark,
-        fontSize: 28,
+        fontSize: 14,
+    },
+    RightData:{
+        position: "absolute",
+        textAlign: "left",
+        top: 135,
+        left: 250,
+        color: COLORS.light,
+        BorderStyle: "solid",
+        //textDecorationColor: COLORS.dark,
+        fontSize: 14,
+
     },
     TeamName:{
         position: "absolute",
         textAlign: "center",
-        top: 145,
-        left: 115,
+        top: 105,
+        left: 80,
+        fontSize: 20,
         color: COLORS.light,
         font: FONTS.robLight,
         fontWeight: "bold",
