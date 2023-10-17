@@ -16,7 +16,7 @@ const getPlayerData = async (playerJson) => {
 
 
     try{
-        const dataStream = await fetch("http://localhost:8000/playerData", params);
+        const dataStream = await fetch("http://3.145.193.188:8000/playerData", params);
         const retData = await dataStream.json();
 
         console.log(retData);
@@ -65,8 +65,14 @@ const getStats = async (resuestJson) =>{
     catch (err){
         console.error(err);
     }
-}
+};
+// export {getPlayerData}
+// export {
+//     getPlayerData,
+//     getTeamData,
+//     getStats
+// }
 
-// getPlayerData({playerName: "Trae Young"});
+getPlayerData({playerName: "all"});
 // getTeamData({teamName: "Los Angeles Lakers"});
 // getStats({playerName: "Stephen Curry"});

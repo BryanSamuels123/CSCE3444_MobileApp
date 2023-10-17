@@ -1,12 +1,14 @@
-// this will be where the code for the server will be;
+// this similar code to what is on the hosted server
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const dbFile = "../Data-Functions/Players-Teams.db"
 const bodyParser = require('body-parser'); // require the required modules
 
+
 const port = 8000;
 
 const app = express();
+app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json());
 app.listen(port, ()=> console.log(`server is listening on ${port}`));
@@ -20,30 +22,39 @@ const createConn = () =>{
 
 app.post("/playerData", (req, res) =>{ // in the body include type: stats, or type: quick maybe? 
     const playerJson = req.body; //the name of the player
-
+    console.log("Request made")
     if (!playerJson.playerName) {
         return res.status(400).send(JSON.stringify({error: "No <playerName> field in request"}))
     } // error handling
 
     const db = createConn(); // create connection to database
 
-    db.all("SELECT * FROM Players where playerName=(?) COLLATE NOCASE", [playerJson.playerName], (err, rawData) =>{ // query all of the player data
-        if (err || (!rawData[0])) {
-            console.error(err);
-            return res.status(404).send(JSON.stringify({error: "Player Not Found"}));
-        }
-        else{
-            console.log(rawData);
-
-
-            db.get("SELECT teamName, teamAbv from Teams where Teams.id =(?)",[rawData[0].currentTeam], (err, teamName) => { // query the team data for the player
-                rawData[0].teamName = (err) ? "NA" : teamName.teamName;
-                rawData[0].teamAbv = (err) ? "NA" : teamName.teamAbv;
+    if (playerJson.playerName == "all"){
+        db.all("Select  Players.*, Teams.teamName, Teams.teamAbv, StatsPerGame2022_2023.PTS, StatsPerGame2022_2023.AST, StatsPerGame2022_2023.REB, StatsPerGame2022_2023.FG_PERCENT  from   Players  INNER JOIN StatsPerGame2022_2023 On StatsPerGame2022_2023.PLAYER_ID = Players.id INNER JOIN Teams On Players.currentTeam = Teams.id", [], (err, data) =>{
+            if (err || (!data[0])) {
+                console.error(err);
+                return res.status(404).send(JSON.stringify({error: "Player Not Found"}));
+            }
+            else{
+                // console.log(data);
+                return res.status(200).send(JSON.stringify(data)); 
+            }
+        });
+    }
+    else{
+        db.all("Select  Players.*, Teams.teamName, Teams.teamAbv, StatsPerGame2022_2023.PTS, StatsPerGame2022_2023.AST, StatsPerGame2022_2023.REB, StatsPerGame2022_2023.FG_PERCENT  from   Players  INNER JOIN StatsPerGame2022_2023 On StatsPerGame2022_2023.PLAYER_ID = Players.id INNER JOIN Teams On Players.currentTeam = Teams.id Where Players.playerName = (?)", [playerJson.playerName], (err, rawData) =>{ // query all of the player data
+            if (err || (!rawData[0])) {
+                console.error(err);
+                return res.status(404).send(JSON.stringify({error: "Player Not Found"}));
+            }
+            else{
+                console.log(rawData);
                 return res.status(200).send(JSON.stringify(rawData)); 
-            })
-        }
-        
-    });
+            }
+            
+        });
+    }
+    
        
     db.close(); // clean up open connection
 });
