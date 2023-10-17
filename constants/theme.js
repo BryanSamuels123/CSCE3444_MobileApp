@@ -4,7 +4,8 @@ const COLORS = {
     darkSecond: "#121212",
     blue: "#247BA0",
     red: "#E84855",
-    orange: "#E38065"
+    orange: "#E38065",
+    lightBlue: "#0099ff"
 };
 
 const FONTS = { //not all fonts are defined from the package only these ones, you can add them here and require them in _layout.js if needed

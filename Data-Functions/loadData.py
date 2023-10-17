@@ -276,6 +276,7 @@ def loadExtra():
 
 #function to save player headshot images
 #file paths have been removed to avoid overwriting
+# had to make some edits to the logic to use for the server instead
 def loadHeadShots():
     try: 
         conn = sqlite3.connect("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/Players-Teams.db")
@@ -287,7 +288,8 @@ def loadHeadShots():
     fh = open("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/test.html")
     doc = BeautifulSoup(fh, "html.parser")
     playerImagesRaw = doc.findAll("img", attrs={"class": "PlayerImage_image__wH_YX PlayerImage_round__bIjPr"})
-    print(playerImagesRaw[0])
+    # print(playerImagesRaw[0])
+    print("[", end="")
     for img in playerImagesRaw:
         rawName = img.get("alt").split(" ")
         name = ""
@@ -302,29 +304,32 @@ def loadHeadShots():
         idTup  = cur.execute("Select id from Players where playerName=(?)", (finName,)).fetchone()
         # print(cur.fetchone())
         if(idTup == None):
-            print("error:", finName)
-            with open("", "a") as meh:
-                finName += "\n"
-                meh.write(finName)
+            # print("error:", finName)
+            # with open("", "a") as meh:
+            #     finName += "\n"
+            #     meh.write(finName)
             continue
         else:
-            print(idTup[0])
-            print(finName, end=": ")
-            id = idTup[0]
-            print(id)
-            src = img.get("src")
-            respImage = requests.get(src)
+            # print(finName, end=": ")
+            id = "{id:" + str(idTup[0]) + ", "
+            print(id,end="")
+            finName = "name: '" + finName + "', "
+            print(finName)
+            src = "src: '" +img.get("src") + "'}, "
+            print(src, end="")
+            # respImage = requests.get(src)
             
-            if respImage.status_code == 200:
-                path = ""
-                path += f"/headShot-{id}.png"
-                with open(path, "wb") as nFile:
-                    nFile.write(respImage.content)
-                # cur.execute("UPDATE Players SET playerHeadshot=(?) WHERE id=(?)", (f"/headShot-{id}.png", id,))
-                # conn.commit()
+            # if respImage.status_code == 200:
+            #     path = ""
+            #     path += f"/headShot-{id}.png"
+            #     with open(path, "wb") as nFile:
+            #         nFile.write(respImage.content)
+            #     cur.execute("UPDATE Players SET playerHeadshot=(?) WHERE id=(?)", (f"/headShot-{id}.png", id,))
+            #     conn.commit()
     conn.close()
-  
-
+    print("]")
+    
+loadHeadShots()
 
 
 # function will be to load the player database

@@ -8,68 +8,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card } from "react-native-paper";
+import { Players } from "../components"
 import { COLORS, FONTS } from "../constants";
 import { Link } from "expo-router";
 
-//dummy data. Need to populate from database
-const PlayerData = [
-  {
-    name: "Lebron James",
-    number: "6",
-    points: "28.9",
-    min: "35.5",
-    gp: "55",
-    position: "SF",
-    team: "LA Lakers",
-    image:
-      "https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/1966.png&w=350&h=254",
-    teamlogo:
-      "https://1000logos.net/wp-content/uploads/2017/03/los-angeles-lakers-logo.jpg",
-    link: "/TestPage",
-  },
-  {
-    name: "Joel Embiid",
-    number: "21",
-    points: "33.1",
-    min: "34.6",
-    gp: "66",
-    position: "C",
-    team: "PHI 76ers",
-    image:
-      "https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3059318.png&w=350&h=254",
-    teamlogo:
-      "https://1000logos.net/wp-content/uploads/2016/10/Color-Philadelphia-76ers-Logo.jpg",
-    link: "/testpage",
-  },
-  {
-    name: "Luka Doncic",
-    number: "77",
-    points: "32.4",
-    min: "36.2",
-    gp: "66",
-    position: "PG",
-    team: "DAL Mavericks",
-    image:
-      "https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/3945274.png&w=350&h=254",
-    teamlogo:
-      "https://1000logos.net/wp-content/uploads/2018/05/Dallas-Mavericks-Logo-Color.jpg",
-    link: "/testpage",
-  },
-  {
-    name: "Damian Lillard",
-    number: "0",
-    points: "32.2",
-    min: "36.3",
-    gp: "58",
-    position: "PG",
-    team: "MIL Bucks",
-    image:
-      "https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/6606.png&w=350&h=254",
-    teamlogo:
-      "https://1000logos.net/wp-content/uploads/2018/01/milwaukee-bucks-new-logo.jpg",
-    link: "/testpage",
-  },
-];
+
 const TeamData = [
   {
     name: "Milwaukee Bucks",
@@ -144,37 +87,6 @@ const LearnData = [
   },
 ];
 
-const PlayerCard = ({ item }) => {
-  return (
-    <Link href={item.link} asChild>
-      <TouchableOpacity>
-        <Card style={style.CardContainer}>
-          <Card.Cover
-            style={style.LogoLayout}
-            source={{ uri: item.teamlogo }}
-          />
-          <Card.Cover style={style.ImageLayout} source={{ uri: item.image }} />
-          <Card.Cover style={style.PlayerStatsLayout} />
-          <Card.Content>
-            <Text style={style.PlayerNameLayout}>{item.name}</Text>
-            <Text style={style.PlayerTeamLayout}>{item.team}</Text>
-            <Text style={style.StatsTitle}>Stats</Text>
-            <Text style={style.StatsList}>
-              Pts: {item.points}
-              {"\n"}
-              Min: {item.min}
-              {"\n"}
-              GP: {item.gp}
-              {"\n"}
-              POS: {item.position}
-              {"\n"}
-            </Text>
-          </Card.Content>
-        </Card>
-      </TouchableOpacity>
-    </Link>
-  );
-};
 const TeamCard = ({ item }) => {
   return (
     <Link href={item.link} asChild>
@@ -226,7 +138,8 @@ const LearnCard = ({ item }) => {
   );
 };
 const MainPage = () => {
-  return (
+  return ( 
+    // will be turned into <Teams/>
     <SafeAreaView style={style.ListItems}>
       <ScrollView>
         <Text style={style.ListHeaders}>{"\t"}Teams</Text>
@@ -237,16 +150,10 @@ const MainPage = () => {
           keyExtractor={(item, index) => item.name + index.toString()}
           renderItem={({ item }) => <TeamCard item={item} />}
         />
+        
+        <Players/>
 
-        <Text style={style.ListHeaders}>{"\t"}Players</Text>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={PlayerData}
-          keyExtractor={(item, index) => item.name + index.toString()}
-          renderItem={({ item }) => <PlayerCard item={item} />}
-        />
-
+        {/* will be turned into <Learn/> */}
         <Text style={style.ListHeaders}>{"\t"}Learn</Text>
         <FlatList
           horizontal={true}
