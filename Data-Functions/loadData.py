@@ -327,9 +327,25 @@ def loadHeadShots():
             #     cur.execute("UPDATE Players SET playerHeadshot=(?) WHERE id=(?)", (f"/headShot-{id}.png", id,))
             #     conn.commit()
     conn.close()
+    fh.close
     print("]")
-    
-loadHeadShots()
 
+def getTeamLogo():
+    fh = open("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/test1.html")
+    doc = BeautifulSoup(fh, "html.parser")
+    logos = doc.findAll("img", attrs={"class": "TeamLogo_logo__PclAJ"})
+    nLogos = list()
+    print("[", end="")
+    for logo in logos:
+        name = logo.get("alt").split(" ")
+        src = logo.get("src")
+        name = name[0] +" "+ name[1]
+        if {"teamName": name, "src": src} not in nLogos:
+            nLogos.append({"teamName": name, "src": src})
+    print(nLogos)
+        
+    # for logo in logos:
+    #     name 
+getTeamLogo()
 
 # function will be to load the player database
