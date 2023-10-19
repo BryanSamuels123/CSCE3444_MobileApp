@@ -39,4 +39,5 @@ export default {
     playerSearch,
     learnIcon,
     settingsGear,
+    learningTile
 }
