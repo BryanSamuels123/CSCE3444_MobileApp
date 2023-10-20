@@ -6,10 +6,14 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  View,
+  ImageBackground,
+  Image,
+  Pressable
 } from "react-native";
 import { Card } from "react-native-paper";
-import { Players } from "../components"
-import { COLORS, FONTS } from "../constants";
+import { Players } from "../components";
+import { COLORS, FONTS, icons, images, SHADOWS } from "../constants";
 import { Link } from "expo-router";
 
 
@@ -137,37 +141,91 @@ const LearnCard = ({ item }) => {
     </Link>
   );
 };
-const MainPage = () => {
-  return ( 
-    // will be turned into <Teams/>
-    <SafeAreaView style={style.ListItems}>
-      <ScrollView>
-        <Text style={style.ListHeaders}>{"\t"}Teams</Text>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={TeamData}
-          keyExtractor={(item, index) => item.name + index.toString()}
-          renderItem={({ item }) => <TeamCard item={item} />}
-        />
-        
-        <Players/>
 
-        {/* will be turned into <Learn/> */}
-        <Text style={style.ListHeaders}>{"\t"}Learn</Text>
-        <FlatList
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          data={LearnData}
-          keyExtractor={(item, index) => item.name + index.toString()}
-          renderItem={({ item }) => <LearnCard item={item} />}
-        />
-      </ScrollView>
-    </SafeAreaView>
-  );
+const MainPage = () =>{ // main page will be split into thirds three views
+  return(
+  
+    <View style={{flex: 1}}>
+      <ImageBackground source={images.mainBackground} resizeMode="cover" style={{ flex: 1, width: '100%', height: "100%"}}>
+        
+        {/* shadow problem here */}
+        <View style={{flex: 1.2, flexDirection: "row"}}>
+          <View style={{flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+            <Text style={{fontFamily: FONTS.regular, textAlign: "center", textAlignVertical: "center"}}>Hello Partner!{"\n"}How are we learning today?</Text>
+          </View>
+          <View style={{flex: 1,  justifyContent: "center"}}>
+            <Pressable  style={{marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170, alignItems: "center", justifyContent: "center", 
+                shadowColor: SHADOWS.medium.shadowColor,
+                shadowOffset: SHADOWS.medium.shadowOffset,
+                shadowRadius: SHADOWS.medium.shadowRadius,
+                shadowOpacity: SHADOWS.medium.shadowOpacity,}}>
+              <Image source={(icons.learningTile)} style={{
+                width: 170,
+                height: 170,
+                resizeMode: 'center',
+                borderRadius: 10
+              }}/>
+            </Pressable>
+        </View>
+          
+        </View>
+
+        <View style={{flex: 1}}>
+
+        </View>
+
+        <View style={{flex: 1}}>
+          
+        </View>
+      </ImageBackground>
+    </View>
+  )
 };
 
+// const MainPage = () => {
+//   return ( 
+//     // will be turned into <Teams/>
+//     <SafeAreaView style={style.ListItems}>
+//       <ScrollView>
+//         <Text style={style.ListHeaders}>{"\t"}Teams</Text>
+//         <FlatList
+//           horizontal={true}
+//           showsHorizontalScrollIndicator={false}
+//           data={TeamData}
+//           keyExtractor={(item, index) => item.name + index.toString()}
+//           renderItem={({ item }) => <TeamCard item={item} />}
+//         />
+        
+//         <Players/>
+
+//         {/* will be turned into <Learn/> */}
+//         <Text style={style.ListHeaders}>{"\t"}Learn</Text>
+//         <FlatList
+//           horizontal={true}
+//           showsHorizontalScrollIndicator={false}
+//           data={LearnData}
+//           keyExtractor={(item, index) => item.name + index.toString()}
+//           renderItem={({ item }) => <LearnCard item={item} />}
+//         />
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
+
 export default MainPage;
+
+const newStyle = StyleSheet.create({
+  homeContainer: {
+    flex: 1
+  },
+  childContainer: {
+    flex: 1
+  }
+
+
+
+
+})
 
 const style = StyleSheet.create({
   ListHeaders: {

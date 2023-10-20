@@ -5,26 +5,26 @@ import MainPage from "./MainPage";
 
 const MainPageRoute = () => <MainPage />;
 
-const TeamsRoute = () => <Text>Teams</Text>;
+// const TeamsRoute = () => <Text>Teams</Text>;
 
-const PlayersRoute = () => <Text>Players</Text>;
+// const PlayersRoute = () => <Text>Players</Text>;
 
-const LearnRoute = () => <Text>Learn</Text>;
+// const LearnRoute = () => <Text>Learn</Text>;
 
 const NavBar = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "MainPage", title: "Home", focusedIcon: icons.MainPageIcon },
-    { key: "Teams", title: "Teams", focusedIcon: icons.teamsIcon },
-    { key: "Players", title: "Players", focusedIcon: icons.playersIcon },
-    { key: "Learn", title: "Learn", focusedIcon: icons.learnIcon },
+    // { key: "Teams", title: "Teams", focusedIcon: icons.teamsIcon },
+    // { key: "Players", title: "Players", focusedIcon: icons.playersIcon },
+    // { key: "Learn", title: "Learn", focusedIcon: icons.learnIcon },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     MainPage: MainPageRoute,
-    Teams: TeamsRoute,
-    Players: PlayersRoute,
-    Learn: LearnRoute,
+    // Teams: TeamsRoute,
+    // Players: PlayersRoute,
+    // Learn: LearnRoute,
   });
 
   return (

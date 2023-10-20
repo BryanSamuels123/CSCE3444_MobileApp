@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useRouter } from "expo-router";
-import { NavigationContainer } from "@react-navigation/native";
+import {View, SafeAreaView, Text} from "react-native";
+import { Stack, useRouter } from "expo-router";     
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import NavBar from "./NavBar";
-import { COLORS } from "../constants";
+import MainPage from "./MainPage";
+import { COLORS, icons, images, DIMS } from "../constants";
 
 /*This is the high level "Page"
 The four pages of MainPage, TeamsPage, PlayersPage, and LearnPage reside here.
@@ -15,19 +16,35 @@ const Drawer = createDrawerNavigator();
 const Home = () => {
   const router = useRouter();
 
-  return (
-    <NavigationContainer independent={true} style={{ flex: 1 }}>
-      <Drawer.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: { backgroundColor: COLORS.darkSecond },
-          headerTintColor: COLORS.light,
-          headerTitle: "",
+  return(
+    <View style={{flex: 1}}>
+      <Stack.Screen // will be the nav bar
+
+        options={{
+          headerStyle: {backgroundColor: COLORS.lightWhite},
+          headerShadowVisible: false,
+
+          headerTitle: "title"
         }}
-      >
-        <Drawer.Screen name="Home" component={NavBar} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
+        />
+      <MainPage/>
+    </View>)
+  
+  
+
+  // return (
+  //   <NavigationContainer independent={true} style={{ flex: 1 }}>
+  //     <Drawer.Navigator
+  //       initialRouteName="Home"
+  //       screenOptions={{
+  //         headerStyle: { backgroundColor: COLORS.darkSecond },
+  //         headerTintColor: COLORS.light,
+  //         headerTitle: "",
+  //       }}
+  //     >
+  //       <Drawer.Screen name="Home" component={NavBar} />
+  //     </Drawer.Navigator>
+  //   </NavigationContainer>
+  // );
 };
 export default Home;
