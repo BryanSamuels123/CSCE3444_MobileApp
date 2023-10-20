@@ -38,7 +38,7 @@ const getTeamData = async (teamJson) =>{
     }   
 
     try{
-        const dataStream = await fetch("http://localhost:8000/teamData", params)
+        const dataStream = await fetch("http://3.145.193.188:8000/teamData", params)
         const data = await dataStream.json();
         console.log(data);
     }
@@ -58,7 +58,27 @@ const getStats = async (resuestJson) =>{
     }   
 
     try{
-        const dataStream = await fetch("http://localhost:8000/getStats", params)
+        const dataStream = await fetch("http://3.145.193.188:8000/getStats", params)
+        const data = await dataStream.json();
+        console.log(data);
+    }
+    catch (err){
+        console.error(err);
+    }
+};
+
+const getTeamPlayers = async (resuestJson) =>{
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(resuestJson)
+        
+    }   
+
+    try{
+        const dataStream = await fetch("http://3.145.193.188:8000/getTeam-Players", params)
         const data = await dataStream.json();
         console.log(data);
     }
@@ -73,6 +93,7 @@ const getStats = async (resuestJson) =>{
 //     getStats
 // }
 
-getPlayerData({playerName: "all"});
+// getPlayerData({playerName: "all"});
+getTeamPlayers({teamID: 44})
 // getTeamData({teamName: "Los Angeles Lakers"});
 // getStats({playerName: "Stephen Curry"});
