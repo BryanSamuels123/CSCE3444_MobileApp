@@ -4,8 +4,14 @@ import { COLORS } from "../constants";
 import Video from "react-native-video";
 import { StatusBar } from "expo-status-bar";
 import { Players } from "../components";
+import fetchHook from "../hook/fetchHook"; // import the fetchHook() function
 
-const TestPage = () => {
+// need to send the parameter in from whatever will call this 
+const TestPage = (teamID) => {
+
+  // to pull the data use the fetchHook() function
+  const playerTeamData = fetchHook("getTeam-Players", {teamID});
+  console.log(playerTeamData);
 
   const teams = [
     {id: 6, title: "Milwaukee Bucks", 
