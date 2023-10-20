@@ -11,6 +11,7 @@ import { Card } from "react-native-paper";
 import { Players } from "../components"
 import { COLORS, FONTS } from "../constants";
 import { Link } from "expo-router";
+import NewsWidget from "./NewsWidget";
 
 
 const TeamData = [
@@ -142,6 +143,7 @@ const MainPage = () => {
     // will be turned into <Teams/>
     <SafeAreaView style={style.ListItems}>
       <ScrollView>
+        <NewsWidget/>
         <Text style={style.ListHeaders}>{"\t"}Teams</Text>
         <FlatList
           horizontal={true}
