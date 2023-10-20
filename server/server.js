@@ -91,6 +91,35 @@ app.post("/teamData", (req, res) =>{ // include a "teamName"
     db.close();
 })
 
+// gets all of the players for a team given the teamID as a parameter.
+app.post("/getTeam-Players", (req, res) => {
+    if (!req.body.teamID) return res.status(400).send(JSON.stringify({error: "MISSING FIELD <teamID>"}));
+    
+    const db = createConn();
+    if (db === -1) return res.status(500).send(JSON.stringify({error: "ERROR CREATING DATABASE CONNECTION"}));
+
+    
+
+    db.all("Select Players.*, Teams.*,  Players.id as playerID, Teams.id as teamID from Players inner Join Teams  on Teams.id = Players.currentTeam where Teams.id=(?)", [req.body.teamID], (err, data) =>{
+        if (err){
+            console.error(err);
+            return res.status(500).send(JSON.stringify({error: "SQL QUERY ERROR"}));
+        }
+        else if (data.length() === 0){
+            return res.status(404).send(JSON.stringify({error: `NO PLAYERS FOUND FOR teamID: ${req.body.teamID}`}))
+        }
+        else{
+            data.map((item) =>{
+                delete item.id;
+                delete item.currentTeam;
+            })
+        console.log(data);
+        return res.status(200).send(JSON.stringify(data));
+        }
+        
+    })
+});
+
 
 app.post("/getStats", (req, res) =>{ // must include teamName and/or playerName fields in body
     const db = createConn();
