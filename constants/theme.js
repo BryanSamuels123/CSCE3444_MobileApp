@@ -61,12 +61,12 @@ const SHADOWS = {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 6,
+            height: 12,
         },
-        shadowOpacity: 0.39,
-        shadowRadius: 8.30,
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
 
-        elevation: 9
+        elevation: 24,
     }
 };
 
