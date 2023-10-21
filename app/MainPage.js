@@ -14,7 +14,7 @@ import {
 import { Card } from "react-native-paper";
 import { Players } from "../components";
 import { COLORS, FONTS, icons, images, SHADOWS } from "../constants";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 
 const TeamData = [
@@ -212,6 +212,8 @@ const indices = {0: "Formal", 1: "Puns_Stats", 2: "Puns_Learning"};
 
 const MainPage = () =>{ // main page will be split into thirds three views
 
+  const router = useRouter();
+
   const genGreet = () =>{
     let randInt = Math.floor(Math.random() * 3);
     let randTemp = Math.floor(Math.random() * greetings[indices[randInt]].length);
@@ -292,7 +294,10 @@ const MainPage = () =>{ // main page will be split into thirds three views
           </View>
 
             <View style={{flex: 1,  justifyContent: "center", alignItems: "center"}}>
-              <Pressable  style={({pressed}) =>[
+
+                    {/* YOU STOPPED HERE STOP  */}
+
+              <Pressable  onPress={() => router.push(`/player-page/AllPlayers.js`)} style={({pressed}) =>[
                 { borderRadius: 10, width: 170, height: 230, alignItems: "center", justifyContent: "center", marginBottom: 40},
                 pressed && SHADOWS.large
               ]}>
