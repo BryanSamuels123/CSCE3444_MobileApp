@@ -9,7 +9,7 @@ import {COLORS, SIZES} from "../../../constants";
 const Players = () =>{
     const router = useRouter();
     const {data, isLoading, error} = fetchHook("playerData", {playerName: "all"});
-    // console.log(data);
+    console.log(data[0]);
 
     // console.log(error)
     // const handleCardPress = () =>{ // handles navigation
@@ -19,26 +19,21 @@ const Players = () =>{
     return(
 
 
-        <View>
-            <View>
-                <Text style={style.ListHeaders}>{"\t"}Players</Text>
-            </View>
-            <View>
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 { isLoading ? (
                     <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
                 ) : error ? (
                     <Text style={style.list}>Something Went Wrong</Text> // style text
                 ): (
                     <FlatList
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
+                        vertical
+                        showsVerticalScrollIndicator={false}
                         data={data}
                         keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
                         renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
                     />
                     )
                 }
-            </View>
         </View>
     )
     

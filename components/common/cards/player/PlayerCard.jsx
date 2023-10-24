@@ -1,7 +1,8 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { StyleSheet, TouchableOpacity, Image, Pressable, View, Text, ImageBackground } from "react-native";
+import { Card } from "react-native-paper";
 import { COLORS } from "../../../../constants";
+import {useRouter} from "expo-router";
 import { Link } from "expo-router";
 import fetchHook from "../../../../hook/fetchHook";
 
@@ -25,34 +26,60 @@ const PlayerCard = ({item}, handleNavigate) => {
 
     return(
       // [playerFile, setPlayerFile] = useState();
-    
+
+      // <Pressable>
+      //   {({presssed}) =>{
+      //     return(
+      //       // <View style={{flex: 1}}> needs closing view
+      //         <ImageBackground style={{flex: 1, backgroundColor: COLORS.backGround_purple, width: "90%", height: "100%"}}>
+
+      //           <
+      //             <Image source={image} style={{flex: 2, width: "10%", height: "10%"}}/>
+
+      //           <View style={{flex: 3}}>
+      //             <Text style={{textAlign: "center", textAlignVertical: "center"}}>
+      //               Hello World
+      //             </Text>
+      //           </View>
+      //         </ImageBackground>
+           
+      //     )
+      //   }}
+      // </Pressable>
+      
       // <Link href="/testpage" asChild>
-        <TouchableOpacity onPress={(handleNavigate)}>
-          <Card style={style.cardContainer}>
-            <Card.Cover
-              style={style.imageLayout}
-              source={image}
-            />
-            <Card.Cover style={style.statsLayout} />
-            <Card.Content>
-              <Text style={style.nameLayout}>{item.playerName}</Text>
-              <Text style={style.teamLayout}>{item.teamAbv}</Text>
-              <Text style={style.statsTitle}>Stats</Text>
-              <Text style={style.statsList}>
-                PPG: {item.PTS}
-                AST: {item.AST}
-                REB: {item.REB}
-                FG%: {item.FG_PERCENT}
-              </Text>
-            </Card.Content>
+        <Pressable onPress={(handleNavigate)}>
+        {({pressed}) => {
+          return(
+            <Card style={style.cardContainer}>
+              <Card.Cover
+                style={style.imageLayout}
+                source={image}
+              />
+              <Card.Cover style={style.statsLayout} />
+              <Card.Content>
+                <Text style={style.nameLayout}>{item.playerName}</Text>
+                <Text style={style.teamLayout}>{item.teamAbv}</Text>
+                <Text style={style.statsTitle}>Stats</Text>
+                <Text style={style.statsList}>
+                  PPG: {item.PTS}
+                  AST: {item.AST}
+                  REB: {item.REB}
+                  FG%: {item.FG_PERCENT}
+                </Text>
+              </Card.Content>
           </Card>
-        </TouchableOpacity>
+          );
+        }}
+        </Pressable>
       // </Link>
     )
   }
   else{
     return(
-    <TouchableOpacity onPress={(handleNavigate)}>
+    <Pressable onPress={(handleNavigate)}>
+      {({pressed}) =>{
+        return(
           <Card style={style.cardContainer}>
             <Card.Cover
               style={style.imageLayout}
@@ -71,7 +98,9 @@ const PlayerCard = ({item}, handleNavigate) => {
               </Text>
             </Card.Content>
           </Card>
-        </TouchableOpacity>
+        );
+      }}
+    </Pressable>
     )
   }
   
