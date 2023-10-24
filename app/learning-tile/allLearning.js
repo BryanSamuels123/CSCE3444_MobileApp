@@ -1,4 +1,4 @@
-// will act as the page that contains the players with searching/filtering options
+// will contain the learning navigation
 
 import * as react from "react";
 import {View, Text, FlatList, Image, ImageBackground, Pressable} from "react-native";

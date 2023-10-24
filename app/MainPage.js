@@ -1,3 +1,5 @@
+// will clean up components, and put into own files in last sprint
+
 import * as React from "react";
 import {
   FlatList,
@@ -229,31 +231,22 @@ const MainPage = () =>{ // main page will be split into thirds three views
         
         {/* shadow problem here */}
         <View style={{flex: 1, flexDirection: "row"}}>
-          <View style={{flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center"}}>
-            <Text style={{color: "#FFFFFF", marginTop: 40, padding: 5, fontFamily: FONTS.medium, fontSize: 20, textAlign: "center", textAlignVertical: "center"}}>{genGreet()}</Text>
+          <View style={newStyle.textContainer_Center}>
+            <Text style={newStyle.greetingText}>{genGreet()}</Text>
           </View>
 
           {/* Learning Tile */}
           <View style={{flex: 1,  justifyContent: "center"}}>
 
-            <Pressable  style={({pressed}) =>[ // must use array of styles for conditional styling
-              {marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170, alignItems: "center", justifyContent: "center", 
-              shadowColor: SHADOWS.medium.shadowColor,
-              shadowOffset: SHADOWS.medium.shadowOffset,
-              shadowRadius: SHADOWS.medium.shadowRadius,
-              shadowOpacity: SHADOWS.medium.shadowOpacity}, 
-
+            <Pressable onPress={() => router.push("/learning-tile/allLearning")} style={({pressed}) =>[ // must use array of styles for conditional styling
+              newStyle.learningTileContainer, 
               pressed && SHADOWS.large
             ]}>
               {({ pressed }) =>{
                 return(
                   // an array of styles is used here
                   <Image source={(icons.learningTile)} style={[
-                    {width: 170,
-                    height: 170,
-                    resizeMode: 'center',
-                    borderRadius: 10},
-
+                    newStyle.learningTileImg,
                     pressed && {opacity: .80}
                   ]}/>
                 );
@@ -264,26 +257,25 @@ const MainPage = () =>{ // main page will be split into thirds three views
           
         </View>
 
+
         {/* news feed will go here */}
         <View style={{flex: 0.7}}>
 
         </View>
 
+
         {/* houses the players and teams icons */}
         <View style={{flex: 1, flexDirection: "row"}} >
 
           <View style={{flex: 1,  justifyContent: "center", alignItems: "center"}}>
-                  <Pressable  style={({pressed}) =>[
-                    { borderRadius: 10, width: 170, height: 230, alignItems: "center", justifyContent: "center", marginBottom: 40},
+                  <Pressable onPress={() => router.push("/team-page/AllTeams")} style={({pressed}) =>[
+                    newStyle.cardIconContainer,
                     pressed && SHADOWS.large
                   ]}>
                     {({ pressed }) =>{
                       return(
                         <Image source={(icons.teamsIcon)} style={[
-                          {width: 170,
-                          height: 230,
-                          resizeMode: 'center',
-                          borderRadius: 10},
+                          newStyle.cardIcon,
                           pressed && {opacity: .70}
                         ]}/>
                       );
@@ -294,28 +286,18 @@ const MainPage = () =>{ // main page will be split into thirds three views
           </View>
 
             <View style={{flex: 1,  justifyContent: "center", alignItems: "center"}}>
-
-                    {/* YOU STOPPED HERE STOP  */}
-
-              <Pressable  onPress={() => router.push(`/player-page/AllPlayers.js`)} style={({pressed}) =>[
-                { borderRadius: 10, width: 170, height: 230, alignItems: "center", justifyContent: "center", marginBottom: 40},
+              <Pressable  onPress={() => router.push(`/player-page/AllPlayers`)} style={({pressed}) =>[
+                newStyle.cardIconContainer,
                 pressed && SHADOWS.large
               ]}>
                 {({pressed}) =>{
                   return(
                     <Image source={(icons.playerCardIcon)} style={[
-                     { width: 170,
-                      height: 230,
-                      resizeMode: 'center',
-                      borderRadius: 10 },
-
+                      newStyle.cardIcon,
                       pressed && {opacity: 0.7}
-                      
                     ]}/>
                   );
                 }}
-                
-
               </Pressable>
             </View>
           
@@ -365,7 +347,42 @@ const newStyle = StyleSheet.create({
   },
   childContainer: {
     flex: 1
-  }
+  },
+
+  greetingText: {
+    color: "#FFFFFF", marginTop: 40, padding: 5, fontFamily: FONTS.medium, fontSize: 20, 
+    textAlign: "center", textAlignVertical: "center"
+  },
+  textContainer_Center:{
+    flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center"
+  },
+
+  learningTileContainer: {
+  marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170, 
+  alignItems: "center", justifyContent: "center", 
+  shadowColor: SHADOWS.medium.shadowColor,
+  shadowOffset: SHADOWS.medium.shadowOffset,
+  shadowRadius: SHADOWS.medium.shadowRadius,
+  shadowOpacity: SHADOWS.medium.shadowOpacity},
+
+  learningTileImg: {
+    width: 170,
+    height: 170,
+    resizeMode: 'center',
+    borderRadius: 10
+  },
+
+  cardIconContainer: {
+    borderRadius: 10, width: 170, height: 230, alignItems: "center", 
+    justifyContent: "center", marginBottom: 40
+  },
+
+  cardIcon: {
+    width: 170,
+    height: 230,
+    resizeMode: 'center',
+    borderRadius: 10
+  },
 
 
 
