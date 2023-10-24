@@ -16,6 +16,7 @@ import {
 import { Card } from "react-native-paper";
 import { Players } from "../components";
 import { COLORS, FONTS, icons, images, SHADOWS } from "../constants";
+import { BackImg } from "../components";
 import { Link, useRouter } from "expo-router";
 
 
@@ -226,9 +227,7 @@ const MainPage = () =>{ // main page will be split into thirds three views
 
   return(
   
-    <View style={{flex: 1}}>
-      <ImageBackground source={images.mainBackground} resizeMode="cover" style={{ flex: 1, width: '100%', height: "100%"}}>
-        
+    <BackImg>  
         {/* shadow problem here */}
         <View style={{flex: 1, flexDirection: "row"}}>
           <View style={newStyle.textContainer_Center}>
@@ -302,10 +301,7 @@ const MainPage = () =>{ // main page will be split into thirds three views
             </View>
           
         </View>
-
-
-      </ImageBackground>
-    </View>
+    </BackImg>
   )
 };
 
