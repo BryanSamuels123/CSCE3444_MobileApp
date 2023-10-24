@@ -260,7 +260,7 @@ const MainPage = () =>{ // main page will be split into thirds three views
 
         {/* news feed will go here */}
         <View style={{flex: 0.7}}>
-
+              <NewsWidget/>
         </View>
 
 
