@@ -18,6 +18,10 @@ import playerSearch from "../assets/icons/person_search_FILL0_wght400_GRAD0_opsz
 import learnIcon from "../assets/icons/school_FILL0_wght400_GRAD0_opsz24.png"
 import settingsGear from "../assets/icons/settings_FILL0_wght400_GRAD0_opsz24.png"
 import learningTile from "../assets/icons/learningTile-U.png"
+import favIcon_U from "../assets/icons/favIcon-U.png"
+import favIcon_F from "../assets/icons/favIcon-F.png"
+import statsCompIcon from "../assets/icons/statsCompIcon.png"
+
 
 
 export default {
@@ -39,5 +43,8 @@ export default {
     playerSearch,
     learnIcon,
     settingsGear,
-    learningTile
+    learningTile,
+    favIcon_U,
+    favIcon_F,
+    statsCompIcon
 }
