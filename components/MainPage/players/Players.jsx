@@ -9,7 +9,7 @@ import {COLORS, SIZES} from "../../../constants";
 const Players = () =>{
     const router = useRouter();
     const {data, isLoading, error} = fetchHook("playerData", {playerName: "all"});
-    console.log(data[0]);
+    // console.log(data[0]);
 
     // console.log(error)
     // const handleCardPress = () =>{ // handles navigation

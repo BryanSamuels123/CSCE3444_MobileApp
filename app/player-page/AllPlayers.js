@@ -21,14 +21,14 @@ const playersPage = () =>{
             </View>
 
             {/* Card Stack UI */}
-            <View style={{flex: 3, backgroundColor: COLORS.gold}}>
+            <View style={{flex: 3.2}}>
                 <Players/>
             </View>
 
 
 
             {/* Fav and compare icon */}
-            <View style={{flex: 1.2, flexDirection: "row"}}> 
+            <View style={{flex: 1, flexDirection: "row"}}> 
 
 
                 {/* Compare Icon */}
