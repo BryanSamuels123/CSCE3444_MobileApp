@@ -29,6 +29,12 @@ const NewsCard = ({ item }) => {
     );
 };
 
+function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    return `${year}-${month}`;
+}
 const NewsWidget = () => {
 
     const [isLoading, setLoading] = useState(true);
@@ -36,7 +42,7 @@ const NewsWidget = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("https://newsapi.org/v2/everything?q=NBA&pageSize=10&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description")
+        axios.get(`https://newsapi.org/v2/everything?q=NBA&pageSize=10&from=${getDate}&sortBy=popularity&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description`)
             .then(({ data }) => {
                 //console.log("defaultApp -> data", data.articles)
                 setData(data.articles)
