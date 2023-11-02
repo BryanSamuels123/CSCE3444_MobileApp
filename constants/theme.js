@@ -7,9 +7,9 @@ const COLORS = {
     orange: "#E28065",
     lightBlue: "#0099ff",
     lightGray: "#D9D9D9",
-    backGround_purple: "4D5AB0",
-    gold: "FDCD51",
-    white: "FFFFFF"
+    backGround_purple: "#4D5AB0",
+    gold: "#FDCD51",
+    white: "#FFFFFF"
 };
 
 const FONTS = { //not all fonts are defined from the package only these ones, you can add them here and require them in _layout.js if needed
@@ -50,12 +50,23 @@ const SHADOWS = {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 4,
+            height: 6,
         },
-        shadowOpacity: 0.32,
-        shadowRadius: 5.46,
+        shadowOpacity: 0.39,
+        shadowRadius: 8.30,
 
         elevation: 9
+    },
+    large: {
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+
+        elevation: 24,
     }
 };
 

@@ -21,7 +21,6 @@ const fetchHook = (endpoint, query) =>{ // takes in a string(endpoint) and an ob
         setIsLoading(true);
 
         try{
-            console.log(params);
             const resp = await fetch(`http://3.145.193.188:8000/${endpoint}`, params);
             const data =  await resp.json();
             // console.log(data)
