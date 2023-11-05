@@ -62,8 +62,10 @@ import pacersBackground from "../assets/images/teamBackgrounds/background-71.png
 import mavsBackground from "../assets/images/teamBackgrounds/background-76.png"
 import warriorsBackground from "../assets/images/teamBackgrounds/background-121.png"
 import defBackground from "../assets/images/teamBackgrounds/defaultBack.png"
+import defaultPlayerPic from "../assets/images/playerHeadShots/defaultPlayer.jpeg"
 
 export default {
+    defaultPlayerPic,
     mainBackground,
     raptorsBackground,
     grizzliesBackground,

@@ -28,17 +28,17 @@ const playersPage = () =>{
 
 
             {/* Fav and compare icon */}
-            <View style={{flex: 1, flexDirection: "row"}}> 
+            <View style={{flex: .8, flexDirection: "row"}}> 
 
 
                 {/* Compare Icon */}
                 <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}> 
-                    <Pressable style={({pressed}) => [{paddingRight: 15, width: 100, height: 100, alignItems: "center", borderRadius: 10}, 
+                    <Pressable style={({pressed}) => [{paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10}, 
                         pressed && SHADOWS.large   
                     ]}>
                     {({pressed}) =>{
                         return(
-                            <Image source={(icons.statsCompIcon)}  style={[{width: 100, height: 100, resizeMode: "center", borderRadius: 10},
+                            <Image source={(icons.statsCompIcon)}  style={[{width: 80, height: 80, resizeMode: "center", borderRadius: 10},
                                 pressed && {opacity: 0.70}
                             ]}/>
                         );
@@ -48,15 +48,15 @@ const playersPage = () =>{
 
                 {/* favorite icon */}
                 <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}> 
-                    <Pressable style={({pressed}) => [{paddingLeft: 15, width: 100, height: 100, alignItems: "center", borderRadius: 10}, 
+                    <Pressable style={({pressed}) => [{paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10}, 
                         pressed && SHADOWS.large
                     ]}>
                         {({pressed}) =>{
                             return(
                                 // will do an animation on pressed later
                                 <Image source={(icons.favIcon_U)} style={[
-                                    {width: 100, height: 100, resizeMode: "center", borderRadius: 10},
-                                    pressed && {opacity: 0.70}
+                                    {width: 80, height: 80, resizeMode: "contain", borderRadius: 9},
+                                    pressed && {opacity: 0.70},
                                 ]}/>
                             );
                         }}
