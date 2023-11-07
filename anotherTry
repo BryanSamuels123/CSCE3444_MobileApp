@@ -1,0 +1,129 @@
+import {useEffect, useState} from "react";
+import {StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput} from "react-native";
+import PlayerCard from "../../common/cards/player/PlayerCard";
+import { useRouter } from "expo-router";
+import fetchHook from "../../../hook/fetchHook";
+import {COLORS, SIZES, FONTS, SHADOWS} from "../../../constants";
+
+
+const Players = ({  }) => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [phText, setphText] = useState("Search");
+    const [family, setFamily] = useState(FONTS.thin);
+    const [playerData, setPlayerData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const router = useRouter();
+  
+    // useEffect(() => {
+    const result = (fetchHook("playerData", { playerName: "all" }));
+    
+
+    useEffect(() =>{
+        
+        setError(result.error);
+
+        setPlayerData(result.data);
+    
+
+        setIsLoading(false)
+    }, [])
+
+    // }, []);
+
+    const fetchData = () => {
+      
+    };
+  
+    const handleSearchQuery = (query) => {
+      setSearchQuery(query);
+    }
+  
+    const searchList = () => {
+      const newData = playerData.filter((player) =>
+        player.playerName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    //   setPlayerData(newData);
+    }
+  
+
+    
+    return(
+        
+        <View style={{flex: 1}}>
+            <View style={{flex: .6, justifyContent:"center", flexDirection: "row"}}>
+
+                {/* filter icon */}
+                <View backgroundColor={COLORS.dark} style={{flex: 2.2}}>
+                    {/* <Image/> */}
+                </View>
+
+                <View style={{flex: 7.8, marginHorizontal: 10, justifyContent: "flex-end", flexDirection: "column"}}>
+                    <TextInput
+                        placeholder={phText}
+                        clearButtonMode="always"
+                        autoCapitalize="words"
+                        autoCorrect={false}
+                        value={searchQuery}
+                        lineBreakStrategyIOS={"standard"}
+                        enablesReturnKeyAutomatically={true}
+                        returnKeyType="done"
+                        onChangeText={(query) => handleSearchQuery(query)}
+                        placeholderTextColor={COLORS.dark}
+                        onFocus={() => {
+                            setphText("")
+                            setFamily(FONTS.regular)
+                        }}
+                        onBlur={() => {
+                            if (searchQuery === ""){
+                                setphText("Search")
+                                setFamily(FONTS.thin)
+                            }
+                        }}
+                        
+                        onSubmitEditing={() => searchList()}
+
+                        style={{height: 45, backgroundColor: COLORS.lightGray, borderRadius: 10, paddingHorizontal: 5, fontFamily: family, ...SHADOWS.small}}
+                    />
+                </View>
+            </View>
+            <View style={{flex: 3.2, justifyContent: "center", alignItems: "center", marginTop: 10}}>
+                    { isLoading ? (
+                        <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
+                    ) : error ? (
+                        <Text style={style.list}>Something Went Wrong</Text> // style text
+                    ): (
+                        <FlatList
+                            vertical
+                            showsVerticalScrollIndicator={false}
+                            data={playerData}
+                            keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
+                            renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
+                            initialNumToRender={10}
+
+                            // extraData={name}
+                        />
+                        )
+                    }
+            </View>
+        </View>
+    )
+    
+}
+export default Players;
+
+
+const style = StyleSheet.create({
+    ListHeaders: {
+      fontWeight: "bold",
+      marginTop: 15,
+      color: COLORS.light,
+    }
+    ,
+    cardContainer: {
+        backgroundColor: COLORS.orange,
+        margin: 5,
+        width: 140,
+        height: 120,
+      },
+});

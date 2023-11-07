@@ -1,28 +1,48 @@
 // will act as the page that contains the players with searching/filtering options
 
-import * as react from "react";
-import {View, Text, FlatList, Image, ImageBackground, Pressable} from "react-native";
+import { useState } from "react";
+import {View, Text, FlatList, Image, ImageBackground, Pressable, SafeAreaView} from "react-native";
 import { SHADOWS, COLORS, icons } from "../../constants";
 import fetchHook from "../../hook/fetchHook";
 import { BackImg } from "../../components";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import {Players} from "../../components";
+import {Players, SearchBar} from "../../components";
 
 const playersPage = () =>{
     // const {data, isLoading, error} = fetchHook("playerData", {playerName: "all"});
 
     // if (!data) console.error("NO DATA, CHECK API CALL OR SERVER")
 
-    return(
-        <BackImg>
-            {/* Search bar */}
-            <View style={{flex: .8, backgroundColor: COLORS.orange}}> 
+    const [searchQuery, setSearchQuery] = useState("all"); //by default display all players
+    const [doSearch, setDoSearch] = useState(false); // tell the list to call its search function
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false); // creates setter with default variable
+    const [error, setError] = useState(null);
 
-            </View>
+    const onSearch = (quer, data, isLoading, error) => {
+        setSearchQuery(quer)
+        // setDoSearch(true);
+        // setData(data);
+        // setIsLoading(isLoading);
+        // setError(error);
+    }
+
+    // const endSearch = () =>{
+    //     setDoSearch(false);
+    // }
+
+    // console.log(searchQuery);
+
+    return(
+        // Page Wrapper
+        <BackImg>
+
+            {/* Search bar */}
+            <SearchBar onSearch={onSearch}/>
 
             {/* Card Stack UI */}
             <View style={{flex: 3.2}}>
-                <Players/>
+                <Players query={searchQuery} /*doSearch={doSearch} endSearch={endSearch} data={data} isLoading={isLoading} error={error}*/ />
             </View>
 
 

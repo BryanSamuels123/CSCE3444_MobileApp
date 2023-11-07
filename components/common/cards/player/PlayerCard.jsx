@@ -159,9 +159,10 @@ export default PlayerCard;
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1, 
-    width: 330, 
-    height: 520, 
-    margin: 5
+    width: 342.7, //342.7 or 330 ?
+    height: 540, //540 or 520 ?
+    margin: 5,
+    ...SHADOWS.medium
   },
 
   headshotContainer: {

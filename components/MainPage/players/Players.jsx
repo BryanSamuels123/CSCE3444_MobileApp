@@ -1,39 +1,57 @@
-import * as react from "react";
-import {StyleSheet, Text, FlatList, ActivityIndicator, View} from "react-native";
+import {useEffect, useState} from "react";
+import {StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput} from "react-native";
 import PlayerCard from "../../common/cards/player/PlayerCard";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import fetchHook from "../../../hook/fetchHook";
-import {COLORS, SIZES} from "../../../constants";
+import {COLORS, SIZES, FONTS, SHADOWS} from "../../../constants";
 
 
-const Players = () =>{
+const Players = ({ result, query  }) => {
+
+    const [playerData, setPlayerData] = useState([]); // initially empty
+
+
+    const [isLoading, setIsLoading] = useState(true); // initially load, wait for search bar to give info
+    const [error, setError] = useState(null);   // initially no error
     const router = useRouter();
-    const {data, isLoading, error} = fetchHook("playerData", {playerName: "all"});
-    // console.log(data[0]);
+  
+    // useEffect(() => {
+    // const result = (fetchHook("playerData", { playerName: "all" }));
+    
+  useEffect(() =>{
+    if (result.error){
+        setError(result.error);
+    }
+    else{
+        setPlayerData(result.data)
+    }
+    setIsLoading(false);
+  } , []) 
 
-    // console.log(error)
-    // const handleCardPress = () =>{ // handles navigation
-    //     router.push(`player-page${item.id}`);
-    // }
+  
 
+    
     return(
+        
+        <View style={{flex: 1}}>
+            { isLoading ? (
+                <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
+            ) : error ? (
+                <Text style={style.list}>Something Went Wrong</Text> // style text
+            ): (
+                <FlatList
+                    vertical
+                    showsVerticalScrollIndicator={false}
+                    data={playerData}
+                    keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
+                    renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
+                    initialNumToRender={10}
 
+                    // extraData={name}
+                />
+                )
+            }
 
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-                { isLoading ? (
-                    <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
-                ) : error ? (
-                    <Text style={style.list}>Something Went Wrong</Text> // style text
-                ): (
-                    <FlatList
-                        vertical
-                        showsVerticalScrollIndicator={false}
-                        data={data}
-                        keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
-                        renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
-                    />
-                    )
-                }
         </View>
     )
     

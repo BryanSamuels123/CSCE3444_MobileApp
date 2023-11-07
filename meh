@@ -1,0 +1,226 @@
+import {useEffect, useState} from "react";
+import {StyleSheet, Text, FlatList, ActivityIndicator, View} from "react-native";
+import PlayerCard from "../../common/cards/player/PlayerCard";
+import { useRouter } from "expo-router";
+import fetchHook from "../../../hook/fetchHook";
+import {COLORS, SIZES} from "../../../constants";
+
+
+const Players = ({query /*, isLoading, error , doSearch, endSearch, query*/}) =>{
+
+    
+    const [listQuery, setQuery] = useState("all");
+    const [goSearch, setGoSearch] = useState(false);
+
+    const [playerData, setPlayerData] = useState([]);
+    // const [isLoading, setIsLoading] = useState(false); // creates setter with default variable
+    // const [error, setError] = useState(null);
+
+    const router = useRouter();
+
+    // const {data, isLoading, error} = fetchHook("playerData", {playerName: listQuery}); // make api call
+    // setPlayerData(data);
+
+    useEffect(() =>{
+        const result = fetchHook("playerData", {playerName: listQuery}); // make api call
+        console.log(result);
+    }, [])
+
+    useEffect(() => {
+        setQuery(query);
+    }, [query])
+
+//     if (listQuery != "all"){ // go ahead and return
+//         return(
+
+
+//             <View style={{flex: 1, justifyContent: "center", alignItems: "center", marginTop: 10}}>
+//                     { isLoading ? (
+//                         <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
+//                     ) : error ? (
+//                         <Text style={style.list}>Something Went Wrong</Text> // style text
+//                     ): (
+//                         <FlatList
+//                             vertical
+//                             showsVerticalScrollIndicator={false}
+//                             data={playerData}
+//                             keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
+//                             renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
+    
+//                             // extraData={name}
+//                         />
+//                         )
+//                     }
+//             </View>
+//         )
+//     }
+
+//     // else do the rest
+    
+//     // filter data
+
+//     // if data let's filter
+//     const newData = (data) ? data.filter((player) => { // handle cases here
+//         player.playerName
+//             .toLowerCase()
+//             .includes(listQuery.toLowerCase())
+//     }): data
+
+//     setPlayerData(newData);
+
+
+//     // setPlayerData(data);
+//     // setGoSearch(doSearch);
+
+//     // if (goSearch) {
+//     //     const newData = data.filter((player) => (
+//     //         player.playerName
+//     //         .toLowerCase()
+//     //         .includes(query.toLowerCase())
+//     //     ))
+//     //     if (!newData){
+//     //         // handle empty 
+//     //     }
+//     //     setPlayerData(newData);
+//     //     setGoSearch(false);
+//     //     endSearch();
+//     // }
+
+//     // if (!goSearch){
+//     //     setPlayerData(data);
+//     // }
+
+    
+//     // setGoSearch(doSearch);
+
+//     // if (goSearch){
+//     //     console.log(doSearch);
+//     //     endSearch();
+//     // }
+
+//     // console.log(doSearch) 
+
+//     // first handle search
+
+//     // if ()
+
+//     // const getData = () =>{ // will handle updating the data
+//     //     let newData = [];
+
+//     //     // switch () {
+//     //     //     case value:
+                
+//     //     //         break;
+        
+//     //     //     default:
+//     //     //         break;
+//     //     // }
+//         // newData = data.filter((player) => (
+//         //     player.playerName
+//         //     .toLowerCase()
+//         //     .includes(query.query.toLowerCase())
+//     //     // ))
+//     //     console.log(query);
+//     //     // setGoSearch(false); // stop searching
+//     //     // setPlayerData(newData);
+//     // }   
+
+//     // if (goSearch) {
+//     //     getData();
+//     //     setGoSearch(false);
+//     //     endSearch();
+//     // }
+
+//     // const newData = (goSearch && listQuery) ? data.filter((player) =>  // filter the data 
+//     //     (player.playerName
+//     //         .toLowerCase()
+//     //         .includes(query.query.toLowerCase()) 
+//     //     )
+//     // )
+//     // : data;
+    
+//     // setPlayerData(newData);
+
+//     // const handleSearch = () =>{
+//     //     const newData = 
+//     // }
+
+    
+//     // const filteredData = ()
+
+
+//     // try moving this above the fetchook if not working
+//     // useEffect(() => {
+//     //     console.log("Hi buddy: ", query.query)
+//     //     setQuer(quer);
+//     //     let {data, isLoading, error} = fetchHook("playerData", {playerName: quer});
+//     //     if (data){
+//     //         setData(data);
+//     //         setIsLoading(isLoading);
+//     //         setError(error);
+//     //     }
+//     // }, [quer]);
+      
+
+
+    
+    
+
+//     // console.log(fetchHook("playerData", {playerName: query.query}));
+    
+
+//     // setPlayerData(data);
+
+    
+      
+//     // console.log("i am here", query.query)
+//     // console.log(playerData[0]);
+
+//     // console.log(data[0]);
+
+//     // console.log(error)
+//     // const handleCardPress = () =>{ // handles navigation
+//     //     router.push(`player-page${item.id}`);
+//     // }
+
+//     return(
+
+
+//         <View style={{flex: 1, justifyContent: "center", alignItems: "center", marginTop: 10}}>
+//                 { isLoading ? (
+//                     <ActivityIndicator size="large" colors={COLORS.lightBlue}/>
+//                 ) : error ? (
+//                     <Text style={style.list}>Something Went Wrong</Text> // style text
+//                 ): (
+//                     <FlatList
+//                         vertical
+//                         showsVerticalScrollIndicator={false}
+//                         data={playerData}
+//                         keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
+//                         renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)}/>)}
+
+//                         // extraData={name}
+//                     />
+//                     )
+//                 }
+//         </View>
+//     )
+    
+}
+export default Players;
+
+
+// const style = StyleSheet.create({
+//     ListHeaders: {
+//       fontWeight: "bold",
+//       marginTop: 15,
+//       color: COLORS.light,
+//     }
+//     ,
+//     cardContainer: {
+//         backgroundColor: COLORS.orange,
+//         margin: 5,
+//         width: 140,
+//         height: 120,
+//       },
+// });

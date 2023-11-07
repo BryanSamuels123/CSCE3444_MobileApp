@@ -23,17 +23,19 @@ const fetchHook = (endpoint, query) =>{ // takes in a string(endpoint) and an ob
         try{
             const resp = await fetch(`http://3.145.193.188:8000/${endpoint}`, params);
             const data =  await resp.json();
-            // console.log(data)
             setData(data);
+            console.log("FetchHook is being called again");
             // setIsLoading(false);
             // console.log(resp);
         }
         catch(err){
-            setError(error);
+            setError(err);
+            
             console.error(err)
             alert("API Request Error");
         }
         finally{
+            console.log("RAAAH")
             setIsLoading(false);
         }
     }
