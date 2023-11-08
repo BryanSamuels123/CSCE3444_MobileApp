@@ -89,9 +89,7 @@ const TeamCard = ({ item }) => {
         //link -> leads to a different page when clicked on
         <Link href={item.link} asChild> 
             <TouchableOpacity>
-                <Card 
-                    style={style.CardContainer}
-                >
+                <Card style={style.CardContainer}>
                     <Card.Cover
                         style={style.ImageBackground}
                         source={{ uri: item.logo}}
