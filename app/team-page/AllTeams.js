@@ -5,6 +5,8 @@ import {View, Text, FlatList, Image, ImageBackground, Pressable} from "react-nat
 import fetchHook from "../../hook/fetchHook";
 import { BackImg } from "../../components";
 import { SHADOWS, COLORS, FONTS, icons } from '../../constants';
+import { useState } from "react";
+import { Teams } from "../../components";
 
 const teamsPage = () =>{
     return(
