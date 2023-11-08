@@ -63,6 +63,9 @@ import mavsBackground from "../assets/images/teamBackgrounds/background-76.png"
 import warriorsBackground from "../assets/images/teamBackgrounds/background-121.png"
 import defBackground from "../assets/images/teamBackgrounds/defaultBack.png"
 import defaultPlayerPic from "../assets/images/playerHeadShots/defaultPlayer.jpeg"
+import popUpBackground from "../assets/images/pop-upBackground.png";
+import popUpBackground2 from "../assets/images/pop-upBackground2.png";
+import popUpBackground3 from "../assets/images/pop-upBackground3.png";
 
 export default {
     defaultPlayerPic,
@@ -97,7 +100,10 @@ export default {
     pacersBackground,
     mavsBackground,
     warriorsBackground,
-    defBackground     
+    defBackground,
+    popUpBackground,
+    popUpBackground2,
+    popUpBackground3
 };
 
 // export default {

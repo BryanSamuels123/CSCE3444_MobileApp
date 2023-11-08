@@ -245,7 +245,7 @@ const MainPage = () =>{ // main page will be split into thirds three views
               {({ pressed }) =>{
                 return(
                   // an array of styles is used here
-                  <Image source={(icons.learningTile)} style={[
+                  <Image source={(icons.learningTile_F)} style={[
                     newStyle.learningTileImg,
                     pressed && {opacity: .80}
                   ]}/>
