@@ -1,16 +1,20 @@
 // will act as the page that contains the players with searching/filtering options
 
+
 import { useState } from "react";
 import {View, Text, FlatList, Image, ImageBackground, Pressable, SafeAreaView} from "react-native";
 import { SHADOWS, COLORS, icons } from "../../constants";
 import fetchHook from "../../hook/fetchHook";
 import { BackImg } from "../../components";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { useRouter } from "expo-router";
+
+  
 import {Players} from "../../components";
 
 const playersPage = () =>{
     // const result = fetchHook("playerData", {playerName: "all"});
-
+    const router = useRouter();
     // if (!data) console.error("NO DATA, CHECK API CALL OR SERVER")
 
     const [searchQuery, setSearchQuery] = useState("all"); //by default display all players
@@ -49,7 +53,7 @@ const playersPage = () =>{
 
                 {/* Compare Icon */}
                 <View style={{flex: 1, justifyContent: "center", alignItems: "center", marginBottom: 20}}> 
-                    <Pressable style={({pressed}) => [{paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10}, 
+                    <Pressable onPress={() => router.push(`/Compare`)} style={({pressed}) => [{paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10}, 
                         pressed && SHADOWS.large   
                     ]}>
                     {({pressed}) =>{
@@ -67,8 +71,8 @@ const playersPage = () =>{
                     <Pressable style={({pressed}) => [{paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10}, 
                         pressed && SHADOWS.large
                     ]}>
-                        {({pressed}) =>{
-                            return(
+                        {({ pressed }) => {
+                            return (
                                 // will do an animation on pressed later
                                 <Image source={(icons.favIcon_U)} style={[
                                     {width: 80, height: 80, resizeMode: "contain", borderRadius: 9},
@@ -80,6 +84,6 @@ const playersPage = () =>{
                 </View>
             </View>
         </BackImg>
-    ) 
+    )
 };
 export default playersPage;

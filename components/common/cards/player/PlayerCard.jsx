@@ -5,12 +5,8 @@ import { COLORS, images, SHADOWS, FONTS } from "../../../../constants";
 import {useRouter} from "expo-router";
 import { Link } from "expo-router";
 
-/* From the React Native Paper Lib 
 
-The Text containers are what need to be changed to dynamicly pull from database.
-If need be, this can just be put into MainPage.js.
-on press it 
-*/
+
 const backImages = {
   "ATL": images.hawksBackground,
   "BKN": images.netsBackground,
@@ -162,9 +158,6 @@ const styles = StyleSheet.create({
     width: 342.7, //342.7 or 330 ?
     height: 540, //540 or 520 ?
     margin: 5,
-    ...SHADOWS.medium
-  },
-
   headshotContainer: {
     width: 120, 
     height: 150, 
@@ -233,29 +226,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly", 
     paddingTop: 30
   },
-
-  statsHeaderContainer: {
-    flex: 1, 
-    flexDirection:"column", 
-    justifyContent: "center", 
-    textAlign: "center"
-  },
-
-  statsHeader: {
-    color:"#FFFFFF", 
-    fontFamily: FONTS.light, 
-    fontSize: 24, 
-    textAlign: "center", 
-    lineHeight: 30
-  },
-
-  statsText: {
-    color:"#FFFFFF", 
-    fontFamily: FONTS.light, 
-    fontSize: 16, 
-    textAlign: "center"
-  },
-
   teamNameContainer: {
     flex: 1, 
     flexDirection: "row",

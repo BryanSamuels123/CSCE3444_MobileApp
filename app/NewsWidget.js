@@ -5,19 +5,24 @@ import { COLORS, FONTS } from "../constants";
 import { Card, ActivityIndicator } from 'react-native-paper'
 import { Link } from "expo-router";
 
+
 const NewsCard = ({ item }) => {
     return (
+        //Link to the article.
         <Link href={item.url} asChild>
             <TouchableOpacity>
                 <Card style={style.CardContainer}>
+                    {/* Styles and sets title to 2 lines */}
                     <Card.Title title={item.title} style={style.NewsTitle}
                         titleVariant='titleMedium'
                         titleNumberOfLines={2}
                     />
+                    {/* Sets image for the article */}
                     <Card.Cover
                         source={{ uri: item.urlToImage }}
                         style={style.NewsImage}
                     />
+                    {/* Sets description and limits it to 3 lines */}
                     <Card.Content>
                         <Text numberOfLines={3}>
                             {item.description}
@@ -29,6 +34,14 @@ const NewsCard = ({ item }) => {
     );
 };
 
+//Function to get the current year and month.
+function getDate() {
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    //console.log(year + '-' + month) testing output of date. 
+    return year + '-' + month;
+}
 const NewsWidget = () => {
 
     const [isLoading, setLoading] = useState(true);
@@ -36,9 +49,11 @@ const NewsWidget = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get("https://newsapi.org/v2/everything?q=NBA&pageSize=10&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description")
+        date = getDate();
+        //Gets the 10 most recent news articles with NBA in the title or description and sorts by popularity
+        axios.get(`https://newsapi.org/v2/everything?q=NBA&pageSize=10&from=${date}&sortBy=popularity&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description`)
             .then(({ data }) => {
-                //console.log("defaultApp -> data", data.articles)
+                //console.log("defaultApp -> data", data.articles) This is to check the data from the API
                 setData(data.articles)
             })
             .catch((error) => console.error(error))
@@ -47,6 +62,7 @@ const NewsWidget = () => {
 
     return (
         <SafeAreaView>
+            {/* Displays loading indicator or the news list */}
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList horizontal={true}
                     data={data}
@@ -70,7 +86,7 @@ const style = StyleSheet.create({
         backgroundColor: COLORS.orange,
         margin: 5,
         width: 300,
-        height: 250,
+        height: 220,
     },
     NewsImage: {
         marginHorizontal: 5,
