@@ -1,8 +1,10 @@
 {
   "expo": {
     "scheme": "acme",
+    "android":{"softwareKeyboardLayoutMode": "pan"},
     "web": {
       "bundler": "metro"
+      
     },
     "plugins": [
       "expo-router"

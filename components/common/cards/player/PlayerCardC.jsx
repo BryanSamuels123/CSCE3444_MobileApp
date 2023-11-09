@@ -2,11 +2,12 @@ import * as React from "react";
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { COLORS } from "../../../../constants";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import fetchHook from "../../../../hook/fetchHook";
 
+//This is the playercard file for the Compare page
 
-const PlayerCard = ({ item }, handleNavigate) => {
+const PlayerCardC = ({ item }, handleNavigate) => {
   // console.log(item)
   // may need to change in the future if doesn't catch all errors
   const imagePath = item.playerHeadshot
@@ -14,12 +15,12 @@ const PlayerCard = ({ item }, handleNavigate) => {
     : "../../../../assets/images/playerHeadShots/defaultPlayer.jpeg";
 
   let image = "";
-
+  const router = useRouter();
   if (!item.playerHeadshot) {
     image = require("../../../../assets/images/playerHeadShots/defaultPlayer.jpeg");
 
     return (
-      <TouchableOpacity onPress={handleNavigate}>
+      <TouchableOpacity onPress={() => toggleViews()}>
         <Card style={style.cardContainer}>
           <Card.Cover style={style.imageLayout} source={image} />
           <Card.Cover style={style.statsLayout} />
@@ -39,7 +40,7 @@ const PlayerCard = ({ item }, handleNavigate) => {
     );
   } else {
     return (
-      <TouchableOpacity onPress={handleNavigate}>
+      <TouchableOpacity onPress={() => toggleViews()}>
         <Card style={style.cardContainer}>
           <Card.Cover
             style={style.imageLayout}
@@ -63,7 +64,7 @@ const PlayerCard = ({ item }, handleNavigate) => {
   }
 };
 
-export default PlayerCard;
+export default PlayerCardC;
 
 const style = StyleSheet.create({
   cardContainer: {

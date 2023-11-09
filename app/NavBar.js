@@ -5,12 +5,11 @@ import MainPage from "./MainPage";
 import TeamUI from "./TeamUI";
 import LearnPage from "./LearnPage";
 
+//This is currently not being used. 
+
 const MainPageRoute = () => <MainPage />;
-
 // const TeamsRoute = () => <Text>Teams</Text>;
-
 // const PlayersRoute = () => <Text>Players</Text>;
-
 // const LearnRoute = () => <Text>Learn</Text>;
 
 const NavBar = () => {
@@ -46,5 +45,4 @@ const NavBar = () => {
     />
   );
 };
-//The theme would need to be changed from lightmode functionality.
 export default NavBar;

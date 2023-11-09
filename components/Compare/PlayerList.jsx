@@ -9,10 +9,13 @@ import {
 import { useRouter } from "expo-router";
 import fetchHook from "../../hook/fetchHook";
 import { COLORS, SIZES } from "../../constants/theme";
-import PlayerCard from "../common/cards/player/PlayerCard"
+import PlayerCardC from "../common/cards/player/PlayerCardC"
 import { TextInput } from "react-native-paper";
 
+//This is the playerlist for the Compare page
 
+
+//Data for the flatlist. 
 const PlayerList = () => {
   const router = useRouter();
   const { data, isLoading, error } = fetchHook("playerData", {
@@ -21,19 +24,19 @@ const PlayerList = () => {
   const [searchText, setSearchText] = react.useState();
 
 
-//Filter
+//Filter for searching
 const searchFilteredData = searchText
     ? data.filter((x) =>
             x.playerName.toLowerCase().includes(searchText.toLowerCase())
       )
     : data;
 
-
+//searchs thru list whenever the text in the search bar changes. 
   return (
       <SafeAreaView>
         <TextInput
             autoCapitalize="none"
-            autoCorrect={false}
+            autoCorrect={true}
             clearButtonMode="always"
             onChangeText={(text) => {
                 setSearchText(text);
@@ -45,9 +48,9 @@ const searchFilteredData = searchText
             style={{ backgroundColor: '#fff', Flex: .5, paddingHorizontal: 5, margin: 25 }}
           />
         {isLoading ? (
-          <ActivityIndicator size="large" colors={COLORS.lightBlue} />
+          <ActivityIndicator size="large" colors={COLORS.lightBlue} /> 
         ) : error ? (
-          <Text style={style.list}>Something Went Wrong</Text> // style text
+          <Text> Something Went Wrong</Text> // error text
         ) : (
           <FlatList 
             horizontal={true}
@@ -55,7 +58,7 @@ const searchFilteredData = searchText
             data={searchFilteredData}
             keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
             renderItem={({ item }) => (
-              <PlayerCard
+              <PlayerCardC
                 item={item}
                 handleNavigate={() => router.push(`player-page${item.id}`)}
               />
@@ -66,17 +69,3 @@ const searchFilteredData = searchText
   );
 };
 export default PlayerList;
-
-const style = StyleSheet.create({
-  ListHeaders: {
-    fontWeight: "bold",
-    marginTop: 15,
-    color: COLORS.light,
-  },
-  cardContainer: {
-    backgroundColor: COLORS.orange,
-    margin: 5,
-    width: 140,
-    height: 120,
-  },
-});
