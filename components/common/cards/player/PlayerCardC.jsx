@@ -7,20 +7,29 @@ import fetchHook from "../../../../hook/fetchHook";
 
 //This is the playercard file for the Compare page
 
-const PlayerCardC = ({ item }, handleNavigate) => {
-  // console.log(item)
-  // may need to change in the future if doesn't catch all errors
+const PlayerCardC = ({ item, passObjectToParent }) => {
+
   const imagePath = item.playerHeadshot
     ? `../../../../assets/images/playerHeadShots${item.playerHeadshot}`
     : "../../../../assets/images/playerHeadShots/defaultPlayer.jpeg";
 
   let image = "";
   const router = useRouter();
+
+  const objectToSend = {
+    key: 'value',
+    anotherKey: 'anotherValue',
+  };
+
+  const passObjectToParentHandler = () => {
+    passObjectToParent(objectToSend);
+  };
+
   if (!item.playerHeadshot) {
     image = require("../../../../assets/images/playerHeadShots/defaultPlayer.jpeg");
 
     return (
-      <TouchableOpacity onPress={() => toggleViews()}>
+      <TouchableOpacity onPress={passObjectToParentHandler}>
         <Card style={style.cardContainer}>
           <Card.Cover style={style.imageLayout} source={image} />
           <Card.Cover style={style.statsLayout} />
@@ -40,7 +49,7 @@ const PlayerCardC = ({ item }, handleNavigate) => {
     );
   } else {
     return (
-      <TouchableOpacity onPress={() => toggleViews()}>
+      <TouchableOpacity onPress={passObjectToParentHandler}>
         <Card style={style.cardContainer}>
           <Card.Cover
             style={style.imageLayout}

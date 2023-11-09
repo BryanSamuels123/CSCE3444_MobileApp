@@ -4,7 +4,8 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  SafeAreaView
+  SafeAreaView,
+
 } from "react-native";
 import { useRouter } from "expo-router";
 import fetchHook from "../../hook/fetchHook";
@@ -16,13 +17,12 @@ import { TextInput } from "react-native-paper";
 
 
 //Data for the flatlist. 
-const PlayerList = () => {
+const PlayerList = ( {passObjectToParent} ) => {
   const router = useRouter();
   const { data, isLoading, error } = fetchHook("playerData", {
     playerName: "all",
   });
   const [searchText, setSearchText] = react.useState();
-
 
 //Filter for searching
 const searchFilteredData = searchText
@@ -30,6 +30,7 @@ const searchFilteredData = searchText
             x.playerName.toLowerCase().includes(searchText.toLowerCase())
       )
     : data;
+
 
 //searchs thru list whenever the text in the search bar changes. 
   return (
@@ -60,7 +61,7 @@ const searchFilteredData = searchText
             renderItem={({ item }) => (
               <PlayerCardC
                 item={item}
-                handleNavigate={() => router.push(`player-page${item.id}`)}
+                passObjectToParent={passObjectToParent}
               />
             )}
           />
