@@ -16,13 +16,8 @@ const PlayerCardC = ({ item, passObjectToParent }) => {
   let image = "";
   const router = useRouter();
 
-  const objectToSend = {
-    key: 'value',
-    anotherKey: 'anotherValue',
-  };
-
   const passObjectToParentHandler = () => {
-    passObjectToParent(objectToSend);
+    passObjectToParent(item);
   };
 
   if (!item.playerHeadshot) {
