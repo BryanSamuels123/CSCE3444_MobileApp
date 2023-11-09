@@ -86,7 +86,7 @@ const style = StyleSheet.create({
         backgroundColor: COLORS.orange,
         margin: 5,
         width: 300,
-        height: 220,
+        height: 225,
     },
     NewsImage: {
         marginHorizontal: 5,
