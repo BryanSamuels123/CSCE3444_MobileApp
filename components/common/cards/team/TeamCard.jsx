@@ -4,38 +4,44 @@ import { Card, Text } from "react-native-paper";
 import { COLORS } from "../../../../constants";
 import { Link } from "expo-router";
 
-const TeamCard = ({ item }) => {
-    return (
-      <Link href={item.link} asChild>
-        <TouchableOpacity>
-          <Card style={style.CardContainer}>
-            <Card.Cover
-              style={style.ImageLayout}
-              source={{ uri: item.teamlogo }}
-            />
-            <Card.Cover style={style.TeamStatsLayout} />
-            <Card.Content>
-              <Text style={style.TeamConferenceLayout}>{item.conference}</Text>
-              <Text style={style.TeamNameLayout}>{item.name}</Text>
-              <Text style={style.StatsTitle}>Stats</Text>
-              <Text style={style.StatsList}>
-                Win: {item.wins}
-                {"\n"}
-                L: {item.loses}
-                {"\n"}
-                W%: {item.winPercent}
-                {"\n"}
-                STRK: {item.streak}
-                {"\n"}
-                L10: {item.last10}
-                {"\n"}
-              </Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
+const tempImg = require("../../../../assets/images/teamLogos/defaultPlayer.jpeg")
+
+//create TeamCard that will be used throughout the flatlist
+const TeamCard = ({ item }, handleNavigate) => {
+
+  //console.log(item)
+
+  let imgSource = (item.teamLogoURl != null) ? {uri: item.teamLogoURl} : images.defaulPlayerPic;
+
+  return (
+      //link -> leads to a different page when clicked on
+      <Link href={item.link} asChild> 
+          <TouchableOpacity>
+              <Card 
+                  style={style.CardContainer}
+              >
+                  <Card.Cover
+                      style={style.ImageBackground}
+                      source={{ uri: item.logo}}
+                  />
+                  <Card.Cover style={style.BlackBar}/>
+                      <Text style={style.leftData}>
+                          Wins: {item.wins}
+                          {"\n"}
+                          Losses: {item.losses}
+                      </Text>
+                      <Text style={style.RightData}>
+                          Conference: {item.conference}
+                          {"\n"}
+                          Streak: {item.streak}
+                      </Text>
+                      <Text style={style.TeamName}>{item.title}</Text>
+
+              </Card>
+          </TouchableOpacity>
       </Link>
-    );
-  };
+  );
+};
   export default TeamCard;
   
   const style = StyleSheet.create({
