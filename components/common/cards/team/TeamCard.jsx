@@ -1,65 +1,91 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity} from "react-native";
+import { StyleSheet, TouchableOpacity,Image, View, Pressable, ImageBackground} from "react-native";
 import { Card, Text } from "react-native-paper";
-import { COLORS } from "../../../../constants";
+import { COLORS, images, SHADOWS, FONTS } from "../../../../constants";
 import { Link } from "expo-router";
+
+const backImages = {
+  "ATL": images.hawksLogo,
+  "BKN": images.netsLogo,
+  "BOS": images.celtsLogo,
+  "CHA": images.hornetsLogo,
+  "CHI": images.bullsLogo,
+  "CLE": images.cavsLogo,
+  "DAL": images.mavsLogo,
+  "DEN": images.nuggetsLogo,
+  "DET": images.pistonsLogo,
+  "GSW": images.warriorsLogo,
+  "HOU": images.rocketsLogo,
+  "IND": images.pacersLogo,
+  "LAC": images.clippersLogo,
+  "LAL": images.lakersLogo,
+  "MEM": images.grizzliesLogo,
+  "MIA": images.heatLogo,
+  "MIL": images.bucksLogo,
+  "MIN": images.timberLogo,
+  "NA": images.defBackground,
+  "NOP": images.pelicansLogo,
+  "NYK": images.knicksLogo,
+  "OKC": images.thunderLogo,
+  "ORL": images.magicLogo,
+  "PHI": images.sixersLogo,
+  "PHX": images.sunsLogo,
+  "POR": images.trailLogo,
+  "SAC": images.kingsLogo,
+  "SAS": images.spursLogo,
+  "TOR": images.raptorsLogo,
+  "UTA": images.jazzLogo,
+  "WAS": images.wizardsLogo,
+};
 
 const tempImg = require("../../../../assets/images/teamLogos/defaultPlayer.jpeg")
 
 //create TeamCard that will be used throughout the flatlist
 const TeamCard = ({ item }, handleNavigate) => {
 
-  //console.log(item)
+  console.log(item)
 
-  let imgSource = (item.teamLogoURl != null) ? {uri: item.teamLogoURl} : images.defaulPlayerPic;
+  let imgSource = (item.teamLogoURI != null) ? {uri: item.teamLogoURI} : images.defaultPlayerPic;
+  return(
+    <ImageBackground source={images.background0} style={style.CardContainer} imageStyle={{resizeMode: "contain", borderRadius:20}}>
+      <Pressable style={({pressed})=>[
+        { flex : 1 }
+      ]}>
+        {({ pressed }) => {
+          return (
+            <View style={[
+              {flex : 1}, pressed && { opacity: 0.8, ...SHADOWS.small}
+            ]}>
 
-  return (
-      //link -> leads to a different page when clicked on
-      <Link href={item.link} asChild> 
-          <TouchableOpacity>
-              <Card 
-                  style={style.CardContainer}
-              >
-                  <Card.Cover
-                      style={style.ImageBackground}
-                      source={{ uri: item.logo}}
-                  />
-                  <Card.Cover style={style.BlackBar}/>
-                      <Text style={style.leftData}>
-                          Wins: {item.wins}
-                          {"\n"}
-                          Losses: {item.losses}
-                      </Text>
-                      <Text style={style.RightData}>
-                          Conference: {item.conference}
-                          {"\n"}
-                          Streak: {item.streak}
-                      </Text>
-                      <Text style={style.TeamName}>{item.title}</Text>
+              <View>
+                <Text style={{color: COLORS.light}}> {item.teamName} </Text>
+                <Text style={{color: COLORS.light}}>{item.city}</Text>
+              </View>
+              <View>
+              <Image source={(backImages[item.teamAbv])} style={style.ImageLayout}/>
+              </View>
+            </View>
+          );
+        }}
 
-              </Card>
-          </TouchableOpacity>
-      </Link>
+        </Pressable>
+  </ImageBackground>
   );
 };
   export default TeamCard;
   
   const style = StyleSheet.create({
     CardContainer: {
-      backgroundColor: COLORS.orange,
       margin: 5,
-      width: 160,
-      height: 125,
+      width: 342.7,
+      height: 540,
     },
     ImageLayout: {
-      marginTop: 5,
-      marginHorizontal: 3,
-      width: 85,
-      height: 85,
-      borderWidth: 0.5,
-      borderRadius: 10,
-      borderColor: "#121212",
-      backgroundColor: "transparent",
+      width: 150,
+      height: 150,
+      resizeMode:
+      "cover",
+      borderRadius: 20,
     },
     TeamNameLayout: {
       textAlign: "left",
