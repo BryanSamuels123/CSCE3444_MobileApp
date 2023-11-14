@@ -1,8 +1,11 @@
 import * as React from "react";
 import { Stack, useRouter } from "expo-router";
-import { SafeAreaView, View, Text } from "react-native";
-import { Button, Divider } from "react-native-paper";
+import { SafeAreaView, View } from "react-native";
+import { Button, Divider, Text } from "react-native-paper";
 import PlayerList from "../components/Compare/PlayerList";
+import { BackImg } from "../components";
+import { SHADOWS, COLORS, icons } from "../constants";
+import CompareCard from "../components/Compare/CompareCard"
 
 const Compare = () => {
   const router = useRouter();
@@ -35,39 +38,41 @@ const Compare = () => {
   };
 
   const TopCard = () => (
-    <View style={{ flex: 1, backgroundColor: "gold", alignItems: 'center', marginTop: 20 }}>
-      {receivedObject && <Text>{JSON.stringify(receivedObject)}</Text>}
-      {!receivedObject && <Text>Please select a player</Text>}
-    </View>
+      <View style={{ flex: 1, alignItems: 'center'}}>
+        {receivedObject && <CompareCard item={receivedObject} ></CompareCard>}
+        {!receivedObject && <Text>Please select a player</Text>}
+      </View>
   );
   const BotCard = () => (
-    <View style={{ flex: 1, backgroundColor: "gold", alignItems: 'center', marginTop: 20 }}>
-      {receivedObject2 && <Text>{JSON.stringify(receivedObject2)}</Text>}
-      {!receivedObject2 && <Text>Please select a player</Text>}
-    </View>
+      <View style={{ flex: 1, alignItems: 'center'}}>
+        {receivedObject2 && <CompareCard item={receivedObject2}></CompareCard>}
+        {!receivedObject2 && <Text>Please select a player</Text>}
+      </View>
   );
 
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "gold" }}>
-      <View style={{ flex: 1, backgroundColor: "gold", alignItems: 'center', marginTop: 20 }}>
+    <BackImg>
+    <SafeAreaView style={{ flex: 1, marginTop: 40 }}>
+      <View style={{ flex: 1, alignItems: 'center',justifyContent: "center", marginTop: 10}}>
         {showTopList && <PlayerList passObjectToParent={receiveObjectFromGrandChild} />}
         {showTopPlayer && <TopCard />}
       </View>
       <Divider />
-      <View style={{ flex: 1, backgroundColor: "gold", alignItems: 'center', justifyContent: "center", }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", marginTop: 10 }}>
         {showBotList && <PlayerList passObjectToParent={receiveObjectFromGrandChild2} />}
         {showBotPlayer && <BotCard />}
       </View>
-      <View style={{ flex: .6, backgroundColor: "blue", flexDirection: "row", alignItems: 'center' }} >
-        <Button style={{ margin: 50 }} mode="contained" onPress={() => toggleTop()}>
+      <View style={{ flex: .6, flexDirection: "row", alignItems: 'center'  }} >
+        <Button compact="true" style={{ margin:50}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleTop()}>
           Toggle Top List
         </Button>
-        <Button style={{ margin: 50 }} mode="contained" onPress={() => toggleBot()}>
+        <Button compact="true" contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleBot()}>
           Toggle Bottom List
         </Button>
       </View>
     </SafeAreaView>
+    </BackImg>
   );
 };
 

@@ -1,11 +1,44 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, Image, ImageBackground } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { COLORS } from "../../../../constants";
+import { COLORS, images, SHADOWS, FONTS } from "../../../../constants";
 import { Link, useRouter } from "expo-router";
 import fetchHook from "../../../../hook/fetchHook";
 
 //This is the playercard file for the Compare page
+const backImages = {
+  "ATL": images.hawksBackground,
+  "BKN": images.netsBackground,
+  "BOS": images.celticsBackground,
+  "CHA": images.hornetsBackground,
+  "CHI": images.bullsBackground,
+  "CLE": images.cavsBackground,
+  "DAL": images.mavsBackground,
+  "DEN": images.nuggetsBackground,
+  "DET": images.pistonsBackground,
+  "GSW": images.warriorsBackground,
+  "HOU": images.rocketsBackground,
+  "IND": images.pacersBackground,
+  "LAC": images.clippersBackground,
+  "LAL": images.lakersBackground,
+  "MEM": images.grizzliesBackground,
+  "MIA": images.heatBackground,
+  "MIL": images.bucksBackground,
+  "MIN": images.timberwolvesBackground,
+  "NA": images.defBackground,
+  "NOP": images.pelicansBackground,
+  "NYK": images.knicksBackground,
+  "OKC": images.okcBackground,
+  "ORL": images.magicBackground,
+  "PHI": images.sixersBackground,
+  "PHX": images.sunsBackground,
+  "POR": images.tbBackground,
+  "SAC": images.kingsBackground,
+  "SAS": images.spursBackground,
+  "TOR": images.raptorsBackground,
+  "UTA": images.jazzBackground,
+  "WAS": images.wizardsBackground
+};
 
 const PlayerCardC = ({ item, passObjectToParent }) => {
 
@@ -26,7 +59,7 @@ const PlayerCardC = ({ item, passObjectToParent }) => {
     return (
       <TouchableOpacity onPress={passObjectToParentHandler}>
         <Card style={style.cardContainer}>
-          <Card.Cover style={style.imageLayout} source={image} />
+            <Card.Cover style={style.imageLayout} source={image} />
           <Card.Cover style={style.statsLayout} />
           <Card.Content>
             <Text style={style.nameLayout}>{item.playerName}</Text>
@@ -40,6 +73,7 @@ const PlayerCardC = ({ item, passObjectToParent }) => {
             </Text>
           </Card.Content>
         </Card>
+        
       </TouchableOpacity>
     );
   } else {
@@ -74,14 +108,14 @@ const style = StyleSheet.create({
   cardContainer: {
     backgroundColor: COLORS.orange,
     margin: 5,
-    width: 160,
-    height: 125,
+    width: 180,
+    height: 180,
   },
   imageLayout: {
     marginTop: 5,
     marginHorizontal: 3,
-    width: 85,
-    height: 85,
+    width: 100,
+    height: 100,
     borderWidth: 0.5,
     borderRadius: 10,
     borderColor: "#121212",
@@ -90,17 +124,18 @@ const style = StyleSheet.create({
   nameLayout: {
     textAlign: "left",
     color: "#121212",
-    fontSize: 10,
+    fontSize: 16,
     position: "absolute",
     paddingLeft: 3,
+    paddingTop:10,
     fontWeight: "bold",
   },
   teamLayout: {
     textAlign: "left",
     color: "#121212",
-    fontSize: 10,
+    fontSize: 16,
     position: "absolute",
-    top: 10,
+    paddingTop:45,
     paddingLeft: 3,
   },
   statsLayout: {
