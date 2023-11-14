@@ -4,7 +4,7 @@ const COLORS = {
     darkSecond: "#121212",
     blue: "#247BA0",
     red: "#E84855",
-    orange: "#E28065",
+    orange: "#FAC748",
     lightBlue: "#0099ff",
     lightGray: "#D9D9D9",
     backGround_purple: "#4D5AB0",

@@ -210,98 +210,98 @@ const greetings = {
   ]
 };
 // might do something where I can use preferences, but for now it's random bewtween these 3;
-const indices = {0: "Formal", 1: "Puns_Stats", 2: "Puns_Learning"};
+const indices = { 0: "Formal", 1: "Puns_Stats", 2: "Puns_Learning" };
 
 
 
-const MainPage = () =>{ // main page will be split into thirds three views
+const MainPage = () => { // main page will be split into thirds three views
 
   const router = useRouter();
 
-  const genGreet = () =>{
+  const genGreet = () => {
     let randInt = Math.floor(Math.random() * 3);
     let randTemp = Math.floor(Math.random() * greetings[indices[randInt]].length);
     let greet = greetings[indices[randInt]][randTemp];
     return greet;
   }
-  
 
-  return(
-  
-    <BackImg>  
-        {/* shadow problem here */}
-        <View style={{flex: 1, flexDirection: "row"}}>
-          <View style={newStyle.textContainer_Center}>
-            <Text style={newStyle.greetingText}>{genGreet()}</Text>
-          </View>
 
-          {/* Learning Tile */}
-          <View style={{flex: 1,  justifyContent: "center"}}>
+  return (
 
-            <Pressable onPress={() => router.push("/learning-tile/allLearning")} style={({pressed}) =>[ // must use array of styles for conditional styling
-              newStyle.learningTileContainer, 
-              pressed && SHADOWS.large
-            ]}>
-              {({ pressed }) =>{
-                return(
-                  // an array of styles is used here
-                  <Image source={(icons.learningTile_F)} style={[
-                    newStyle.learningTileImg,
-                    pressed && {opacity: .80}
-                  ]}/>
-                );
-              }}
-              
-            </Pressable>
-          </View>
-          
+    <BackImg>
+      {/* shadow problem here */}
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={newStyle.textContainer_Center}>
+          <Text style={newStyle.greetingText}>{genGreet()}</Text>
         </View>
 
+        {/* Learning Tile */}
+        <View style={{ flex: 1, justifyContent: "center" }}>
 
-        {/* news feed will go here */}
-        <View style={{flex: 0.7}}>
-              <NewsWidget/>
+          <Pressable onPress={() => router.push("/learning-tile/allLearning")} style={({ pressed }) => [ // must use array of styles for conditional styling
+            newStyle.learningTileContainer,
+            pressed && SHADOWS.large
+          ]}>
+            {({ pressed }) => {
+              return (
+                // an array of styles is used here
+                <Image source={(icons.learningTile_F)} style={[
+                  newStyle.learningTileImg,
+                  pressed && { opacity: .80 }
+                ]} />
+              );
+            }}
+
+          </Pressable>
         </View>
 
+      </View>
 
-        {/* houses the players and teams icons */}
-        <View style={{flex: 1, flexDirection: "row"}} >
 
-          <View style={{flex: 1,  justifyContent: "center", alignItems: "center"}}>
-                  <Pressable onPress={() => router.push("/team-page/AllTeams")} style={({pressed}) =>[
-                    newStyle.cardIconContainer,
-                    pressed && SHADOWS.large
-                  ]}>
-                    {({ pressed }) =>{
-                      return(
-                        <Image source={(icons.teamsIcon)} style={[
-                          newStyle.cardIcon,
-                          pressed && {opacity: .70}
-                        ]}/>
-                      );
-                    }}
-                    
+      {/* news feed will go here */}
+      <View style={{ flex: 0.7 }}>
+        <NewsWidget />
+      </View>
 
-                  </Pressable>
-          </View>
 
-            <View style={{flex: 1,  justifyContent: "center", alignItems: "center"}}>
-              <Pressable  onPress={() => router.push(`/player-page/AllPlayers`)} style={({pressed}) =>[
-                newStyle.cardIconContainer,
-                pressed && SHADOWS.large
-              ]}>
-                {({pressed}) =>{
-                  return(
-                    <Image source={(icons.playerCardIcon)} style={[
-                      newStyle.cardIcon,
-                      pressed && {opacity: 0.7}
-                    ]}/>
-                  );
-                }}
-              </Pressable>
-            </View>
-          
+      {/* houses the players and teams icons */}
+      <View style={{ flex: 1, flexDirection: "row" }} >
+
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Pressable onPress={() => router.push("/TeamUI")} style={({ pressed }) => [
+            newStyle.cardIconContainer,
+            pressed && SHADOWS.large
+          ]}>
+            {({ pressed }) => {
+              return (
+                <Image source={(icons.teamsIcon)} style={[
+                  newStyle.cardIcon,
+                  pressed && { opacity: .70 }
+                ]} />
+              );
+            }}
+
+
+          </Pressable>
         </View>
+
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Pressable onPress={() => router.push(`/player-page/AllPlayers`)} style={({ pressed }) => [
+            newStyle.cardIconContainer,
+            pressed && SHADOWS.large
+          ]}>
+            {({ pressed }) => {
+              return (
+                <Image source={(icons.playerCardIcon)} style={[
+                  newStyle.cardIcon,
+                  pressed && { opacity: 0.7 }
+                ]} />
+              );
+            }}
+          </Pressable>
+        </View>
+
+      </View>
     </BackImg>
   )
 };
@@ -319,7 +319,7 @@ const MainPage = () =>{ // main page will be split into thirds three views
 //           keyExtractor={(item, index) => item.name + index.toString()}
 //           renderItem={({ item }) => <TeamCard item={item} />}
 //         />
-        
+
 //         <Players/>
 
 //         {/* will be turned into <Learn/> */}
@@ -347,20 +347,21 @@ const newStyle = StyleSheet.create({
   },
 
   greetingText: {
-    color: "#FFFFFF", marginTop: 40, padding: 5, fontFamily: FONTS.medium, fontSize: 20, 
+    color: "#FFFFFF", marginTop: 40, padding: 5, fontFamily: FONTS.medium, fontSize: 20,
     textAlign: "center", textAlignVertical: "center"
   },
-  textContainer_Center:{
+  textContainer_Center: {
     flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center"
   },
 
   learningTileContainer: {
-  marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170, 
-  alignItems: "center", justifyContent: "center", 
-  shadowColor: SHADOWS.medium.shadowColor,
-  shadowOffset: SHADOWS.medium.shadowOffset,
-  shadowRadius: SHADOWS.medium.shadowRadius,
-  shadowOpacity: SHADOWS.medium.shadowOpacity},
+    marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170,
+    alignItems: "center", justifyContent: "center",
+    shadowColor: SHADOWS.medium.shadowColor,
+    shadowOffset: SHADOWS.medium.shadowOffset,
+    shadowRadius: SHADOWS.medium.shadowRadius,
+    shadowOpacity: SHADOWS.medium.shadowOpacity
+  },
 
   learningTileImg: {
     width: 170,
@@ -370,7 +371,7 @@ const newStyle = StyleSheet.create({
   },
 
   cardIconContainer: {
-    borderRadius: 10, width: 170, height: 230, alignItems: "center", 
+    borderRadius: 10, width: 170, height: 230, alignItems: "center",
     justifyContent: "center", marginBottom: 40
   },
 
