@@ -26,19 +26,19 @@ const teamsPage = () =>{
         <BackImg>
             {/* Search Bar*/}
             {/*Card UI */}
-            <View style={{ flex: 3.8}}>
+            <View style={{ flex: 4}}>
                 <Teams />
             </View>
 
             {/*Fav icon*/}
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginBottom: 20 }}>
-                    <Pressable style={({ pressed }) => [{ paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
+                    <Pressable style={({ pressed }) => [{ paddingLeft: 13, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
                     pressed && SHADOWS.large
                     ]}>
                         {({ pressed }) => {
                             return (
                                 // will do an animation on pressed later
-                                <Image source={(icons.favIcon)} style={[
+                                <Image source={(icons.favIcon_U)} style={[
                                     { width: 80, height: 80, resizeMode: "contain", borderRadius: 9 },
                                     pressed && { opacity: 0.70 },
                                 ]} />

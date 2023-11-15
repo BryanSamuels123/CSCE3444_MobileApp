@@ -25,14 +25,11 @@ const Teams = () => {
 
     const handleToggle = (type) => {
 
-        // player
+        // team
         if (type === 0) {
-            setSortTogglePlayer((prevState) => (prevState === 2 ? 0 : prevState + 1));
-        }
-        //team
-        else {
             setSortToggleTeam((prevState) => (prevState === 2 ? 0 : prevState + 1));
         }
+        //team
 
     }
 
@@ -48,7 +45,7 @@ const Teams = () => {
     else {
         filteredData = (searchQuery) ?
             result.data.filter((team) =>
-                team.teamame.toLowerCase().includes(searchQuery.toLowerCase()))
+                team.teamName.toLowerCase().includes(searchQuery.toLowerCase()))
             : result.data;
     }
 
@@ -87,34 +84,19 @@ const Teams = () => {
     }
 
     const handleSort = () => {
-        if (sortTogglePlayer === 0 && sortToggleTeam === 0) {
+        if (sortToggleTeam === 0) {
             setNewData([]);
             return;
         }
 
         const sortedData = [...result.data];
 
-        // Team Name sorting
+        //Team Name sorting
         if (sortToggleTeam === 1) {
             sortedData.sort((a, b) => a.teamName.localeCompare(b.teamName));
         } else if (sortToggleTeam === 2) {
             sortedData.sort((a, b) => b.teamName.localeCompare(a.teamName));
         }
-
-        // Player Name sorting
-        if (sortTogglePlayer === 1) {
-            sortedData.sort((a, b) => a.playerName.localeCompare(b.playerName));
-        } else if (sortTogglePlayer === 2) {
-            sortedData.sort((a, b) => b.playerName.localeCompare(a.playerName));
-        }
-
-        // // Update the data
-        // setSortToggleTeam(sortOrderTeam === 2 ? 0 : sortOrderTeam + 1);
-        // setSortTogglePlayer(sortOrderPlayer === 2 ? 0 : sortOrderPlayer + 1);
-
-        // console.log(sortedData);
-
-        // filteredData = sortedData;
         setNewData(sortedData);
         console.log(newData)
     };
@@ -124,12 +106,11 @@ const Teams = () => {
         <View style={{ flex: 1 }}>
 
             <Modal visible={shown} transparent={true} animationType="slide">
-                {/* Ask them if just having it slide all the way or doing it like this is better  */}
+
                 <View style={{ flex: 1, backgroundColor: "#00000066", justifyContent: "flex-end" }} onLayout={() => setModalOverlay("#00000066")}>
                     <TouchableWithoutFeedback style={{ flex: 0.6 }} onPress={() => {
                         setShown(false)
                         handleSort()
-                        // setModalOverlay("#00000000")
                     }}>
                         <View style={{ flex: 1 }} />
                     </TouchableWithoutFeedback>
@@ -144,25 +125,16 @@ const Teams = () => {
                         </View>
 
 
-
-
-
-
-
-
-                        {/* teams button and players button */}
+                        {/* teams button*/}
                         <View style={{ flex: 2, flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
 
 
                             <View style={{ flex: 1, flexDirection: "row" }} >
                                 <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
                                     <TouchableOpacity onPress={() => {
-                                        // setShown(false)
-                                        handleToggle(1);
-                                        // setModalOverlay("#0000000")
+                                        handleToggle(0);
                                     }} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
-                                        {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
-                                        <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 28 }}>
+                                        <View style={{ height: 180, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 28 }}>
                                             <Text style={{ fontFamily: FONTS.regular, fontSize: 18, color: COLORS.lightGray }}>Team Name</Text>
                                         </View>
                                     </TouchableOpacity>
@@ -171,25 +143,6 @@ const Teams = () => {
                                     {getIcon(sortToggleTeam)}
                                 </View>
                             </View>
-
-                            <View style={{ flex: 1, flexDirection: "row" }} >
-                                <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
-                                    <TouchableOpacity onPress={() => {
-                                        // setShown(false)
-                                        handleToggle(0);
-                                        // setModalOverlay("#0000000")
-                                    }} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
-                                        {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
-                                        <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 28 }}>
-                                            <Text style={{ fontFamily: FONTS.regular, fontSize: 18, color: COLORS.lightGray }}>Player Name</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ flex: 1, alignItems: "flex-start", justifyContent: "flex-start" }}>
-                                    {getIcon(sortTogglePlayer)}
-                                </View>
-                            </View>
-
                         </View>
 
 
@@ -220,10 +173,8 @@ const Teams = () => {
 
                     {/* sort button */}
                     <View style={{ flex: 2.2, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end", paddingRight: 10 }}>
-                        {/* maybe does the same thing with less code */}
                         <TouchableOpacity onPress={() => {
                             setShown(true)
-                            // setModalOverlay("#0000066")
                         }} style={{ height: 45, width: "100%", justifyContent: "center", borderRadius: 10 }}>
                             <View backgroundColor={COLORS.pastelPurpleLow} style={{ height: 45, borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small }}>
                                 <Text style={{ fontFamily: FONTS.regular, fontSize: 14 }}>Sort</Text>
@@ -265,7 +216,7 @@ const Teams = () => {
                 </View>
             }
 
-            <View style={{ flex: 3.2, justifyContent: "center", alignItems: "center", marginTop: 10 }}>
+            <View style={{ flex: 3.2, justifyContent: "center", alignItems: "center", marginTop: 5 }}>
                 {result.isLoading ? (
                     <ActivityIndicator size="large" colors={COLORS.lightBlue} />
                 ) : result.error ? (
@@ -305,10 +256,5 @@ const styles = StyleSheet.create({
         color: COLORS.light,
     }
     ,
-    cardContainer: {
-        backgroundColor: COLORS.orange,
-        margin: 5,
-        width: 140,
-        height: 120,
-    },
+
 });

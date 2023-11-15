@@ -47,7 +47,7 @@ const TeamCard = ({ item }, handleNavigate) => {
 
   let imgSource = (item.teamLogoURI != null) ? {uri: item.teamLogoURI} : images.defaultPlayerPic;
   return(
-    <ImageBackground source={images.background0} style={style.CardContainer} imageStyle={{resizeMode: "contain", borderRadius:20}}>
+    <ImageBackground source={images.background0} style={style.CardContainer} imageStyle={{resizeMode: "stretch", borderRadius:20}}>
       <Pressable style={({pressed})=>[
         { flex : 1 }
       ]}>
@@ -56,13 +56,14 @@ const TeamCard = ({ item }, handleNavigate) => {
             <View style={[
               {flex : 1}, pressed && { opacity: 0.8, ...SHADOWS.small}
             ]}>
-
+              {/*Team Name and Location*/}
               <View>
-                <Text style={{color: COLORS.light}}> {item.teamName} </Text>
-                <Text style={{color: COLORS.light}}>{item.city}</Text>
+                <Text style={style.TeamNameLayout}> {item.teamName}</Text>
+                <Image source={(backImages[item.teamAbv])} style={style.ImageLayout}/>
+                <Text style={style.TeamLocation}>{item.city}</Text>
               </View>
+              {/*Team Logo*/}
               <View>
-              <Image source={(backImages[item.teamAbv])} style={style.ImageLayout}/>
               </View>
             </View>
           );
@@ -78,32 +79,35 @@ const TeamCard = ({ item }, handleNavigate) => {
     CardContainer: {
       margin: 5,
       width: 342.7,
-      height: 540,
+      height: 300,
     },
     ImageLayout: {
-      width: 150,
-      height: 150,
-      resizeMode:
-      "cover",
+      alignItems:"center",
+      justifyContent: "center",
+      marginTop: 30,
+      marginLeft: 90,
+      width: 160,
+      height: 160,
+      
       borderRadius: 20,
     },
     TeamNameLayout: {
-      textAlign: "left",
-      color: "#121212",
-      fontSize: 10,
-      position: "absolute",
-      left: 3,
-      top: 15,
+      color: COLORS.light,
+      fontSize: 25,
+      flexDirection: "row",
+      textAlign: "center",
+      justifyContent: "flex-start",
       fontWeight: "bold",
-      width: 140,
     },
-    TeamConferenceLayout: {
-      textAlign: "left",
-      color: "#121212",
-      fontSize: 10,
+    TeamLocation: {
+      textAlign: "center",
+      alignItems: "center",
+      flexDirection: "row",
+      color: COLORS.light,
       position: "absolute",
-      top: 5,
-      left: 3,
+      marginLeft: 90,
+      fontSize: 25,
+      marginTop: 220,
     },
     TeamStatsLayout: {
       marginTop: 5,
