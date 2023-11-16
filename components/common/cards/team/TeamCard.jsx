@@ -1,77 +1,112 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity} from "react-native";
+import { StyleSheet, TouchableOpacity,Image, View, Pressable, ImageBackground} from "react-native";
 import { Card, Text } from "react-native-paper";
-import { COLORS } from "../../../../constants";
+import { COLORS, images, SHADOWS, FONTS } from "../../../../constants";
 import { Link } from "expo-router";
 
-const TeamCard = ({ item }) => {
-    return (
-      <Link href={item.link} asChild>
-        <TouchableOpacity>
-          <Card style={style.CardContainer}>
-            <Card.Cover
-              style={style.ImageLayout}
-              source={{ uri: item.teamlogo }}
-            />
-            <Card.Cover style={style.TeamStatsLayout} />
-            <Card.Content>
-              <Text style={style.TeamConferenceLayout}>{item.conference}</Text>
-              <Text style={style.TeamNameLayout}>{item.name}</Text>
-              <Text style={style.StatsTitle}>Stats</Text>
-              <Text style={style.StatsList}>
-                Win: {item.wins}
-                {"\n"}
-                L: {item.loses}
-                {"\n"}
-                W%: {item.winPercent}
-                {"\n"}
-                STRK: {item.streak}
-                {"\n"}
-                L10: {item.last10}
-                {"\n"}
-              </Text>
-            </Card.Content>
-          </Card>
-        </TouchableOpacity>
-      </Link>
-    );
-  };
+const backImages = {
+  "ATL": images.hawksLogo,
+  "BKN": images.netsLogo,
+  "BOS": images.celtsLogo,
+  "CHA": images.hornetsLogo,
+  "CHI": images.bullsLogo,
+  "CLE": images.cavsLogo,
+  "DAL": images.mavsLogo,
+  "DEN": images.nuggetsLogo,
+  "DET": images.pistonsLogo,
+  "GSW": images.warriorsLogo,
+  "HOU": images.rocketsLogo,
+  "IND": images.pacersLogo,
+  "LAC": images.clippersLogo,
+  "LAL": images.lakersLogo,
+  "MEM": images.grizzliesLogo,
+  "MIA": images.heatLogo,
+  "MIL": images.bucksLogo,
+  "MIN": images.timberLogo,
+  "NA": images.defBackground,
+  "NOP": images.pelicansLogo,
+  "NYK": images.knicksLogo,
+  "OKC": images.thunderLogo,
+  "ORL": images.magicLogo,
+  "PHI": images.sixersLogo,
+  "PHX": images.sunsLogo,
+  "POR": images.trailLogo,
+  "SAC": images.kingsLogo,
+  "SAS": images.spursLogo,
+  "TOR": images.raptorsLogo,
+  "UTA": images.jazzLogo,
+  "WAS": images.wizardsLogo,
+};
+
+const tempImg = require("../../../../assets/images/teamLogos/defaultPlayer.jpeg")
+
+//create TeamCard that will be used throughout the flatlist
+const TeamCard = ({ item }, handleNavigate) => {
+
+  console.log(item)
+
+  let imgSource = (item.teamLogoURI != null) ? {uri: item.teamLogoURI} : images.defaultPlayerPic;
+  return(
+    <ImageBackground source={images.background0} style={style.CardContainer} imageStyle={{resizeMode: "stretch", borderRadius:20}}>
+      <Pressable style={({pressed})=>[
+        { flex : 1 }
+      ]}>
+        {({ pressed }) => {
+          return (
+            <View style={[
+              {flex : 1}, pressed && { opacity: 0.8, ...SHADOWS.small}
+            ]}>
+              {/*Team Name and Location*/}
+              <View>
+                <Text style={style.TeamNameLayout}> {item.teamName}</Text>
+                <Image source={(backImages[item.teamAbv])} style={style.ImageLayout}/>
+              </View>
+              {/*Team Logo*/}
+              <View>
+              </View>
+            </View>
+          );
+        }}
+
+        </Pressable>
+  </ImageBackground>
+  );
+};
   export default TeamCard;
   
   const style = StyleSheet.create({
     CardContainer: {
-      backgroundColor: COLORS.orange,
       margin: 5,
-      width: 160,
-      height: 125,
+      width: 342.7,
+      height: 300,
     },
     ImageLayout: {
-      marginTop: 5,
-      marginHorizontal: 3,
-      width: 85,
-      height: 85,
-      borderWidth: 0.5,
-      borderRadius: 10,
-      borderColor: "#121212",
-      backgroundColor: "transparent",
+      alignItems:"center",
+      justifyContent: "center",
+      marginTop: 30,
+      marginLeft: 90,
+      width: 160,
+      height: 160,
+      
+      borderRadius: 20,
     },
     TeamNameLayout: {
-      textAlign: "left",
-      color: "#121212",
-      fontSize: 10,
-      position: "absolute",
-      left: 3,
-      top: 15,
+      color: COLORS.light,
+      fontSize: 25,
+      flexDirection: "row",
+      textAlign: "center",
+      justifyContent: "flex-start",
       fontWeight: "bold",
-      width: 140,
     },
-    TeamConferenceLayout: {
-      textAlign: "left",
-      color: "#121212",
-      fontSize: 10,
+    TeamLocation: {
+      textAlign: "center",
+      alignItems: "center",
+      flexDirection: "row",
+      color: COLORS.light,
       position: "absolute",
-      top: 5,
-      left: 3,
+      marginLeft: 90,
+      fontSize: 25,
+      marginTop: 220,
     },
     TeamStatsLayout: {
       marginTop: 5,

@@ -66,6 +66,39 @@ import defaultPlayerPic from "../assets/images/playerHeadShots/defaultPlayer.jpe
 import popUpBackground from "../assets/images/pop-upBackground.png";
 import popUpBackground2 from "../assets/images/pop-upBackground2.png";
 import popUpBackground3 from "../assets/images/pop-upBackground3.png";
+import background0 from "../assets/images/teamBackgrounds/background-0.png";
+import sixersLogo from "../assets/images/teamLogos/76ersLogo.png"
+import bucksLogo from "../assets/images/teamLogos/bucksLogo.png"
+import bullsLogo from "../assets/images/teamLogos/bullsLogo.png"
+import cavsLogo from "../assets/images/teamLogos/cavaliersLogo.png"
+import celtsLogo from "../assets/images/teamLogos/celticsLogo.png"
+import clippersLogo from "../assets/images/teamLogos/clippersLogo.png"
+import grizzliesLogo from "../assets/images/teamLogos/grizzliesLogo.png"
+import hawksLogo from "../assets/images/teamLogos/hawksLogo.png"
+import heatLogo from "../assets/images/teamLogos/heatLogo.png"
+import hornetsLogo from "../assets/images/teamLogos/hornetsLogo.png"
+import jazzLogo from "../assets/images/teamLogos/jazzLogo.png"
+import kingsLogo from "../assets/images/teamLogos/kingsLogo.png"
+import knicksLogo from "../assets/images/teamLogos/knicksLogo.png"
+import lakersLogo from "../assets/images/teamLogos/lakersLogo.png"
+import magicLogo from "../assets/images/teamLogos/magicLogo.png"
+import mavsLogo from "../assets/images/teamLogos/mavsLogo.png"
+import netsLogo from "../assets/images/teamLogos/netsLogo.png"
+import nuggetsLogo from "../assets/images/teamLogos/nuggetsLogo.png"
+import pacersLogo from "../assets/images/teamLogos/pacersLogo.png"
+import pelicansLogo from "../assets/images/teamLogos/pelicansLogo.png"
+import pistonsLogo from "../assets/images/teamLogos/pistonsLogo.png"
+import raptorsLogo from "../assets/images/teamLogos/raptorsLogo.png"
+import rocketsLogo from "../assets/images/teamLogos/rocketsLogo.png"
+import spursLogo from "../assets/images/teamLogos/spursLogo.png"
+import sunsLogo from "../assets/images/teamLogos/sunsLogo.png"
+import thunderLogo from "../assets/images/teamLogos/thunderLogo.png"
+import timberLogo from "../assets/images/teamLogos/timberwolvesLogo.png"
+import trailLogo from "../assets/images/teamLogos/trail-blazersLogo.png"
+import warriorsLogo from "../assets/images/teamLogos/warriorsLogo.png"
+import wizardsLogo from "../assets/images/teamLogos/wizardsLogo.png"
+
+
 
 export default {
     defaultPlayerPic,
@@ -103,7 +136,38 @@ export default {
     defBackground,
     popUpBackground,
     popUpBackground2,
-    popUpBackground3
+    popUpBackground3,
+    background0,
+    sixersLogo,
+    bucksLogo,
+    bullsLogo,
+    cavsLogo,
+    celtsLogo,
+    clippersLogo,
+    grizzliesLogo,
+    hawksLogo,
+    heatLogo,
+    hornetsLogo,
+    jazzLogo,
+    kingsLogo,
+    knicksLogo,
+    lakersLogo,
+    magicLogo,
+    mavsLogo,
+    netsLogo,
+    nuggetsLogo,
+    pacersLogo,
+    pelicansLogo,
+    pistonsLogo,
+    raptorsLogo,
+    rocketsLogo,
+    spursLogo,
+    sunsLogo,
+    thunderLogo,
+    timberLogo,
+    trailLogo,
+    warriorsLogo,
+    wizardsLogo,
 };
 
 // export default {
