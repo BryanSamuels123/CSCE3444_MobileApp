@@ -60,7 +60,6 @@ const TeamCard = ({ item }, handleNavigate) => {
               <View>
                 <Text style={style.TeamNameLayout}> {item.teamName}</Text>
                 <Image source={(backImages[item.teamAbv])} style={style.ImageLayout}/>
-                <Text style={style.TeamLocation}>{item.city}</Text>
               </View>
               {/*Team Logo*/}
               <View>
