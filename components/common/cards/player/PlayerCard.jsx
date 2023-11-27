@@ -53,10 +53,17 @@ const PlayerCard = ({ item }, handleNavigate) => {
   // may need to change in the future if doesn't catch all errors
   let imgSource = (item.playerHeadshot != null) ? { uri: item.playerHeadshot } : images.defaultPlayerPic;
 
+  let fontColor = (item.teamAbv !== "NA") ? "#FFFFFF" : "#000000"
+
+  if (item.teamAbv === "NA"){
+    item.teamName = "National Basketball Association";
+  }
+
+  // console.log(fontColor)
   return (
 
     <ImageBackground source={(backImages[item.teamAbv])} style={styles.cardContainer} imageStyle={{ resizeMode: "contain", borderRadius: 20 }}>
-      <Pressable style={({ pressed }) => [
+      <Pressable onPress={() =>{console.log(item.teamAbv)}} style={({ pressed }) => [
         { flex: 1 }
       ]}>
         {({ pressed }) => {
@@ -83,16 +90,16 @@ const PlayerCard = ({ item }, handleNavigate) => {
 
                     {/* position */}
                     <View style={styles.posContainer}>
-                      <Text style={styles.posText}>POS{"\n"}{item.position}</Text>
+                      <Text style={{...styles.posText, color: fontColor}}>POS{"\n"}{item.position}</Text>
                     </View>
 
                     {/* number */}
-                    <Text style={styles.numberContainer}>#{item.jerseyNumber}</Text>
+                    <Text style={{...styles.numberContainer, color: fontColor}}>#{item.jerseyNumber}</Text>
                   </View>
 
                   {/* name section */}
                   <View style={styles.nameContainer}>
-                    <Text style={styles.nameText}>{item.playerName}</Text>
+                    <Text style={{...styles.nameText, color: fontColor}}>{item.playerName}</Text>
                   </View>
 
                 </View>
@@ -104,18 +111,18 @@ const PlayerCard = ({ item }, handleNavigate) => {
               <View style={styles.statsTopContainer}>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>PPG</Text>
-                  <Text style={styles.statsText}>{item.PTS}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>PPG</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.PTS}</Text>
                 </View>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>FG%</Text>
-                  <Text style={styles.statsText}>{item.FG_PERCENT}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>FG%</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.FG_PERCENT}</Text>
                 </View>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>AST</Text>
-                  <Text style={styles.statsText}>{item.AST}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>AST</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.AST}</Text>
                 </View>
 
               </View>
@@ -124,18 +131,18 @@ const PlayerCard = ({ item }, handleNavigate) => {
               <View style={{ flex: 0.9, flexDirection: "row" }}>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>REB</Text>
-                  <Text style={styles.statsText}>{item.REB}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>REB</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.REB}</Text>
                 </View>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>BPM</Text>
-                  <Text style={styles.statsText}>{item.PLUS_MINUS}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>BPM</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.PLUS_MINUS}</Text>
                 </View>
 
                 <View style={styles.statsHeaderContainer}>
-                  <Text style={styles.statsHeader}>TOV</Text>
-                  <Text style={styles.statsText}>{item.TOV}</Text>
+                  <Text style={{...styles.statsHeader, color: fontColor}}>TOV</Text>
+                  <Text style={{...styles.statsText, color: fontColor}}>{item.TOV}</Text>
                 </View>
 
               </View>
@@ -143,7 +150,7 @@ const PlayerCard = ({ item }, handleNavigate) => {
 
               {/* team name section */}
               <View style={styles.teamNameContainer}>
-                <Text style={styles.teamNameText}>{item.teamName}</Text>
+                <Text style={{...styles.teamNameText, color: fontColor}}>{item.teamName}</Text>
               </View>
 
             </View>
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
   },
 
   posText: {
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     fontFamily: FONTS.light,
     fontSize: 16,
     textAlign: "center"
@@ -204,7 +211,7 @@ const styles = StyleSheet.create({
   numberContainer: {
     marginRight: 20,
     marginTop: 10,
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     fontFamily: FONTS.light,
     fontSize: 16
   },
@@ -217,7 +224,7 @@ const styles = StyleSheet.create({
   },
 
   nameText: {
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     lineHeight: 20,
     fontFamily: FONTS.light,
     fontSize: 20,
@@ -242,7 +249,7 @@ const styles = StyleSheet.create({
   },
 
   statsHeader: {
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     fontFamily: FONTS.light,
     fontSize: 24,
     textAlign: "center",
@@ -250,7 +257,7 @@ const styles = StyleSheet.create({
   },
 
   statsText: {
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     fontFamily: FONTS.light,
     fontSize: 16,
     textAlign: "center"
@@ -264,7 +271,7 @@ const styles = StyleSheet.create({
   },
 
   teamNameText: {
-    color: "#FFFFFF",
+    // color: "#FFFFFF",
     fontFamily: FONTS.light,
     fontSize: 16,
     textAlign: "center",
