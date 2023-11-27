@@ -21,7 +21,7 @@ const fetchHook = (endpoint, query) =>{ // takes in a string(endpoint) and an ob
         setIsLoading(true);
 
         try{
-            const resp = await fetch(`http://18.191.156.254:8000/${endpoint}`, params);
+            const resp = await fetch(`http://18.118.102.93:8000/${endpoint}`, params);
             const data =  await resp.json();
             setData(data);
             // console.log("FetchHook is being called again");
