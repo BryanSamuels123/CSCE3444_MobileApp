@@ -343,9 +343,50 @@ def getTeamLogo():
         if {"teamName": name, "src": src} not in nLogos:
             nLogos.append({"teamName": name, "src": src})
     print(nLogos)
+    
+def checkDb():
+    try:
+        conn = sqlite3.connect("/Users/bryan/Desktop/CSCE/projects/CSCE-3444/mobile_app/Data-Functions/Players-TeamsOnServer.db")
+        cur = conn.cursor()
+    except:
+        print("Cannot connect to database")
+        return -1
+
+    data = list()
+    coolData = list()  
+    finData = list()  
+    
+    # data = cur.execute("Select * from Players").fetchall()
+    
+    # coolData = cur.execute("Select  Players.*, Teams.teamName, Teams.teamAbv, StatsPerGame2022_2023.PTS, StatsPerGame2022_2023.AST, StatsPerGame2022_2023.REB, StatsPerGame2022_2023.FG_PERCENT, StatsPerGame2022_2023.TOV, StatsPerGame2022_2023.PLUS_MINUS  from   Players  INNER JOIN StatsPerGame2022_2023 On StatsPerGame2022_2023.PLAYER_ID = Players.id INNER JOIN Teams On Players.currentTeam = Teams.id").fetchall()
+    # # print(len(data))
+    # # print(len(coolData))
+
+    # check = False
+    
+    # for item in data:
+       
+    #     for nitem in coolData:
+    #         # print (nitem[1], item[1])
+    #         # return
+    #         if item[1] == nitem[1]:
+    #             check = True
+    #             break
+    #     if (check == False):
+    #         finData.append(item)
+    #     check = False
+    finData = [7, 19, 21, 24, 34, 37, 45, 48, 50, 51, 56, 61, 66, 69, 74, 77, 81, 89, 96, 97, 102, 103, 107, 114, 115, 122, 133, 153, 154, 162, 163, 164, 166, 167, 170, 173, 177, 180, 186, 200, 201, 204, 218, 220, 224, 225, 226, 231, 232, 237, 238, 243, 255, 259, 261, 263, 264, 272, 275, 291, 292, 315, 316, 318, 321, 323, 330, 340, 346, 358, 361, 363, 364, 365, 366, 377, 387, 394, 397, 399, 405, 406, 414, 419, 420, 421, 422, 426, 430, 442, 452, 467, 472, 473, 476, 479, 483, 488, 492, 494, 495, 496, 501, 504, 508, 519, 520, 522, 526, 528, 532, 533, 536, 539, 543, 546, 552, 553, 555, 556, 565, 571, 572, 589, 593]
+    # print(len(finData))
+    for item in finData:
+        cur.execute("Update StatsPerGame2022_2023 set PTS='NA', AST='NA', REB='NA', FG_PERCENT='NA', TOV='NA', PLUS_MINUS='NA' where PLAYER_ID=(?)", (item,))
+        conn.commit()
+    #     # print(item)
+    
+    conn.close()
         
+checkDb()
     # for logo in logos:
     #     name 
-getTeamLogo()
+# getTeamLogo()
 
 # function will be to load the player database
