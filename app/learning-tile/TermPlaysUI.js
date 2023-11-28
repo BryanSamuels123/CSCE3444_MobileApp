@@ -1,8 +1,8 @@
 import * as React from "react";
 import { SafeAreaView, Text, Image, View, StyleSheet, ScrollView, FlatList } from "react-native";
-import { COLORS } from "../constants";
+import { COLORS, FONTS } from "../../constants";
 import { StatusBar } from "expo-status-bar";
-import { BackImg } from "../components";
+import { BackImg } from "../../components";
 
 
   const TermPlaysPage = () => {
@@ -105,22 +105,22 @@ import { BackImg } from "../components";
 
   return (
     <BackImg>
-      <SafeAreaView>
-      <ScrollView>
-      <View style={styles.AdditionalCard}>
-        <Text style={styles.additionalCardText}> Welcome To The </Text>
-        <Text style={styles.additionalCardText}> Terms & Plays Page </Text>
-      </View>
+    <SafeAreaView style={{flex: 1}}>
+      
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Welcome To The</Text>
+          <Text style={styles.headerText}>Terms & Plays Page</Text>
+        </View>
 
-      <View style={styles.AdditionalCard2}>
-     <Text style={styles.additionalCardText2}> TERMS </Text>
-      </View>
+        <View style={styles.section}>
+          <View style={{flex: 1, alignItems: "center", marginTop: 50}}>
+            <Text style={styles.sectionHeader}>TERMS</Text>
+          </View>
+          
 
-        <FlatList
-          data={terms}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.Card}>
+          {terms.map((item) => (
+            <View style={styles.card2} key={item.id}>
               <Image source={{ uri: "https://guineeconakry.online/wp-content/uploads/2022/10/bask.jpeg" }} style={styles.image} />
               <View style={styles.textContainer}>
                 <Text style={styles.termText}>{item.term}</Text>
@@ -129,48 +129,67 @@ import { BackImg } from "../components";
                 </View>
               </View>
             </View>
-          )}
-        />
-     
-     <View style={styles.AdditionalCard2}>
-     <Text style={styles.additionalCardText2}> PLAYS </Text>
-      </View>
-
-    <FlatList
-      data={plays}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.Card2}>
-          <View style={styles.textContainer2}>
-            <Text style={styles.playsText}>{item.term}</Text>
+          ))}
             </View>
-          <View style={styles.topContainer}>
-            <Image source={{ uri: item.imageUrl }} style={styles.image2} />
+
+        <View style={styles.section}>
+          <View style={{flex: 1, alignItems: "center", marginTop: 10, marginBottom: 10}}>
+            <Text style={styles.sectionHeader}>PLAYS</Text>
           </View>
-            <View style={styles.textContainer3}>
-            <Text style={styles.playsText2}>{item.termDef}</Text>
+          
+
+          {plays.map((item) => (
+            <View style={styles.card} key={item.id}>
+              <View style={styles.textContainer2}>
+                <Text style={styles.playsText}>{item.term}</Text>
+              </View>
+              <View style={styles.topContainer}>
+                <Image source={{ uri: item.imageUrl }} style={styles.image2} />
+              </View>
+              <View style={styles.textContainer3}>
+                <Text style={styles.playsText2}>{item.termDef}</Text>
+              </View>
+            </View>
+          ))}
         </View>
-        </View>
-      )}
-      />
       </ScrollView>
-      </SafeAreaView>
+    </SafeAreaView>
     </BackImg>
   );
 };
 
-export default TermPlaysPage;
-
 const styles = StyleSheet.create({
-  AdditionalCard: {
+  container: {
+    flex: 1,
+    // backgroundColor: '#fff', // Set your background color
+  },
+  header: {
+    padding: 16,
+    alignItems: 'center',
+     // Set your header background color
+  },
+  headerText: {
+    fontSize: 25,
+    fontFamily: FONTS.medium
+  },
+  section: {
+    margin: 16,
+  },
+  sectionHeader: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  card: {
     flexDirection: 'column',
     padding: 16,
     marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: "transparent",
+    marginHorizontal: 10,
+    backgroundColor: 'lightblue', // Set your card background color
     borderRadius: 8,
-    alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -179,42 +198,14 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  additionalCardText: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "black",
-  },
-  AdditionalCard2: {
+  card2: {
     flexDirection: 'column',
     padding: 16,
     marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: "transparent",
+    marginHorizontal: 10,
+    backgroundColor: COLORS.gold, // Set your card background color
     borderRadius: 8,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  additionalCardText2: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "white",
-  },
-  Card: {
-    flexDirection: 'column',
-    padding: 16,
-
-    marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: COLORS.orange,
-    borderRadius: 8,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -224,19 +215,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: 380,
+    width: '100%',
     height: 150,
     borderRadius: 4,
-    marginLeft: -6,
-
   },
   textContainer: {
     marginTop: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   termText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    alignItems: "center"
   },
   bottomContainer: {
     marginTop: 10,
@@ -245,31 +235,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
   },
- Card2: {
-    padding: 16,
+  textContainer2: {
+    flexDirection: 'column',
+    flex: 1,
+    textAlignVertical: 'center',
     marginVertical: 8,
-    marginHorizontal: 16,
-    backgroundColor: 'lightblue',
-    borderRadius: 8,
-    shadowColor: '#000',
-    alignItems: "center",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  },
+  textContainer3: {
+    flexDirection: 'column',
+    textAlignVertical: 'middle',
   },
   topContainer: {
     marginRight: 10,
   },
   image2: {
-    width: 180,
+    width: '100%',
     height: 170,
     borderRadius: 4,
     marginBottom: 8,
-    alignItems:"center",
   },
   playsText: {
     fontSize: 18,
@@ -277,16 +260,8 @@ const styles = StyleSheet.create({
   },
   playsText2: {
     fontSize: 18,
-    textAlignVertical: "center",
-  },
-  textContainer2: {
-    flexDirection: 'column',
-    flex: 1, 
-    textAlignVertical: "center",
-    marginVertical: 8,
-  },
-  textContainer3: {
-    flexDirection: 'column',
-    verticalAlign: 'middle'
+    textAlignVertical: 'center',
   },
 });
+
+export default TermPlaysPage;
