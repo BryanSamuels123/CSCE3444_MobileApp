@@ -238,7 +238,7 @@ const MainPage = () => { // main page will be split into thirds three views
         {/* Learning Tile */}
         <View style={{ flex: 1, justifyContent: "center" }}>
 
-          <Pressable onPress={() => router.push("/learning-tile/allLearning")} style={({ pressed }) => [ // must use array of styles for conditional styling
+          <Pressable onPress={() => router.push("/learning-tile/TermPlaysUI")} style={({ pressed }) => [ // must use array of styles for conditional styling
             newStyle.learningTileContainer,
             pressed && SHADOWS.large
           ]}>
