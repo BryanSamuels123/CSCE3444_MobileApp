@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput, TouchableOpacity, Modal, ImageBackground, TouchableWithoutFeedback, Image } from "react-native";
+import { StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput, TouchableOpacity, Modal, ImageBackground, TouchableWithoutFeedback, Image, Animated } from "react-native";
 import PlayerCard from "../../common/cards/player/PlayerCard";
 import { useRouter } from "expo-router";
 import fetchHook from "../../../hook/fetchHook";
 import { COLORS, SIZES, FONTS, SHADOWS, images, icons } from "../../../constants";
 
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const Players = () => {
 
@@ -116,9 +117,13 @@ const Players = () => {
 
         // filteredData = sortedData;
         setNewData(sortedData);
-        console.log(newData)
+        // console.log(newData)
     };
 
+
+    // for use in the flatlist animation
+    const y = new Animated.Value(0);
+    const onScroll = Animated.event([{nativeEvent: {contentOffset: {y}}}], {useNativeDriver: true}); 
 
     return (
         <View style={{ flex: 1 }}>
@@ -269,16 +274,25 @@ const Players = () => {
                 {result.isLoading ? (
                     <ActivityIndicator size="large" colors={COLORS.lightBlue} />
                 ) : result.error ? (
-                    <Text style={style.list}>Something Went Wrong</Text> // style text
+                    <Text style={styles.list}>Something Went Wrong</Text> // style text
                 ) : (
-                    <FlatList
+                    //implementing deck of cards
+                    
+                    <AnimatedFlatList
                         vertical
+                        scrollEventThrottle={16}
+                        snapToAlignment={"center"}
+                        snapToInterval={550}
+                        decelerationRate={"fast"}
+                        removeClippedSubviews={true}
+                        bounces={false} // stops the cards from bouncing when scrolled to top or bottom
                         showsVerticalScrollIndicator={false}
                         data={((newData.length > 0) && (searchQuery == "")) ? newData : filteredData}
                         keyExtractor={(item) => item.id} // can remove question mark to test errors; ? skips items without id's but all should have id's
-                        renderItem={({ item }) => (<PlayerCard item={item} handleNavigate={() => router.push(`player-page${item.id}`)} />)}
+                                                                // the decompression allows to pass the y component like this.
+                        renderItem={({ index, item }) => (<PlayerCard {...{y, index}} item={item} handleNavigate={() => router.push(`player-page${item.id}`)} />)}
                         initialNumToRender={10}
-
+                        {...{onScroll}}
                     // extraData={name}
                     />
                 )

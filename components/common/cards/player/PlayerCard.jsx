@@ -1,16 +1,11 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity, Image, Pressable, View, Text, ImageBackground } from "react-native";
+import { StyleSheet, TouchableOpacity, Image, Pressable, View, Text, ImageBackground, Animated, Dimensions} from "react-native";
 import { Card } from "react-native-paper";
 import { COLORS, images, SHADOWS, FONTS } from "../../../../constants";
 import { useRouter } from "expo-router";
 import { Link } from "expo-router";
 
-/* From the React Native Paper Lib 
 
-The Text containers are what need to be changed to dynamicly pull from database.
-If need be, this can just be put into MainPage.js.
-on press it 
-*/
 const backImages = {
   "ATL": images.hawksBackground,
   "BKN": images.netsBackground,
@@ -45,9 +40,16 @@ const backImages = {
   "WAS": images.wizardsBackground
 };
 
-const tempImg = require("../../../../assets/images/playerHeadShots/headShot-151.png")
+const CARD_HEIGHT = 550;
+const { height: wHeight } = Dimensions.get("window");
+const height = wHeight - 64;
+// const tempImg = require("../../../../assets/images/playerHeadShots/headShot-151.png")
 
-const PlayerCard = ({ item }, handleNavigate) => {
+// PlayerCardProps = {
+
+// }
+
+const PlayerCard = ({ item, y , index}, handleNavigate) => {
 
   // console.log(item)
   // may need to change in the future if doesn't catch all errors
@@ -56,14 +58,37 @@ const PlayerCard = ({ item }, handleNavigate) => {
   let fontColor = (item.teamAbv !== "NA") ? "#FFFFFF" : "#000000"
 
   if (item.teamAbv === "NA"){
-    item.teamName = "National Basketball Association";
+    item.teamName = "National Basketball\nAssociation";
   }
+
+
+  // card Height is 540 + margin height
+  const position = Animated.subtract(index * CARD_HEIGHT, y);
+  const isDisappearing = -CARD_HEIGHT;
+  const isTop = 0;
+  const isBottom = height - CARD_HEIGHT;
+  const isAppearing = height;
+  const translateY = Animated.add(y, y.interpolate({
+                // add really small value so the first one will show up
+    inputRange: [0, 0.00001 + index * CARD_HEIGHT],
+    outputRange: [0, -index * CARD_HEIGHT],
+    extrapolateRight: "clamp"
+  }));
+
+  // references for the disappearing and reappearing animation
+  const scale = position.interpolate({
+    inputRange: [isDisappearing, isTop, isBottom, isAppearing],
+    outputRange: [0.75, 1, 1, 0.75],
+    extrapolate:"clamp"
+  });
+
+
 
   // console.log(fontColor)
   return (
-
+    <Animated.View style={[{flex: 1}, {transform: [{translateY}, {scale}] }] }>
     <ImageBackground source={(backImages[item.teamAbv])} style={styles.cardContainer} imageStyle={{ resizeMode: "contain", borderRadius: 20 }}>
-      <Pressable onPress={() =>{console.log(item.teamAbv)}} style={({ pressed }) => [
+      <Pressable onPress={() => console.log(index)} style={({ pressed }) => [
         { flex: 1 }
       ]}>
         {({ pressed }) => {
@@ -158,6 +183,7 @@ const PlayerCard = ({ item }, handleNavigate) => {
         }}
       </Pressable>
     </ImageBackground>
+    </Animated.View>
   );
 };
 
