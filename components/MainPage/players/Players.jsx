@@ -126,7 +126,7 @@ const Players = () => {
     const onScroll = Animated.event([{nativeEvent: {contentOffset: {y}}}], {useNativeDriver: true}); 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
 
             <Modal visible={shown} transparent={true} animationType="slide">
                 {/* Ask them if just having it slide all the way or doing it like this is better  */}
@@ -147,18 +147,9 @@ const Players = () => {
                                 Sort By:
                             </Text>
                         </View>
-
-
-
-
-
-
-
-
-                        {/* teams button and players button */}
-                        <View style={{ flex: 2, flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: 10 }}>
-
-
+                        {/* sort teams button and players button */}
+                        <View style={{ flex: 2, flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: 10}}>
+                            
                             <View style={{ flex: 1, flexDirection: "row" }} >
                                 <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
                                     <TouchableOpacity onPress={() => {
@@ -221,7 +212,7 @@ const Players = () => {
             {result.isLoading ? (
                 <ActivityIndicator size="large" colors={COLORS.lightBlue} />
             ) :
-                <View style={{ flex: .6, justifyContent: "center", flexDirection: "row-reverse" }}>
+                <View style={{ flex: .3, justifyContent: "center", flexDirection: "row-reverse" , paddingTop: 10}}>
 
                     {/* sort button */}
                     <View style={{ flex: 2.2, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end", paddingRight: 10 }}>
@@ -270,7 +261,7 @@ const Players = () => {
                 </View>
             }
 
-            <View style={{ flex: 3.2, justifyContent: "center", alignItems: "center", marginTop: 10 }}>
+            <View style={{ flex: 3.2, justifyContent: "center", alignItems: "center", marginTop: 10}}>
                 {result.isLoading ? (
                     <ActivityIndicator size="large" colors={COLORS.lightBlue} />
                 ) : result.error ? (

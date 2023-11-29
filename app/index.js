@@ -33,16 +33,15 @@ const Home = () => {
   
 
   // return (
-  //   <NavigationContainer independent={true} style={{ flex: 1 }}>
+  //   <NavigationContainer independent={true} style={{ height: 25 }}>
   //     <Drawer.Navigator
-  //       initialRouteName="Home"
+  //       initialRouteName="home"
   //       screenOptions={{
-  //         headerStyle: { backgroundColor: COLORS.darkSecond },
-  //         headerTintColor: COLORS.light,
-  //         headerTitle: "",
-  //       }}
+  //         headerTransparent: false
+  //     }}
   //     >
-  //       <Drawer.Screen name="Home" component={NavBar} />
+  //       <Drawer.Screen name="home" component={MainPage} />
+  //       <Drawer.Screen name="players" component={PlayersPage}/>
   //     </Drawer.Navigator>
   //   </NavigationContainer>
   // );

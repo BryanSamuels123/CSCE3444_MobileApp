@@ -2,38 +2,34 @@ import { useState } from "react";
 import { View, Text, FlatList, Image, ImageBackground, Pressable, SafeAreaView } from "react-native";
 import { SHADOWS, COLORS, icons } from "../../constants";
 import fetchHook from "../../hook/fetchHook";
-import { BackImg } from "../../components";
+import { BackImg, MenuButton, SideMenu } from "../../components";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Players } from "../../components";
 import { useRouter } from "expo-router";
 
-const playersPage = () => {
+const PlayersPage = () => {
     const router = useRouter();
-    // const result = fetchHook("playerData", {playerName: "all"});
 
-    // if (!data) console.error("NO DATA, CHECK API CALL OR SERVER")
+    const [shown, setShown] = useState(false)
 
-    const [searchQuery, setSearchQuery] = useState("all"); //by default display all players
-    const [doSearch, setDoSearch] = useState(false); // tell the list to call its search function
-    const [res, setResult] = useState([]);
-
-
-
-    const onSearch = ({ result }) => {
-        console.log("in players page", result)
-        setResult(result);
-
+    const openMenu = () =>{
+        setShown(true);
     }
-
-    // const endSearch = () =>{
-    //     setDoSearch(false);
-    // }
-
-    // console.log(searchQuery);
+    
+    const closeMenu = () =>{
+        setShown(false);
+    }
 
     return (
         // Page Wrapper
         <BackImg>
+            
+            <SideMenu toggleState={shown} updateState={closeMenu}/>
+
+            {/* menu button */}
+            <View style={{flex: .3, marginTop: 20}}>
+                <MenuButton handlePress={openMenu}/>
+            </View>
 
             {/* Search bar*/}
             {/* Card Stack UI */}
@@ -82,4 +78,4 @@ const playersPage = () => {
         </BackImg>
     )
 };
-export default playersPage;
+export default PlayersPage;
