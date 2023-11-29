@@ -220,7 +220,7 @@ const Teams = () => {
                 {result.isLoading ? (
                     <ActivityIndicator size="large" colors={COLORS.lightBlue} />
                 ) : result.error ? (
-                    <Text style={style.list}>Something Went Wrong</Text> // style text
+                    <Text style={styles.list}>Something Went Wrong</Text> // style text
                 ) : (
                     <FlatList
                         vertical
