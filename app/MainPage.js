@@ -136,7 +136,7 @@ const MainPage = () => { // main page will be split into thirds three views
       <View style={{ flex: 1, flexDirection: "row" }} >
 
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Pressable onPress={() => router.push("/TeamUI")} style={({ pressed }) => [
+          <Pressable onPress={() => router.push("/team-page/AllTeams")} style={({ pressed }) => [
             newStyle.cardIconContainer,
             pressed && SHADOWS.large
           ]}>
