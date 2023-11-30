@@ -3,7 +3,7 @@ import { Stack, useRouter } from "expo-router";
 import { SafeAreaView, View } from "react-native";
 import { Button, Divider, Text } from "react-native-paper";
 import PlayerList from "../components/Compare/PlayerList";
-import { BackImg } from "../components";
+import { BackImg, SideMenu, MenuButton } from "../components";
 import { SHADOWS, COLORS, icons } from "../constants";
 import CompareCard from "../components/Compare/CompareCard"
 
@@ -51,9 +51,34 @@ const Compare = () => {
   );
 
 
+  const [shown, setShown] = React.useState(false);
+
+  const openMenu = () =>{
+      setShown(true);
+  }
+  
+  const closeMenu = () =>{
+      setShown(false);
+  }
+
+  const chasePage = (route) =>{
+      // console.log(route);
+      setShown(false);
+      router.push(route);
+  }
+
+
   return (
     <BackImg>
-    <SafeAreaView style={{ flex: 1, marginTop: 40 }}>
+
+
+      <SideMenu toggleState={shown} updateState={closeMenu} followSlug={chasePage} isRoot={false}/>
+      {/* menu button */}
+      <View style={{flex: 0.08, marginTop: 20}}>
+          <MenuButton handlePress={openMenu}/>
+      </View>
+
+    <SafeAreaView style={{ flex: 1}}>
       <View style={{ flex: 1, alignItems: 'center',justifyContent: "center", marginTop: 10}}>
         {showTopList && <PlayerList passObjectToParent={receiveObjectFromGrandChild} />}
         {showTopPlayer && <TopCard />}
