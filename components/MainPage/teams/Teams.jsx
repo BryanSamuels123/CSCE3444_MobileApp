@@ -169,7 +169,7 @@ const Teams = () => {
             {result.isLoading ? (
                 <ActivityIndicator size="large" colors={COLORS.lightBlue} />
             ) :
-                <View style={{ flex: .6, justifyContent: "center", flexDirection: "row-reverse" }}>
+                <View style={{ flex: 0.4, justifyContent: "center", flexDirection: "row-reverse"}}>
 
                     {/* sort button */}
                     <View style={{ flex: 2.2, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end", paddingRight: 10 }}>

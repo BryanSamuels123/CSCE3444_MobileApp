@@ -65,6 +65,7 @@ const NewsWidget = () => {
             {/* Displays loading indicator or the news list */}
             {isLoading ? <ActivityIndicator /> : (
                 <FlatList horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                     data={data}
                     keyExtractor={(item, index) => {
                         //console.log("index", index)

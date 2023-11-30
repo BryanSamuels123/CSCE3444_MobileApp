@@ -55,7 +55,7 @@ const PlayerCard = ({ item, y , index}, handleNavigate) => {
   // may need to change in the future if doesn't catch all errors
   let imgSource = (item.playerHeadshot != null) ? { uri: item.playerHeadshot } : images.defaultPlayerPic;
 
-  let fontColor = (item.teamAbv !== "NA") ? "#FFFFFF" : "#000000"
+  let fontColor = ((item.teamAbv !== "NA") && (item.teamAbv !== "UTA") && (item.teamAbv !== "GSW") && (item.teamAbv !== "MIA") && (item.teamAbv !== "LAL") && (item.teamAbv !== "SAS")) ? "#FFFFFF" : "#000000"
 
   if (item.teamAbv === "NA"){
     item.teamName = "National Basketball\nAssociation";
@@ -116,6 +116,11 @@ const PlayerCard = ({ item, y , index}, handleNavigate) => {
                     {/* position */}
                     <View style={styles.posContainer}>
                       <Text style={{...styles.posText, color: fontColor}}>POS{"\n"}{item.position}</Text>
+                    </View>
+
+                    {/* height */}
+                    <View style={{...styles.posContainer, paddingRight: 10}}>
+                      <Text style={{...styles.posText, color: fontColor}}>HT{"\n"}{item.height.replace(/-/g, "' ")}</Text>
                     </View>
 
                     {/* number */}
@@ -235,7 +240,7 @@ const styles = StyleSheet.create({
   },
 
   numberContainer: {
-    marginRight: 20,
+    marginRight: 25,
     marginTop: 10,
     // color: "#FFFFFF",
     fontFamily: FONTS.light,
