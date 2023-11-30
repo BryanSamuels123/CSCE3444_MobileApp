@@ -131,7 +131,7 @@ const Players = () => {
             <Modal visible={shown} transparent={true} animationType="slide">
                 {/* Ask them if just having it slide all the way or doing it like this is better  */}
                 <View style={{ flex: 1, backgroundColor: "#00000066", justifyContent: "flex-end" }} onLayout={() => setModalOverlay("#00000066")}>
-                    <TouchableWithoutFeedback style={{ flex: 0.6 }} onPress={() => {
+                    <TouchableWithoutFeedback style={{ flex: 0.2 }} onPress={() => {
                         setShown(false)
                         handleSort()
                         // setModalOverlay("#00000000")
@@ -139,7 +139,7 @@ const Players = () => {
                         <View style={{ flex: 1 }} />
                     </TouchableWithoutFeedback>
 
-                    <ImageBackground style={{ flex: 0.4, alignItems: "center" }} resizeMode="stretch" source={images.popUpBackground3} >
+                    <ImageBackground style={{ flex: 0.8, alignItems: "center" }} resizeMode="stretch" source={images.popUpBackground3} >
 
                         {/* title */}
                         <View style={{ flex: 0.6, width: "80%", justifyContent: "flex-start", flexDirection: "row" }} >
