@@ -11,7 +11,8 @@ const COLORS = {
     gold: "#FDCD51",
     white: "#FFFFFF",
     pastelPurpleLow: "#A3A9CE80",  // color with alpha value (opacity: 50%),
-    pastelPurpleHigh: "#A3A9CEFF"  // color with alpha value (opacity: 90%)
+    pastelPurpleHigh: "#A3A9CEFF", // color with alpha value (opacity: 90%)
+    linkBlue: "#0377FC"
 };
 
 const FONTS = { //not all fonts are defined from the package only these ones, you can add them here and require them in _layout.js if needed

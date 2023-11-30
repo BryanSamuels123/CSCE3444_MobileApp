@@ -1,17 +1,19 @@
 // will clean up components, and put into own files in last sprint
 
-import * as React from "react";
+import {useState} from "react";
 import {
   Text,
   StyleSheet,
   View,
   Image,
-  Pressable
+  Pressable,
+  SafeAreaView
 } from "react-native";
 import { COLORS, FONTS, icons, images, SHADOWS } from "../constants";
 import { BackImg } from "../components";
 import { useRouter } from "expo-router";
 import NewsWidget from "./NewsWidget";
+import {SideMenu, MenuButton} from "../components";
 
 
 const greetings = {
@@ -93,82 +95,123 @@ const MainPage = () => { // main page will be split into thirds three views
     return greet;
   }
 
+  const [shown, setShown] = useState(false);
+
+    const openMenu = () =>{
+        setShown(true);
+    }
+    
+    const closeMenu = () =>{
+        setShown(false);
+    }
+
+    const chasePage = (route) =>{
+        // console.log(route);
+        setShown(false);
+        router.push(route);
+    }
+
 
   return (
 
     <BackImg>
-      {/* shadow problem here */}
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View style={newStyle.textContainer_Center}>
-          <Text style={newStyle.greetingText}>{genGreet()}</Text>
-        </View>
 
-        {/* Learning Tile */}
+
+
+      {/* <View backgroundColor={"blue"} style={{flex: .01}}>
+
+      </View> */}
+
+      <View style={{flex: 1}} >
+
+        {/* shadow problem here */}
+        <View style={{flex: 1, flexDirection: "column"}}>
+
+        <SideMenu toggleState={shown} updateState={closeMenu} followSlug={chasePage} isRoot={false}/>
+
+        {/* menu button */}
+        <View style={{flex: .3, marginTop: 20}}>
+            <MenuButton handlePress={openMenu}/>
+        </View> 
+
+
+          <View style={{ flex: 1, flexDirection: "row"}}>
+            <View style={newStyle.textContainer_Center}>
+              <Text style={newStyle.greetingText}>{genGreet()}</Text>
+            </View>
+
+            {/* Learning Tile */}
+            <View style={{ flex: 1, justifyContent: "center" }}>
+
+              <Pressable onPress={() => router.push("/learning-tile/TermPlaysUI")} style={({ pressed }) => [ // must use array of styles for conditional styling
+                newStyle.learningTileContainer,
+                pressed && SHADOWS.large
+              ]}>
+                {({ pressed }) => {
+                  return (
+                    // an array of styles is used here
+                    <Image source={(icons.learningTile_F)} style={[
+                      newStyle.learningTileImg,
+                      pressed && { opacity: .80 }
+                    ]} />
+                  );
+                }}
+
+              </Pressable>
+              <View style={{alignItems: "center"}}>
+                <Text style={{fontFamily: FONTS.regular, color: COLORS.white, fontSize: 14, paddingRight: 10, paddingTop:10}}>Learning Tile</Text>
+              </View>
+              
+            </View>
+
+          </View>
+        </View>       
+
+        {/* news feed will go here */}
         <View style={{ flex: 1, justifyContent: "center" }}>
-
-          <Pressable onPress={() => router.push("/learning-tile/TermPlaysUI")} style={({ pressed }) => [ // must use array of styles for conditional styling
-            newStyle.learningTileContainer,
-            pressed && SHADOWS.large
-          ]}>
-            {({ pressed }) => {
-              return (
-                // an array of styles is used here
-                <Image source={(icons.learningTile_F)} style={[
-                  newStyle.learningTileImg,
-                  pressed && { opacity: .80 }
-                ]} />
-              );
-            }}
-
-          </Pressable>
+          <NewsWidget />
         </View>
 
-      </View>
 
+        {/* houses the players and teams icons */}
+        <View style={{ flex: 1, flexDirection: "row" }} >
 
-      {/* news feed will go here */}
-      <View style={{ flex: 0.7 }}>
-        <NewsWidget />
-      </View>
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Pressable onPress={() => router.push("/team-page/AllTeams")} style={({ pressed }) => [
+              newStyle.cardIconContainer,
+              pressed && SHADOWS.large
+            ]}>
+              {({ pressed }) => {
+                return (
+                  <Image source={(icons.teamsIcon)} style={[
+                    newStyle.cardIcon,
+                    pressed && { opacity: .70 }
+                  ]} />
+                );
+              }}
+            </Pressable>
 
+            <Text style={{marginBottom: 10, fontFamily: FONTS.light, color: COLORS.white, fontSize: 14}}>Teams</Text>
+          </View>
 
-      {/* houses the players and teams icons */}
-      <View style={{ flex: 1, flexDirection: "row" }} >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center"}}>
+            <Pressable onPress={() => router.push(`/player-page/AllPlayers`)} style={({ pressed }) => [
+              newStyle.cardIconContainer,
+              pressed && SHADOWS.large
+            ]}>
+              {({ pressed }) => {
+                return (
+                  <Image source={(icons.playerCardIcon)} style={[
+                    newStyle.cardIcon,
+                    pressed && { opacity: 0.7 }
+                  ]} />
+                );
+              }}
+            </Pressable>
+            <Text style={{marginBottom: 10, fontFamily: FONTS.light, color: COLORS.white, fontSize: 14}}>Players</Text>
+          </View>
 
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Pressable onPress={() => router.push("/TeamUI")} style={({ pressed }) => [
-            newStyle.cardIconContainer,
-            pressed && SHADOWS.large
-          ]}>
-            {({ pressed }) => {
-              return (
-                <Image source={(icons.teamsIcon)} style={[
-                  newStyle.cardIcon,
-                  pressed && { opacity: .70 }
-                ]} />
-              );
-            }}
-
-
-          </Pressable>
         </View>
-
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Pressable onPress={() => router.push(`/player-page/AllPlayers`)} style={({ pressed }) => [
-            newStyle.cardIconContainer,
-            pressed && SHADOWS.large
-          ]}>
-            {({ pressed }) => {
-              return (
-                <Image source={(icons.playerCardIcon)} style={[
-                  newStyle.cardIcon,
-                  pressed && { opacity: 0.7 }
-                ]} />
-              );
-            }}
-          </Pressable>
-        </View>
-
       </View>
     </BackImg>
   )
@@ -215,15 +258,15 @@ const newStyle = StyleSheet.create({
   },
 
   greetingText: {
-    color: "#FFFFFF", marginTop: 40, padding: 5, fontFamily: FONTS.medium, fontSize: 20,
+    color: "#FFFFFF", padding: 5, fontFamily: FONTS.medium, fontSize: 20,
     textAlign: "center", textAlignVertical: "center"
   },
   textContainer_Center: {
-    flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center"
+    flex: 1, alignItems: "center", justifyContent: "center", textAlign: "center", paddingTop: 0
   },
 
   learningTileContainer: {
-    marginLeft: 5, marginTop: 40, borderRadius: 10, width: 170, height: 170,
+    marginLeft: 5, paddingTop: 0, borderRadius: 10, width: 170, height: 170,
     alignItems: "center", justifyContent: "center",
     shadowColor: SHADOWS.medium.shadowColor,
     shadowOffset: SHADOWS.medium.shadowOffset,
@@ -240,7 +283,7 @@ const newStyle = StyleSheet.create({
 
   cardIconContainer: {
     borderRadius: 10, width: 170, height: 230, alignItems: "center",
-    justifyContent: "center", marginBottom: 40
+    justifyContent: "center", marginBottom: 0
   },
 
   cardIcon: {

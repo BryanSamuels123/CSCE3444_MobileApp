@@ -20,11 +20,18 @@ const PlayersPage = () => {
         setShown(false);
     }
 
+    const chasePage = (route) =>{
+        // console.log(route);
+        setShown(false);
+        router.push(route);
+        
+    }
+    
     return (
         // Page Wrapper
         <BackImg>
             
-            <SideMenu toggleState={shown} updateState={closeMenu}/>
+            <SideMenu toggleState={shown} updateState={closeMenu} followSlug={chasePage} isRoot={false}/>
 
             {/* menu button */}
             <View style={{flex: .3, marginTop: 20}}>

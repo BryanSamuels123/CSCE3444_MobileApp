@@ -1,13 +1,15 @@
-import * as React from "react";
+import {useState} from "react";
 import { SafeAreaView, Text, Image, View, StyleSheet, ScrollView, FlatList } from "react-native";
 import { COLORS, FONTS } from "../../constants";
 import { StatusBar } from "expo-status-bar";
-import { BackImg } from "../../components";
+import { BackImg, SideMenu, MenuButton } from "../../components";
+import { useRouter } from "expo-router";
 
 
-  const TermPlaysPage = () => {
 
-  const terms = [
+const TermPlaysPage = () => {
+    const router = useRouter();
+    const terms = [
         {  id:1, term: "Airball", 
           termDef: "The ball misses the hoop and backboard entirely." 
         },
@@ -103,64 +105,90 @@ import { BackImg } from "../../components";
         },
   ];
 
+  const [shown, setShown] = useState(false);
+
+  const openMenu = () =>{
+      setShown(true);
+  }
+  
+  const closeMenu = () =>{
+      setShown(false);
+  }
+
+  const chasePage = (route) =>{
+      // console.log(route);
+      setShown(false);
+      router.push(route);
+  }
+
+
   return (
     <BackImg>
-    <SafeAreaView style={{flex: 1}}>
-      
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Welcome To The</Text>
-          <Text style={styles.headerText}>Terms & Plays Page</Text>
-        </View>
+        <View style={{flex: 1}}>
+        <SideMenu toggleState={shown} updateState={closeMenu} followSlug={chasePage} isRoot={false}/>
 
-        <View style={styles.section}>
-          <View style={{flex: 1, alignItems: "center", marginTop: 50}}>
-            <Text style={styles.sectionHeader}>TERMS</Text>
-          </View>
-          
 
-          {terms.map((item) => (
-            <View style={styles.card2} key={item.id}>
-              <Image source={{ uri: "https://guineeconakry.online/wp-content/uploads/2022/10/bask.jpeg" }} style={styles.image} />
-              <View style={styles.textContainer}>
-                <Text style={styles.termText}>{item.term}</Text>
-                <View style={styles.bottomContainer}>
-                  <Text style={styles.definitionText}>{item.termDef}</Text>
+        
+        <ScrollView style={styles.container}>
+
+            {/* menu button */}
+            <View style={{height: 50, marginTop: 20}}>
+                <MenuButton handlePress={openMenu}/>
+            </View>
+
+            <View style={styles.header}>
+            <Text style={styles.headerText}>Welcome To The</Text>
+            <Text style={styles.headerText}>Terms & Plays Page</Text>
+            </View>
+
+            <View style={styles.section}>
+            <View style={{flex: 1, alignItems: "center", marginTop: 50}}>
+                <Text style={styles.sectionHeader}>TERMS</Text>
+            </View>
+            
+
+            {terms.map((item) => (
+                <View style={styles.card2} key={item.id}>
+                <Image source={{ uri: "https://guineeconakry.online/wp-content/uploads/2022/10/bask.jpeg" }} style={styles.image} />
+                <View style={styles.textContainer}>
+                    <Text style={styles.termText}>{item.term}</Text>
+                    <View style={styles.bottomContainer}>
+                    <Text style={styles.definitionText}>{item.termDef}</Text>
+                    </View>
                 </View>
-              </View>
-            </View>
-          ))}
-            </View>
+                </View>
+            ))}
+                </View>
 
-        <View style={styles.section}>
-          <View style={{flex: 1, alignItems: "center", marginTop: 10, marginBottom: 10}}>
-            <Text style={styles.sectionHeader}>PLAYS</Text>
-          </View>
-          
-
-          {plays.map((item) => (
-            <View style={styles.card} key={item.id}>
-              <View style={styles.textContainer2}>
-                <Text style={styles.playsText}>{item.term}</Text>
-              </View>
-              <View style={styles.topContainer}>
-                <Image source={{ uri: item.imageUrl }} style={styles.image2} />
-              </View>
-              <View style={styles.textContainer3}>
-                <Text style={styles.playsText2}>{item.termDef}</Text>
-              </View>
+            <View style={styles.section}>
+            <View style={{flex: 1, alignItems: "center", marginTop: 10, marginBottom: 10}}>
+                <Text style={styles.sectionHeader}>PLAYS</Text>
             </View>
-          ))}
+            
+
+            {plays.map((item) => (
+                <View style={styles.card} key={item.id}>
+                <View style={styles.textContainer2}>
+                    <Text style={styles.playsText}>{item.term}</Text>
+                </View>
+                <View style={styles.topContainer}>
+                    <Image source={{ uri: item.imageUrl }} style={styles.image2} />
+                </View>
+                <View style={styles.textContainer3}>
+                    <Text style={styles.playsText2}>{item.termDef}</Text>
+                </View>
+                </View>
+            ))}
+            </View>
+        </ScrollView>
         </View>
-      </ScrollView>
-    </SafeAreaView>
     </BackImg>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 10,
     // backgroundColor: '#fff', // Set your background color
   },
   header: {
