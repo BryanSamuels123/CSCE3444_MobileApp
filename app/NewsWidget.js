@@ -37,7 +37,7 @@ const NewsCard = ({ item }) => {
 //Function to get the current year and month.
 function getDate() {
     const today = new Date();
-    const month = today.getMonth() + 1;
+    const month = today.getMonth();
     const year = today.getFullYear();
     //console.log(year + '-' + month) testing output of date. 
     return year + '-' + month;
@@ -51,7 +51,7 @@ const NewsWidget = () => {
     useEffect(() => {
         date = getDate();
         //Gets the 10 most recent news articles with NBA in the title or description and sorts by popularity
-        axios.get(`https://newsapi.org/v2/everything?q=NBA&pageSize=10&from=${date}&sortBy=popularity&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description`)
+        axios.get(`https://newsapi.org/v2/everything?q=NBA&pageSize=10&sortBy=popularity&apiKey=207ebfb92a7b450998044884cd52bd3d&language=en&searchIn=title,description`)
             .then(({ data }) => {
                 //console.log("defaultApp -> data", data.articles) This is to check the data from the API
                 setData(data.articles)
