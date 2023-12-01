@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Stack, useRouter } from "expo-router";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Pressable, Image } from "react-native";
 import { Button, Divider, Text } from "react-native-paper";
 import PlayerList from "../components/Compare/PlayerList";
-import { BackImg, SideMenu, MenuButton } from "../components";
+import { BackImg, SideMenu, MenuButton} from "../components";
 import { SHADOWS, COLORS, icons } from "../constants";
 import CompareCard from "../components/Compare/CompareCard"
 
@@ -88,16 +88,29 @@ const Compare = () => {
         {showBotList && <PlayerList passObjectToParent={receiveObjectFromGrandChild2} />}
         {showBotPlayer && <BotCard />}
       </View>
-      <View style={{ flex: .06, flexDirection: "row", alignItems: 'center'  }} >
-        <Text style={{marginBottom: 0}}>Top Button</Text>
-      </View>
       <View style={{ flex: .4, flexDirection: "row", alignItems: 'center'  }} >
-        <Button compact="true" style={{ marginLeft:25, marginRight: 25, paddingBottom: 5}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleTop()}>
-          Toggle Top List
-        </Button>
-        <Button compact="true" style={{ marginRight:25, marginLeft:25}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleBot()}>
-          Toggle Bottom List
-        </Button>
+      <Pressable onPress={() => toggleTop()} style={({ pressed }) => [{ paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
+                    pressed && SHADOWS.large
+                    ]}>
+                        {({ pressed }) => {
+                            return (
+                                <Image source={(icons.Cleartop)} style={[{ width: 80, height: 80, resizeMode: "center", borderRadius: 10 },
+                                pressed && { opacity: 0.70 }
+                                ]} />
+                            );
+                        }}
+                    </Pressable>
+      <Pressable onPress={() => toggleBot()} style={({ pressed }) => [{ paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
+                    pressed && SHADOWS.large
+                    ]}>
+                        {({ pressed }) => {
+                            return (
+                                <Image source={(icons.Clearbot)} style={[{ width: 80, height: 80, resizeMode: "center", borderRadius: 10 },
+                                pressed && { opacity: 0.70 }
+                                ]} />
+                            );
+                        }}
+                    </Pressable>
       </View>
     </SafeAreaView>
     </BackImg>
