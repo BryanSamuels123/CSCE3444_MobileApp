@@ -37,7 +37,7 @@ const NewsCard = ({ item }) => {
 //Function to get the current year and month.
 function getDate() {
     const today = new Date();
-    const month = today.getMonth() + 1;
+    const month = today.getMonth();
     const year = today.getFullYear();
     //console.log(year + '-' + month) testing output of date. 
     return year + '-' + month;
