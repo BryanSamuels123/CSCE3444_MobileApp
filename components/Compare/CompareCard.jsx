@@ -55,7 +55,7 @@ const CompareCard = ({ item }, handleNavigate) => {
 
   return (
 
-    <ImageBackground source={(backImages[item.teamAbv])} style={styles.cardContainer} imageStyle={{ resizeMode: "contain", borderRadius: 20 }}>
+    <ImageBackground source={(backImages[item.teamAbv])} style={styles.cardContainer} imageStyle={{ resizeMode: "cover", borderRadius: 20, width: 340, height:220 }}>
       <Pressable style={({ pressed }) => [
         { flex: 1 }
       ]}>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     width: 340, //342.7 or 330 ?
-    height: 260, //540 or 520 ?
+    height: 220, //540 or 520 ?
     margin: 5,
     ...SHADOWS.medium
   },

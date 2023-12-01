@@ -79,20 +79,23 @@ const Compare = () => {
       </View>
 
     <SafeAreaView style={{ flex: 1}}>
-      <View style={{ flex: 1, alignItems: 'center',justifyContent: "center", marginTop: 10}}>
+      <View style={{ flex: 1, alignItems: 'center',justifyContent: "center"}}>
         {showTopList && <PlayerList passObjectToParent={receiveObjectFromGrandChild} />}
         {showTopPlayer && <TopCard />}
       </View>
       <Divider />
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: "center", marginTop: 10 }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: "center"}}>
         {showBotList && <PlayerList passObjectToParent={receiveObjectFromGrandChild2} />}
         {showBotPlayer && <BotCard />}
       </View>
-      <View style={{ flex: .6, flexDirection: "row", alignItems: 'center'  }} >
-        <Button compact="true" style={{ margin:50}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleTop()}>
+      <View style={{ flex: .06, flexDirection: "row", alignItems: 'center'  }} >
+        <Text style={{marginBottom: 0}}>Top Button</Text>
+      </View>
+      <View style={{ flex: .4, flexDirection: "row", alignItems: 'center'  }} >
+        <Button compact="true" style={{ marginLeft:25, marginRight: 25, paddingBottom: 5}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleTop()}>
           Toggle Top List
         </Button>
-        <Button compact="true" contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleBot()}>
+        <Button compact="true" style={{ marginRight:25, marginLeft:25}} contentStyle={{width:140, height:100, alignContent:"center"}} buttonColor="#4D5AB0" mode="contained" labelStyle={{fontSize: 12, verticalAlign: "middle", fontWeight:"bold",}} onPress={() => toggleBot()}>
           Toggle Bottom List
         </Button>
       </View>

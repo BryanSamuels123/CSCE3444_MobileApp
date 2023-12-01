@@ -86,15 +86,15 @@ const PlayerCardC = ({ item, passObjectToParent }) => {
           />
           <Card.Cover style={style.statsLayout} />
           <Card.Content>
-            <Text style={style.nameLayout}>{item.playerName}</Text>
             <Text style={style.teamLayout}>{item.teamAbv}</Text>
-            <Text style={style.statsTitle}>Stats</Text>
+            <Text style={style.nameLayout}>{item.playerName}</Text>
+            <Text style={style.statsTitle}>Stats:</Text>
             <Text style={style.statsList}>
               PPG: {item.PTS} {"\n"}
               AST: {item.AST} {"\n"}
               REB: {item.REB} {"\n"}
-              FG%: {item.FG_PERCENT} {"\n"}
             </Text>
+            <Text style={style.teamTitle}>Team:</Text>
           </Card.Content>
         </Card>
       </TouchableOpacity>
@@ -109,7 +109,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.orange,
     margin: 5,
     width: 180,
-    height: 180,
+    height: 160,
   },
   imageLayout: {
     marginTop: 5,
@@ -121,22 +121,24 @@ const style = StyleSheet.create({
     borderColor: "#121212",
     backgroundColor: "#121212",
   },
+  teamLayout: {
+    textAlign: "left",
+    color: COLORS.light,
+    fontSize: 14,
+    position: "absolute",
+    right: -5,
+    top: -15,
+    width: 55,
+    fontWeight: "bold",
+  },
   nameLayout: {
     textAlign: "left",
     color: "#121212",
-    fontSize: 16,
+    fontSize: 15,
     position: "absolute",
+    paddingTop: 10,
     paddingLeft: 3,
-    paddingTop:10,
     fontWeight: "bold",
-  },
-  teamLayout: {
-    textAlign: "left",
-    color: "#121212",
-    fontSize: 16,
-    position: "absolute",
-    paddingTop:45,
-    paddingLeft: 3,
   },
   statsLayout: {
     marginTop: 5,
@@ -153,7 +155,7 @@ const style = StyleSheet.create({
     fontSize: 10,
     position: "absolute",
     right: 9,
-    top: -65,
+    top: -70,
     width: 55,
   },
   statsTitle: {
@@ -163,6 +165,16 @@ const style = StyleSheet.create({
     position: "absolute",
     right: 10,
     top: -85,
+    width: 50,
+    fontWeight: "bold",
+  },
+  teamTitle: {
+    textAlign: "center",
+    color: COLORS.light,
+    fontSize: 10,
+    position: "absolute",
+    right: 10,
+    top: -30,
     width: 50,
     fontWeight: "bold",
   },

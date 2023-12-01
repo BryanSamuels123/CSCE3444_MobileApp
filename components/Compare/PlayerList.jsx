@@ -46,7 +46,7 @@ const searchFilteredData = searchText
             placeholder="Search"
             mode= 'outlined'
             dense={true}
-            style={{ backgroundColor: '#fff', Flex: .5, paddingHorizontal: 5, margin: 25 }}
+            style={{ backgroundColor: '#fff', Flex: 1, paddingHorizontal: 5, margin: 5 }}
           />
         {isLoading ? (
           <ActivityIndicator size="large" colors={COLORS.lightBlue} /> 

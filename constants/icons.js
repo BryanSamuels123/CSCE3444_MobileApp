@@ -25,6 +25,7 @@ import statsCompIcon from "../assets/icons/statsCompIcon.png"
 import newMenu from "../assets/icons/newMenu.png"
 import upArrow from "../assets/icons/arrowUpIcon.png";
 import downArrow from "../assets/icons/arrowDownIcon.png";
+import Clearbot from "../assets/icons/ClearBottomCard.png"
 
 
 
@@ -54,5 +55,6 @@ export default {
     statsCompIcon,
     newMenu,
     upArrow,
-    downArrow
+    downArrow,
+    Clearbot
 }
