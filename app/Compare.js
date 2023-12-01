@@ -78,34 +78,34 @@ const Compare = () => {
           <MenuButton handlePress={openMenu}/>
       </View>
 
-    <SafeAreaView style={{ flex: 1}}>
-      <View style={{ flex: 1, alignItems: 'center',justifyContent: "center"}}>
+    <SafeAreaView style={{ flex: .9}}>
+      <View style={{ flex: .9, alignItems: 'center',justifyContent: "center"}}>
         {showTopList && <PlayerList passObjectToParent={receiveObjectFromGrandChild} />}
         {showTopPlayer && <TopCard />}
       </View>
       <Divider />
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: "center"}}>
+      <View style={{ flex: .9, alignItems: 'center', justifyContent: "center"}}>
         {showBotList && <PlayerList passObjectToParent={receiveObjectFromGrandChild2} />}
         {showBotPlayer && <BotCard />}
       </View>
-      <View style={{ flex: .4, flexDirection: "row", alignItems: 'center'  }} >
-      <Pressable onPress={() => toggleTop()} style={({ pressed }) => [{ paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
-                    pressed && SHADOWS.large
+      <View style={{ flex: .4, flexDirection: "row", alignItems: 'center'}} >
+      <Pressable onPress={() => toggleTop()} style={({ pressed }) => [{ marginHorizontal: 15, width: 150, height: 150, alignItems: "center", borderRadius: 0 },
+                    pressed
                     ]}>
                         {({ pressed }) => {
                             return (
-                                <Image source={(icons.Cleartop)} style={[{ width: 80, height: 80, resizeMode: "center", borderRadius: 10 },
+                                <Image source={(icons.Cleartop)} style={[{ width: 150, height: 150, resizeMode: "center", borderRadius: 0 },
                                 pressed && { opacity: 0.70 }
                                 ]} />
                             );
                         }}
                     </Pressable>
-      <Pressable onPress={() => toggleBot()} style={({ pressed }) => [{ paddingRight: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
-                    pressed && SHADOWS.large
+      <Pressable onPress={() => toggleBot()} style={({ pressed }) => [{ marginHorizontal: 15, width: 150, height: 150, alignItems: "center", borderRadius: 0 },
+                    pressed 
                     ]}>
                         {({ pressed }) => {
                             return (
-                                <Image source={(icons.Clearbot)} style={[{ width: 80, height: 80, resizeMode: "center", borderRadius: 10 },
+                                <Image source={(icons.Clearbot)} style={[{ width: 150, height: 150, resizeMode: "center", borderRadius: 0 },
                                 pressed && { opacity: 0.70 }
                                 ]} />
                             );

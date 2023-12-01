@@ -270,8 +270,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     lineHeight: 30,
     paddingTop: 15,
-    paddingLeft: 40,
-    paddingBottom:60,
+    paddingLeft: 55,
+    paddingBottom: 60,
   },
-
 });
