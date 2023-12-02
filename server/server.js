@@ -1,4 +1,4 @@
-// this is the code that is on the server hosted on AWS.
+// this will be where the code for the server will be;
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
@@ -33,6 +33,40 @@ app.get("/", (req, res) =>{
     res.send("<h1>Hello World</h1>")
 })
 
+app.post("/setFav", (req, res) =>{
+    console.log("Working");
+    
+    if (!req.body.id) return res.status(400).send(JSON.stringify({error: "No <id> field in requst body"}));
+    if (req.body.type === null) return res.status(400).send(JSON.stringify({error: "No <type> field in requst body"}));
+
+    const db = createConn();
+
+    if (db === -1){
+        return res.status(500).send(JSON.stringify({error: "Server Failure To Connect To Database"}));
+    }
+
+    // set fav
+    if (req.body.type === 1){
+        db.run("Update Players Set isFavorite=1 where id=?;", [req.body.id] , (err) =>{
+            if (err) {
+                console.error(err);
+                return res.status(500).send(JSON.stringify({error: "Failure To Update isFavorite"}));
+            }
+        })
+    }
+    else if(req.body.type === 0){
+        db.run("Update Players Set isFavorite=0 where id=?", [req.body.id] , (err) =>{
+            if (err) {
+                console.error(err);
+                return res.status(500).send(JSON.stringify({error: "Failure To Update isFavorite"}));
+            }
+        })
+    }
+    
+    db.close();
+    res.status(200).send(JSON.stringify([]));
+
+});
 
 app.post("/playerData", (req, res) =>{ // in the body include type: stats, or type: quick maybe? 
     const playerJson = req.body; //the name of the player
@@ -48,13 +82,13 @@ app.post("/playerData", (req, res) =>{ // in the body include type: stats, or ty
     }
 
     if (playerJson.playerName == "all"){
-        db.all("Select  Players.*, Teams.teamName, Teams.teamAbv, StatsPerGame2022_2023.PTS, StatsPerGame2022_2023.AST, StatsPerGame2022_2023.REB, StatsPerGame2022_2023.FG_PERCENT StatsPerGame2022_2023.TOV, StatsPerGame2022_2023.PLUS_MINUS  from   Players  INNER JOIN StatsPerGame2022_2023 On StatsPerGame2022_2023.PLAYER_ID = Players.id INNER JOIN Teams On Players.currentTeam = Teams.id", [], (err, data) =>{
+        db.all("Select  Players.*, Teams.teamName, Teams.teamAbv, StatsPerGame2022_2023.PTS, StatsPerGame2022_2023.AST, StatsPerGame2022_2023.REB, StatsPerGame2022_2023.FG_PERCENT, StatsPerGame2022_2023.TOV, StatsPerGame2022_2023.PLUS_MINUS  from   Players  INNER JOIN StatsPerGame2022_2023 On StatsPerGame2022_2023.PLAYER_ID = Players.id INNER JOIN Teams On Players.currentTeam = Teams.id", [], (err, data) =>{
             if (err || (!data[0])) {
                 console.error(err);
                 return res.status(500).send(JSON.stringify({error: "DATABASE ERROR QUERYING <all>"}));
             }
             else{
-                console.log(data);
+                console.log(data.length);
                 return res.status(200).send(JSON.stringify(data)); 
             }
         });

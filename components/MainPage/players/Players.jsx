@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput, TouchableOpacity, Modal, ImageBackground, TouchableWithoutFeedback, Image, Animated } from "react-native";
 import PlayerCard from "../../common/cards/player/PlayerCard";
 import { useRouter } from "expo-router";
@@ -8,7 +8,7 @@ import  SortOption  from "../../common/SortOption";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const Players = () => {
+const Players = ({updateIndex}) => {
 
     const [searchQuery, setSearchQuery] = useState("");     // update value of input
     const [phText, setphText] = useState("Search");         //place holder text will be removed on focus 
@@ -17,10 +17,10 @@ const Players = () => {
     const [shown, setShown] = useState(false);
     const [newData, setNewData] = useState([]);
     const [modalOverlay, setModalOverlay] = useState("#00000000");
-    const [sortToggleTeam, setSortToggleTeam] = useState(0);
-    const [sortTogglePlayer, setSortTogglePlayer] = useState(0);
-    const [arrowIcon, setArrowIcon] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     const [isSortSet, setIsSortSet] = useState(false);
+
+    // useRef instead of useState so that values persist across renders
+    
 
     const [iconStateObj, setIconStateObj] = useState({
         firstName: 0,   //1
@@ -38,7 +38,6 @@ const Players = () => {
     });
 
     const varsMap = {
-        height: "height",
         jerseyNumber: "jerseyNumber",
         ppg: "PTS",
         apg: "AST",
@@ -46,17 +45,26 @@ const Players = () => {
         bpm: "PLUS_MINUS",
         tpg: "TOV",
         fgp: "FG_PERCENT",
-        pos: "position"
     }
+
+
+    const viewabilityConfig = {viewAreaCoveragePercentThreshold: 80, minimumViewTime: 300}
+
+    const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+        if (viewableItems && viewableItems.length > 0) {
+            // get id of the currentCard and what type would be supplied to the api to set or reset fav 
+            updateIndex({id: viewableItems[0].item.id, type: (1 - viewableItems[0].item.isFavorite)});
+        }
+    }, []);
+    
 
     const listRef = useRef(null);
     
+    // check if all values are set to zero; will be used to conditionally display the clear button
     let allZero = !(Object.values(iconStateObj).every(value => value === 0));
 
     useEffect(()=> {
-
         setIsSortSet(allZero);
-
     }, [allZero])
 
 
@@ -240,7 +248,7 @@ const Players = () => {
     };
 
     const handleSort = () => {
-        if ((Object.values(iconStateObj).every(value => value === 0)) && sortToggleTeam === 0) {
+        if (Object.values(iconStateObj).every(value => value === 0)) {
             setNewData([]);
             return;
         }
@@ -523,6 +531,7 @@ const Players = () => {
                                     setphText("Search")
                                     setFamily(FONTS.thin)
                                     setColor(COLORS.pastelPurpleLow)
+                                    scrollToTop()
                                 }
                             }}
 
@@ -543,6 +552,8 @@ const Players = () => {
                     //implementing deck of cards
                     
                     <AnimatedFlatList
+                        onViewableItemsChanged={onViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
                         ref={listRef}
                         vertical
                         scrollEventThrottle={16}
