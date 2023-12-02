@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, FlatList, ActivityIndicator, View, TextInput, TouchableOpacity, Modal, ImageBackground, TouchableWithoutFeedback, Image, Animated } from "react-native";
 import PlayerCard from "../../common/cards/player/PlayerCard";
 import { useRouter } from "expo-router";
 import fetchHook from "../../../hook/fetchHook";
 import { COLORS, SIZES, FONTS, SHADOWS, images, icons } from "../../../constants";
+import  SortOption  from "../../common/SortOption";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -18,7 +19,48 @@ const Players = () => {
     const [modalOverlay, setModalOverlay] = useState("#00000000");
     const [sortToggleTeam, setSortToggleTeam] = useState(0);
     const [sortTogglePlayer, setSortTogglePlayer] = useState(0);
-    const [arrowIcon, setArrowIcon] = useState(null);
+    const [arrowIcon, setArrowIcon] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    const [isSortSet, setIsSortSet] = useState(false);
+
+    const [iconStateObj, setIconStateObj] = useState({
+        firstName: 0,   //1
+        lastName: 0,    //2
+        teamName: 0,    //3
+        height: 0,      //4
+        jerseyNumber: 0,
+        ppg: 0,
+        apg: 0,
+        rpg: 0,
+        bpm: 0,
+        tpg: 0,
+        fgp: 0,
+        pos: 0          //5
+    });
+
+    const varsMap = {
+        height: "height",
+        jerseyNumber: "jerseyNumber",
+        ppg: "PTS",
+        apg: "AST",
+        rpg: "REB",
+        bpm: "PLUS_MINUS",
+        tpg: "TOV",
+        fgp: "FG_PERCENT",
+        pos: "position"
+    }
+
+    const listRef = useRef(null);
+    
+    let allZero = !(Object.values(iconStateObj).every(value => value === 0));
+
+    useEffect(()=> {
+
+        setIsSortSet(allZero);
+
+    }, [allZero])
+
+
+    // const setSortToggleIcon
     const router = useRouter();
 
 
@@ -26,17 +68,124 @@ const Players = () => {
 
     const handleToggle = (type) => {
 
+
         // player
-        if (type === 0) {
-            setSortTogglePlayer((prevState) => (prevState === 2 ? 0 : prevState + 1));
+        switch (type){
+
+            case 0:
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    firstName: (prevState.firstName === 2 ? 0 : prevState.firstName + 1)
+                })));
+
+                break;
+
+            case 1:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    lastName: (prevState.lastName === 2 ? 0 : prevState.lastName + 1)
+                })));
+
+
+                break;
+            
+            case 2:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    teamName: (prevState.teamName === 2 ? 0 : prevState.teamName + 1)
+                })));
+
+
+                break;
+            case 3:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    height: (prevState.height === 2 ? 0 : prevState.height + 1)
+                })));
+
+
+                break;
+            case 4:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    jerseyNumber: (prevState.jerseyNumber === 2 ? 0 : prevState.jerseyNumber + 1)
+                })));
+
+
+                break;
+
+
+            case 5:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    bpm: (prevState.bpm === 2 ? 0 : prevState.bpm + 1)
+                })));
+
+                break;
+            case 6:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    ppg: (prevState.ppg === 2 ? 0 : prevState.ppg + 1)
+                })));
+
+                break;
+            case 7:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    apg: (prevState.apg === 2 ? 0 : prevState.apg + 1)
+                })));
+
+                break;
+            case 8:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    rpg: (prevState.rpg === 2 ? 0 : prevState.rpg + 1)
+                })));
+
+
+                break;
+            
+            
+            case 9:
+
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    tpg: (prevState.tpg === 2 ? 0 : prevState.tpg + 1)
+                })));
+                break;
+            
+            case 10:
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    pos: (prevState.pos === 2 ? 0 : prevState.pos + 1)
+                })));
+                break;
+            
+            case 11:
+                setIconStateObj(((prevState) => ({
+                    ...prevState,
+                    fgp: (prevState.fgp === 2 ? 0 : prevState.fgp + 1)
+                })));
+                break;
+
+            default:
+                break;
+
         }
-        //team
-        else {
-            setSortToggleTeam((prevState) => (prevState === 2 ? 0 : prevState + 1));
-        }
+
+        allZero = !(Object.values(iconStateObj).every(value => value === 0));
 
     }
 
+    // const handleSortval = ({stateObj})
 
     let filteredData = [];
 
@@ -53,42 +202,45 @@ const Players = () => {
             : result.data;
     }
 
-
-
-
     const handleSearchQuery = (query) => {
         setSearchQuery(query);
     }
 
 
+    const resetSort = () =>{
 
-    // will handle sort arrow
-    const getIcon = (sortToggle) => {
+        setIconStateObj({
+            firstName: 0,
+            lastName: 0,
+            teamName: 0,
+            height: 0,
+            jerseyNumber: 0,
+            ppg: 0,
+            apg: 0,
+            rpg: 0,
+            bpm: 0,
+            tpg: 0,
+            fgp: 0,
+            pos: 0
+        });
 
-        // let icon = 
-
-        switch (sortToggle) {
-            case 0:
-                return null; // No arrow
-            case 1:
-                return (
-                    <View style={{}}>
-                        <Image source={icons.upArrow} resizeMode="contain" style={{ width: 33, height: 25 }} />
-                    </View>
-                ); // Arrow up
-            case 2:
-                return (
-                    <View style={styles.arrowContainer}>
-                        <Image source={icons.downArrow} resizeMode="contain" style={{ width: 33, height: 25 }} />
-                    </View>
-                ); // Arrow down
-            default:
-                return null;
-        }
+        setNewData([]);
+        setIsSortSet(false);
+        scrollToTop()
     }
 
+
+    const sortNum = (stateVar, dataArray) => {
+        if (iconStateObj[stateVar] === 1) {
+          dataArray.sort((a, b) => b[varsMap[stateVar]] - a[varsMap[stateVar]]);
+        } 
+        else if (iconStateObj[stateVar] === 2) {
+          dataArray.sort((a, b) => a[varsMap[stateVar]] - b[varsMap[stateVar]]);
+        }
+    };
+
     const handleSort = () => {
-        if (sortTogglePlayer === 0 && sortToggleTeam === 0) {
+        if ((Object.values(iconStateObj).every(value => value === 0)) && sortToggleTeam === 0) {
             setNewData([]);
             return;
         }
@@ -96,18 +248,138 @@ const Players = () => {
         const sortedData = [...result.data];
 
         // Team Name sorting
-        if (sortToggleTeam === 1) {
-            sortedData.sort((a, b) => a.teamName.localeCompare(b.teamName));
-        } else if (sortToggleTeam === 2) {
-            sortedData.sort((a, b) => b.teamName.localeCompare(a.teamName));
+        if (iconStateObj.teamName !== 0) {
+            sortedData.sort((a, b) => {
+                
+                let teamNameA = "";
+                let teamNameB = "";
+
+                if (a.teamName ===  "NA"){
+                    teamNameA = (iconStateObj.teamName === 1) ? "ZZZZ ZZZZ" : "AAAA AAAA";
+                }
+                else{
+                    teamNameA = a.teamName;
+                }
+
+                if (b.teamName ===  "NA"){
+                    teamNameB = (iconStateObj.teamName === 2) ? "AAAA AAAA" : "ZZZZ ZZZZ"
+                }
+                else{
+                    teamNameB = b.teamName;
+                }
+                
+                // const teamNameA = (a.teamName === "NA" && iconStateObj.teamName === 1) ? "ZZZZ ZZZZ" : a.teamName;
+                // const teamNameB = (b.teamName === "NA") ? "ZZZZ ZZZZ" : b.teamName;
+
+                // if (a.teamName === "NA"){
+                //     teamNameA = (iconStateObj.teamName === 1) ? "ZZZZ ZZZZ" : "AAAA AAAAA";
+                // }
+                // if (b.teamName === "NA"){
+                //     teamNameB = (iconStateObj.teamName === 1) ? "ZZZZ ZZZZ" : "AAAA AAAAA";
+                // }
+                
+                
+                const mascotA = (teamNameA.split(" ").length > 2) ? teamNameA.split(" ")[2] : teamNameA.split(" ")[1];
+                const mascotB = (teamNameB.split(" ").length > 2) ? teamNameB.split(" ")[2] : teamNameB.split(" ")[1];
+
+                // console.log(a.teamName);
+            
+ 
+                const comparison = mascotA.localeCompare(mascotB);
+                // console.log(mascotA, mascotB);
+                return iconStateObj.teamName === 1 ? comparison : -comparison;
+                
+            });
         }
 
-        // Player Name sorting
-        if (sortTogglePlayer === 1) {
-            sortedData.sort((a, b) => a.playerName.localeCompare(b.playerName));
-        } else if (sortTogglePlayer === 2) {
-            sortedData.sort((a, b) => b.playerName.localeCompare(a.playerName));
+
+        const heightComparator = (a, b) => {
+            const parseHeight = (height) => {
+              const [feet, inches] = height.split('-').map(Number);
+              return feet * 12 + inches;
+            };
+
+            if (iconStateObj.height === 1){
+                return parseHeight(b.height) - parseHeight(a.height);
+            }   
+            else if (iconStateObj.height === 2){
+                return parseHeight(a.height) - parseHeight(b.height);
+            }
+          };
+        // height sorting
+        if(iconStateObj.height !== 0){
+            sortedData.sort(heightComparator);
+
+            
         }
+
+        //position sorting
+        if (iconStateObj.pos === 1) {
+            sortedData.sort((a, b) => {
+                const newPosA = (a.position == "NA") ? "ZZZZ" : a.position;
+                const newPosB = (b.position == "NA") ? "ZZZZ" : b.position;
+                return newPosA.localeCompare(newPosB)});
+        } 
+        else if (iconStateObj.pos === 2) {
+            sortedData.sort((a, b) => {
+            const newPosA = (a.position == "NA") ? "AAAA" : a.position;
+            const newPosB = (b.position == "NA") ? "AAAA" : b.position;
+            return newPosB.localeCompare(newPosA)});
+        } 
+
+
+        // Player Name sorting
+        if (iconStateObj.firstName === 1) {
+            sortedData.sort((a, b) => a.playerName.split(" ")[0].replace(/[^a-zA-Z]/g, "").localeCompare(b.playerName.split(" ")[0].replace(/[^a-zA-Z]/g, "")));
+        } else if (iconStateObj.firstName === 2) {
+            sortedData.sort((a, b) => b.playerName.split(" ")[0].replace(/[^a-zA-Z]/g, "").localeCompare(a.playerName.split(" ")[0].replace(/[^a-zA-Z]/g, "")));
+        }
+
+        if (iconStateObj.lastName === 1) {
+            sortedData.sort((a, b) => a.playerName.split(" ")[1].replace(/[^a-zA-Z]/g, "").localeCompare(b.playerName.split(" ")[1].replace(/[^a-zA-Z]/g, "")));
+        } else if (iconStateObj.lastName === 2) {
+            sortedData.sort((a, b) => b.playerName.split(" ")[1].replace(/[^a-zA-Z]/g, "").localeCompare(a.playerName.split(" ")[1].replace(/[^a-zA-Z]/g, "")));
+        }
+
+
+
+        // sorting by the rest of the number vals
+        sortNum("jerseyNumber", sortedData);
+        sortNum("apg", sortedData);
+        sortNum("ppg", sortedData);
+        sortNum("rpg", sortedData);
+        sortNum("bpm", sortedData);
+        sortNum("tpg", sortedData);
+        sortNum("fgp", sortedData);
+
+
+        /*         
+        jerseyNumber: "jerseyNumber",
+        ppg: "PTS",
+        apg: "AST",
+        rpg: "REB",
+        bpm: "PLUS_MINUS",
+        tpg: "TOV",
+        fgp: "FG_PERCENT", */
+
+
+
+
+        // if (iconStateObj.apg  === 1){
+        //     sortedData.sort((a ,b) => (b.AST - a.AST));
+        // }
+        // else if(iconStateObj.apg === 2){
+        //     sortedData.sort((a,b) => (a.AST - b.AST));
+        // }
+
+        // if (iconStateObj.apg  === 1){
+        //     sortedData.sort((a ,b) => (b.AST - a.AST));
+        // }
+        // else if(iconStateObj.apg === 2){
+        //     sortedData.sort((a,b) => (a.AST - b.AST));
+        // }
+        
+
 
         // // Update the data
         // setSortToggleTeam(sortOrderTeam === 2 ? 0 : sortOrderTeam + 1);
@@ -117,6 +389,7 @@ const Players = () => {
 
         // filteredData = sortedData;
         setNewData(sortedData);
+        scrollToTop()
         // console.log(newData)
     };
 
@@ -125,13 +398,20 @@ const Players = () => {
     const y = new Animated.Value(0);
     const onScroll = Animated.event([{nativeEvent: {contentOffset: {y}}}], {useNativeDriver: true}); 
 
+    const scrollToTop = () => {
+        listRef.current.scrollToIndex({ index: 0, animated: true });
+    };
+    
+    // console.log(filteredData[0]);
+
     return (
         <View style={{flex: 1}}>
 
+            {/* sort modal */}
             <Modal visible={shown} transparent={true} animationType="slide">
                 {/* Ask them if just having it slide all the way or doing it like this is better  */}
                 <View style={{ flex: 1, backgroundColor: "#00000066", justifyContent: "flex-end" }} onLayout={() => setModalOverlay("#00000066")}>
-                    <TouchableWithoutFeedback style={{ flex: 0.2 }} onPress={() => {
+                    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         setShown(false)
                         handleSort()
                         // setModalOverlay("#00000000")
@@ -139,58 +419,51 @@ const Players = () => {
                         <View style={{ flex: 1 }} />
                     </TouchableWithoutFeedback>
 
-                    <ImageBackground style={{ flex: 0.8, alignItems: "center" }} resizeMode="stretch" source={images.popUpBackground3} >
+                    <ImageBackground style={{ flex: 1.5, alignItems: "center" }} resizeMode="stretch" source={images.popUpBackground3} >
 
                         {/* title */}
-                        <View style={{ flex: 0.6, width: "80%", justifyContent: "flex-start", flexDirection: "row" }} >
+                        <View style={{ flex: 0.4, width: "80%", justifyContent: "flex-start", flexDirection: "column"}} >
                             <Text style={{ paddingTop: 20, fontFamily: FONTS.regular, fontSize: 18, color: COLORS.backGround_purple }}>
                                 Sort By:
                             </Text>
                         </View>
-                        {/* sort teams button and players button */}
-                        <View style={{ flex: 2, flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: 10}}>
-                            
-                            <View style={{ flex: 1, flexDirection: "row" }} >
-                                <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
-                                    <TouchableOpacity onPress={() => {
-                                        // setShown(false)
-                                        handleToggle(1);
-                                        // setModalOverlay("#0000000")
-                                    }} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
-                                        {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
-                                        <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 28 }}>
-                                            <Text style={{ fontFamily: FONTS.regular, fontSize: 18, color: COLORS.lightGray }}>Team Name</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ flex: 1, alignItems: "flex-start", justifyContent: "flex-start" }}>
-                                    {getIcon(sortToggleTeam)}
-                                </View>
-                            </View>
 
-                            <View style={{ flex: 1, flexDirection: "row" }} >
-                                <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
-                                    <TouchableOpacity onPress={() => {
-                                        // setShown(false)
-                                        handleToggle(0);
-                                        // setModalOverlay("#0000000")
-                                    }} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
-                                        {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
-                                        <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 28 }}>
-                                            <Text style={{ fontFamily: FONTS.regular, fontSize: 18, color: COLORS.lightGray }}>Player Name</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ flex: 1, alignItems: "flex-start", justifyContent: "flex-start" }}>
-                                    {getIcon(sortTogglePlayer)}
-                                </View>
-                            </View>
+                        {/* sort teams button and players button */}
+                        <View style={{ flex: 2, flexDirection: "column", justifyContent: "space-between", alignItems: "center", marginBottom: 5}}>
+                            
+                            {/*  */}
+                            <SortOption label="First Name" handlePress={handleToggle} iconState={iconStateObj.firstName}/>
+                            <SortOption label="Last Name" handlePress={handleToggle} iconState={iconStateObj.lastName}/>
+                            <SortOption label="Team" handlePress={handleToggle} iconState={iconStateObj.teamName}/>
+                            <SortOption label="Position" handlePress={handleToggle} iconState={iconStateObj.pos}/>
+                            <SortOption label="Height" handlePress={handleToggle} iconState={iconStateObj.height}/>
+                            <SortOption label="Jersey Number" handlePress={handleToggle} iconState={iconStateObj.jerseyNumber}/>
+                            <SortOption label="Box Plus/Minus" handlePress={handleToggle} iconState={iconStateObj.bpm}/>
+                            <SortOption label="Points Per Game" handlePress={handleToggle} iconState={iconStateObj.ppg}/>
+                            <SortOption label="Assists Per Game" handlePress={handleToggle} iconState={iconStateObj.apg}/>
+                            <SortOption label="Rebounds Per Game" handlePress={handleToggle} iconState={iconStateObj.rpg}/>
+                            <SortOption label="Turnovers Per Game" handlePress={handleToggle} iconState={iconStateObj.tpg}/>
+                            <SortOption label="Field Goal %" handlePress={handleToggle} iconState={iconStateObj.fgp}/>
+                            
 
                         </View>
 
-
                         {/* close button */}
-                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end" }}>
+
+
+                        <View style={{ flex: 0.6, flexDirection: "column", justifyContent: "flex-end", alignItems: "center", marginBottom: 5}}>
+                           
+                            {isSortSet ? (
+                                <TouchableOpacity onPress={() => {
+                                    resetSort()
+                                    // setModalOverlay("#0000000")
+                                }} style={{ height: 30, width: "33%", justifyContent: "center", borderRadius: 10, alignItems: "center"}}>
+                                    {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
+                                    <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 30 }}>
+                                        <Text style={{ fontFamily: FONTS.regular, fontSize: 16, color: COLORS.lightGray, textAlign: "center" }}>Clear Filter</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                ) : null}
 
                             <TouchableOpacity onPress={() => {
                                 setShown(false)
@@ -199,7 +472,7 @@ const Players = () => {
                             }} style={{ height: 30, width: "33%", justifyContent: "center", borderRadius: 10, alignItems: "center", marginBottom: 20 }}>
                                 {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
                                 <View style={{ height: 45, width: "100%", borderRadius: 10, justifyContent: "center", alignItems: "center", ...SHADOWS.small, marginBottom: 30 }}>
-                                    <Text style={{ fontFamily: FONTS.regular, fontSize: 16, color: COLORS.lightGray }}>Done</Text>
+                                    <Text style={{ fontFamily: FONTS.regular, fontSize: 16, color: COLORS.lightGray, textAlign: "center" }}>Done</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -270,6 +543,7 @@ const Players = () => {
                     //implementing deck of cards
                     
                     <AnimatedFlatList
+                        ref={listRef}
                         vertical
                         scrollEventThrottle={16}
                         snapToAlignment={"center"}
@@ -304,12 +578,26 @@ const styles = StyleSheet.create({
 
     },
 
+    sortAndIconContainer: { 
+        flex: 1, 
+        flexDirection: "row", 
+        marginTop: 5
+    },
+
+    sortOptions_containers: { 
+        flex: 1,
+        width: "100%",
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
     ListHeaders: {
         fontWeight: "bold",
         marginTop: 15,
         color: COLORS.light,
-    }
-    ,
+    },
+    
     cardContainer: {
         backgroundColor: COLORS.orange,
         margin: 5,

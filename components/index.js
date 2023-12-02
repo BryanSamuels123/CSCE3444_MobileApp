@@ -4,11 +4,13 @@ import Teams from "./MainPage/teams/Teams.jsx";
 import BackImg from "./common/BackImg.jsx";
 import MenuButton from "./icons/MenuButton.jsx";
 import SideMenu from "./common/sideMenu.jsx";
+import SortOption from "./common/SortOption.jsx";
 
 export {
     Players,
     Teams,
     BackImg,
     MenuButton, 
-    SideMenu
+    SideMenu,
+    SortOption
 }
