@@ -8,7 +8,7 @@ import  SortOption  from "../../common/SortOption";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const Players = ({updateIndex, likeNum}) => {
+const Players = ({updateIndex, checkFav, isDiff, resetIsDiff}) => {
 
     const [searchQuery, setSearchQuery] = useState("");     // update value of input
     const [phText, setphText] = useState("Search");         //place holder text will be removed on focus 
@@ -19,6 +19,7 @@ const Players = ({updateIndex, likeNum}) => {
     const [modalOverlay, setModalOverlay] = useState("#00000000");
     const [isSortSet, setIsSortSet] = useState(false);
     const [isLiked, setIsLiked] = useState(0);
+    const [favOn, setFavOn] = useState(true);
 
     const activeCard = useRef({});
     // useRef instead of useState so that values persist across renders
@@ -55,12 +56,14 @@ const Players = ({updateIndex, likeNum}) => {
     const onViewableItemsChanged = useCallback(({ viewableItems }) => {
         if (viewableItems && viewableItems.length > 0) {
             const liked  = (1 - viewableItems[0].item.isFavorite);
-
+            
+            // console.log(`value 1: ${liked}, value 2: ${activeCard.current}`);
             const currentCard = viewableItems[0].index;
-            activeCard.current = currentCard;
 
+            activeCard.current = currentCard;
             // get id of the currentCard and what type would be supplied to the api to set or reset fav 
             updateIndex({id: viewableItems[0].item.id, type: liked});
+
             // viewableItems[0].item.isFavorite = liked;
         }
     }, []);
@@ -75,24 +78,34 @@ const Players = ({updateIndex, likeNum}) => {
         setIsSortSet(allZero);
     }, [allZero])
 
-
-    // update the likeNum only in response to good API response back; 
-    // no change on error
     useEffect(() => {
-        setIsLiked(likeNum);
-        if (newData.length > 0){
-            newData[activeCard.current].isFavorite = likeNum;
+        // console.log(isDiff);
+        if(isDiff){
+            // console.log("this ran");
+            scrollToIndex(activeCard.current);
+            resetIsDiff();
         }
-        else if (filteredData.length > 0){
-            console.log(activeCard.current);
-            filteredData[activeCard.current].isFavorite = likeNum;
-            console.log(likeNum);
-            // console.log("called");
-        }
-        
-    }, [likeNum])
+    }, [isDiff])
 
-    // const setSortToggleIcon
+
+    useEffect(() =>{
+        if (checkFav){
+            if(newData.length > 0){
+                newData[activeCard.current].isFavorite = 1 - newData[activeCard.current].isFavorite;
+            }
+            else if (filteredData.length > 0){
+                filteredData[activeCard.current].isFavorite = 1 - filteredData[activeCard.current].isFavorite;
+                console.log(filteredData[activeCard.current]);
+            }
+            // if ((favOn) || ((newData.length > 2) && (filteredData.length > 2))){
+            scrollToIndex(activeCard.current); 
+            // }
+            // else{
+            //     scrollToTop();
+            // }c
+        }
+    }, [checkFav])
+
     const router = useRouter();
 
 
@@ -277,7 +290,11 @@ const Players = ({updateIndex, likeNum}) => {
             return;
         }
 
-        const sortedData = [...result.data];
+        let sortedData = [...result.data];
+
+        if (newData[0]){
+            sortedData = newData;
+        }
 
         // Team Name sorting
         if (iconStateObj.teamName !== 0) {
@@ -425,14 +442,36 @@ const Players = ({updateIndex, likeNum}) => {
         // console.log(newData)
     };
 
+    const filterFavs = () =>{
+        if (favOn){
+            if (newData[0]) {
+                setNewData(newData.filter((player) => (player.isFavorite === 1)));
+            }
+            else {
+                setNewData(result.data.filter((player) => (player.isFavorite === 1)));       
+            }
+        }
+        else{
+            setNewData([]);
+            
+        }
+        setFavOn(!favOn);
+        setShown(false);
+        scrollToTop();
+    }
 
     // for use in the flatlist animation
     const y = new Animated.Value(0);
     const onScroll = Animated.event([{nativeEvent: {contentOffset: {y}}}], {useNativeDriver: true}); 
 
     const scrollToTop = () => {
-        listRef.current.scrollToIndex({ index: 0, animated: true });
+        // listRef.current.scrollToIndex({ index: 0, animated: true });
+        scrollToIndex(0);
     };
+
+    const scrollToIndex = (id) =>{
+        listRef.current.scrollToIndex({index: id, animated: true});
+    }
     
     // console.log(filteredData[0]);
 
@@ -476,7 +515,7 @@ const Players = ({updateIndex, likeNum}) => {
                             <SortOption label="Rebounds Per Game" handlePress={handleToggle} iconState={iconStateObj.rpg}/>
                             <SortOption label="Turnovers Per Game" handlePress={handleToggle} iconState={iconStateObj.tpg}/>
                             <SortOption label="Field Goal %" handlePress={handleToggle} iconState={iconStateObj.fgp}/>
-                            
+                            <SortOption label="Favorite Players" handlePress={filterFavs}  iconState={0}/>
 
                         </View>
 
@@ -555,7 +594,8 @@ const Players = ({updateIndex, likeNum}) => {
                                     setphText("Search")
                                     setFamily(FONTS.thin)
                                     setColor(COLORS.pastelPurpleLow)
-                                    scrollToTop()
+                                    scrollToIndex(activeCard.current);
+                                    // scrollToTop()
                                 }
                             }}
 

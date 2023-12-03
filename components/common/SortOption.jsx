@@ -45,7 +45,15 @@ const SortOption = ({ label, handlePress, iconState }) => {
   return (
         <View style={styles.sortAndIconContainer} >
             <View style={{ flex: 1, alignItems: "flex-end", justifyContent: "flex-start" }}>
-                <TouchableOpacity onPress={() => {handlePress(labelTable[label])}} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
+                <TouchableOpacity onPress={() => {
+                    if(label !== "Favorite Players"){
+                        handlePress(labelTable[label])
+                    }
+                    else{
+                        handlePress();
+                    }   
+
+                    }} style={{ flex: 1, borderRadius: 10, justifyContent: "flex-end" }}>
                     {/* <Image source={icons.cancel} style={{flex: 1, resizeMode: "contain", alignItems: "center", justifyContent: "center", opacity: 0.4}}/> */}
                     <View style={styles.sortOptions_containers}>
                         <Text style={{ fontFamily: FONTS.regular, fontSize: 18, color: COLORS.backGround_purple }}>{label}</Text>

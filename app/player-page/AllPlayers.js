@@ -1,10 +1,9 @@
-import { useState, useRef } from "react";
-import { View, Text, FlatList, Image, ImageBackground, Pressable, SafeAreaView } from "react-native";
+import { useState, useRef, useEffect } from "react";
+import { View, Image, ActivityIndicator, Pressable,  } from "react-native";
 import { SHADOWS, COLORS, icons } from "../../constants";
 import fetchHook from "../../hook/fetchHook";
-import { BackImg, MenuButton, SideMenu } from "../../components";
+import { Players, BackImg, MenuButton, SideMenu } from "../../components";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { Players } from "../../components";
 import { useRouter } from "expo-router";
 import Animated, { Easing, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import { TapGestureHandler } from 'react-native-gesture-handler';
@@ -13,18 +12,31 @@ const PlayersPage = () => {
     const router = useRouter();
 
     const [shown, setShown] = useState(false);
-    const [isLiked, setIsLiked] = useState(0);
+    const [checkFav, setCheckFav] = useState(false);
     const [liked, setLiked] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDiff, setIsDiff] = useState(false);
+    const activeCard = useRef({id: -1, type: 1});
 
-    
-
-    const activeCard = useRef({id: -1, type: 0});
-
+    // come back to this
     const updateIndex = (nextActiveCard) =>{
+        // console.log(`Curr: ${nextActiveCard.type}\nLiked: ${activeCard.current.type}`);
+        if (nextActiveCard.type !== activeCard.current.type){ // handle transition
+            // console.log("true");
+            setIsDiff(true);
+        }
         activeCard.current = nextActiveCard;
-        setLiked(nextActiveCard.type);
-        console.log(activeCard.current);
+        setLiked(activeCard.current.type);
+        // console.log(activeCard.current); 
+        
+        // setIsDiff(false);
     }
+
+
+    const resetIsDiff = () =>{
+        setIsDiff(false);
+    }
+
 
     const openMenu = () =>{
         setShown(true);
@@ -42,6 +54,7 @@ const PlayersPage = () => {
     }
 
     const setFav = () =>{
+        setIsLoading(true);
         console.log("called");
         const params = {
             method: 'POST',
@@ -56,17 +69,24 @@ const PlayersPage = () => {
         fetch(`http://18.118.102.93:8000/setFav`, params)
         .then(response => response.json())
         .then(data => {
+            setIsLoading(false);
+            activeCard.current.type = 1 - liked;
+            setLiked((liked) => 1 - liked);
+            
+            setCheckFav(true);
+            setIsDiff(true);
             // Use the state updater function to ensure the latest state
-            setIsLiked(prevIsLiked => 1 - prevIsLiked);
+            // setIsLiked(prevIsLiked => 1 - prevIsLiked);
             // no need to use setLiked here, as it's based on isLiked
 
             // Handle the data from the API response
-            console.log(data, isLiked); // This might still log the previous value
+            console.log(data, liked); // This might still log the previous value
         })
         .catch(error => {
             // Handle errors
             console.error('API call error:', error);
-        });
+        })
+        .finally(() => setCheckFav(false));
     }
     
     return (
@@ -83,7 +103,7 @@ const PlayersPage = () => {
             {/* Search bar*/}
             {/* Card Stack UI */}
             <View style={{ flex: 3.8 }}>
-                <Players updateIndex={updateIndex} likeNum={isLiked}/>
+                <Players updateIndex={updateIndex} checkFav={checkFav} isDiff={isDiff} resetIsDiff={resetIsDiff}/>
             </View>
 
 
@@ -100,7 +120,7 @@ const PlayersPage = () => {
                         {({ pressed }) => {
                             return (
                                 <Image source={(icons.statsCompIcon)} style={[{ width: 80, height: 80, resizeMode: "center", borderRadius: 10 },
-                                pressed && { opacity: 0.70 }
+                                pressed && { opacity: 0.60 }
                                 ]} />
                             );
                         }}
@@ -109,19 +129,22 @@ const PlayersPage = () => {
 
                 {/* favorite icon */}
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginBottom: 20 }}>
-                    <Pressable onPress={() => setFav()} style={({ pressed }) => [{ paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
-                    pressed && SHADOWS.large
-                    ]}>
-                        {({ pressed }) => {
-                            
-                            return (
-                                <Image source={(activeCard.current.type === 1) ? icons.favIcon_U : icons.favIcon_F} style={[
-                                    { width: 80, height: 80, resizeMode: "contain", borderRadius: 9 },
-                                    pressed && { opacity: 0.70 },
-                                ]} />
-                            );
-                        }}
-                    </Pressable>
+                    {isLoading ? (
+                        // Render the loading wheel when isLoading is true
+                        <ActivityIndicator size="large" color={COLORS.lightGray} />
+                    ) : (
+                        // Render the icon when isLoading is false
+                        <Pressable onPress={() => setFav()} style={({ pressed }) => [{ paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
+                        pressed && SHADOWS.large
+                        ]}>
+                        {({ pressed }) => (
+                            <Image source={(liked === 1) ? icons.favIcon_U : icons.favIcon_F} style={[
+                            { width: 80, height: 80, resizeMode: "contain", borderRadius: 9 },
+                            pressed && { opacity: 0.70 },
+                            ]} />
+                        )}
+                        </Pressable>
+                    )}
                 </View>
             </View>
         </BackImg>
