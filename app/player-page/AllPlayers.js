@@ -6,17 +6,23 @@ import { BackImg, MenuButton, SideMenu } from "../../components";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Players } from "../../components";
 import { useRouter } from "expo-router";
+import Animated, { Easing, useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { TapGestureHandler } from 'react-native-gesture-handler';
 
 const PlayersPage = () => {
     const router = useRouter();
 
     const [shown, setShown] = useState(false);
+    const [isLiked, setIsLiked] = useState(0);
+    const [liked, setLiked] = useState(1);
 
+    
 
     const activeCard = useRef({id: -1, type: 0});
 
     const updateIndex = (nextActiveCard) =>{
         activeCard.current = nextActiveCard;
+        setLiked(nextActiveCard.type);
         console.log(activeCard.current);
     }
 
@@ -50,13 +56,12 @@ const PlayersPage = () => {
         fetch(`http://18.118.102.93:8000/setFav`, params)
         .then(response => response.json())
         .then(data => {
-            
-
-            // need to update the value of the active person isFavorite
-            // need to update the value here to conditionally render the images (use animation)
+            // Use the state updater function to ensure the latest state
+            setIsLiked(prevIsLiked => 1 - prevIsLiked);
+            // no need to use setLiked here, as it's based on isLiked
 
             // Handle the data from the API response
-            console.log(data);
+            console.log(data, isLiked); // This might still log the previous value
         })
         .catch(error => {
             // Handle errors
@@ -78,7 +83,7 @@ const PlayersPage = () => {
             {/* Search bar*/}
             {/* Card Stack UI */}
             <View style={{ flex: 3.8 }}>
-                <Players updateIndex={updateIndex}/>
+                <Players updateIndex={updateIndex} likeNum={isLiked}/>
             </View>
 
 
@@ -104,17 +109,13 @@ const PlayersPage = () => {
 
                 {/* favorite icon */}
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginBottom: 20 }}>
-                    <Pressable onPress={() => {
-                        console.log(activeCard.current)
-                        setFav();
-                    }}
-                        style={({ pressed }) => [{ paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
-                        pressed && SHADOWS.large
+                    <Pressable onPress={() => setFav()} style={({ pressed }) => [{ paddingLeft: 15, width: 80, height: 80, alignItems: "center", borderRadius: 10 },
+                    pressed && SHADOWS.large
                     ]}>
                         {({ pressed }) => {
+                            
                             return (
-                                // will do an animation on pressed later
-                                <Image source={(icons.favIcon_U)} style={[
+                                <Image source={(activeCard.current.type === 1) ? icons.favIcon_U : icons.favIcon_F} style={[
                                     { width: 80, height: 80, resizeMode: "contain", borderRadius: 9 },
                                     pressed && { opacity: 0.70 },
                                 ]} />
