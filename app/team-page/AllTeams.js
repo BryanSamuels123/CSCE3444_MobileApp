@@ -12,8 +12,8 @@ import { useRouter } from "expo-router";
 const teamsPage = () =>{
     const router = useRouter();
 
-    const [searchQuery, setSearchQuery] = useState("all");
-    const [doSearch, setDoSearch] = useState(false);
+    // const [searchQuery, setSearchQuery] = useState("all");
+    // const [doSearch, setDoSearch] = useState(false);
     const [res, setResult] =useState([]);
 
     const onSearch = ({result}) => {
@@ -36,7 +36,7 @@ const teamsPage = () =>{
         setShown(false);
         router.push(route);
     }
-    
+
     return(
         //Wrapper
         <BackImg>

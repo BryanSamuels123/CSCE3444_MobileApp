@@ -16,9 +16,9 @@ const Players = ({updateIndex, checkFav, isDiff, resetIsDiff}) => {
     const [color, setColor] = useState(COLORS.pastelPurpleLow);
     const [shown, setShown] = useState(false);
     const [newData, setNewData] = useState([]);
-    const [modalOverlay, setModalOverlay] = useState("#00000000");
+    // const [modalOverlay, setModalOverlay] = useState("#00000000");
     const [isSortSet, setIsSortSet] = useState(false);
-    const [isLiked, setIsLiked] = useState(0);
+    // const [isLiked, setIsLiked] = useState(0);
     const [favOn, setFavOn] = useState(true);
 
     const activeCard = useRef({});
@@ -95,7 +95,7 @@ const Players = ({updateIndex, checkFav, isDiff, resetIsDiff}) => {
             }
             else if (filteredData.length > 0){
                 filteredData[activeCard.current].isFavorite = 1 - filteredData[activeCard.current].isFavorite;
-                console.log(filteredData[activeCard.current]);
+                // console.log(filteredData[activeCard.current]);
             }
             // if ((favOn) || ((newData.length > 2) && (filteredData.length > 2))){
             scrollToIndex(activeCard.current); 
@@ -481,7 +481,7 @@ const Players = ({updateIndex, checkFav, isDiff, resetIsDiff}) => {
             {/* sort modal */}
             <Modal visible={shown} transparent={true} animationType="slide">
                 {/* Ask them if just having it slide all the way or doing it like this is better  */}
-                <View style={{ flex: 1, backgroundColor: "#00000066", justifyContent: "flex-end" }} onLayout={() => setModalOverlay("#00000066")}>
+                <View style={{ flex: 1, backgroundColor: "#00000066", justifyContent: "flex-end" }} >
                     <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => {
                         setShown(false)
                         handleSort()

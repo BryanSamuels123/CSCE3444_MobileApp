@@ -43,9 +43,12 @@ const tempImg = require("../../../../assets/images/teamLogos/defaultPlayer.jpeg"
 //create TeamCard that will be used throughout the flatlist
 const TeamCard = ({ item }, handleNavigate) => {
 
-  console.log(item)
+  // console.log(item)
 
   let imgSource = (item.teamLogoURI != null) ? {uri: item.teamLogoURI} : images.defaultPlayerPic;
+  if (item.teamAbv !== "NA"){
+
+  
   return(
     <ImageBackground source={images.background0} style={style.CardContainer} imageStyle={{resizeMode: "stretch", borderRadius:20}}>
       <Pressable style={({pressed})=>[
@@ -71,6 +74,7 @@ const TeamCard = ({ item }, handleNavigate) => {
         </Pressable>
   </ImageBackground>
   );
+  }
 };
   export default TeamCard;
   
